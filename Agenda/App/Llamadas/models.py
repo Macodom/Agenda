@@ -1,5 +1,6 @@
 from django.db import models
 from Agenda.App.Cliente.models import Client
+from Agenda.App.Recepcion.models import Reception
 
 class Calls(models.Model):
     phone = models.CharField(max_length=12, blank=True)
@@ -10,6 +11,7 @@ class Calls(models.Model):
     comments = models.TextField(max_length=500, blank=True)
     observations = models.TextField(max_length=500, blank=True)
     client = models.ForeignKey(Client)
+    reception = models.ForeignKey(Reception)
 
     def __str__(self):
         return "%s" % self.phone
