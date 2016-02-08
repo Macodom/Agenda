@@ -37,6 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Agenda.App.Area',
+    'Agenda.App.Cliente',
+    'Agenda.App.Asesor',
+    'Agenda.App.Llamadas',
+    'Agenda.App.Recepcion',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -77,8 +82,12 @@ WSGI_APPLICATION = 'Agenda.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Agenda',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
