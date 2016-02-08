@@ -1,0 +1,112 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+    Modificar la fecha de registro del clientes
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% include 'menu_navegacion_cliente.html' %}
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                       
+              <h3> Cambiar Fecha registro del cliente</h3>          
+                        
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+                   
+                  <div class="control-group">
+                    <label class="control-label">Nueva Fecha registro del cliente</label>
+                    <div class="controls">
+                      
+
+                    <div id="datetimepicker1" class="input-append date ">
+          <input type="text" name="fechanueva" data-format="yyyy-MM-dd hh:mm:ss"></input>
+                        <span class="add-on ">
+                            <i class="icon-calendar" data-date-icon="icon-calendar" data-time-icon="icon-time"></i>
+                        </span>
+                    </div>
+                 
+                    </div>
+                  </div>
+                  
+
+                 {% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+{% endif %}
+
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

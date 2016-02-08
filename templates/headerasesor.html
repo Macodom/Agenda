@@ -1,0 +1,284 @@
+ <div class="navbar navbar-inverse top-nav">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="home-link">
+          <a href="/p-asesor/" class="icon-home"></a>
+        </span>
+        <a class="brand" href="/p-asesor/">
+        <img src="{{STATIC_URL}}images/logo-falgun.png" width="103" height="50" alt="Falgun">
+       </a>
+        <div class="nav-collapse">
+          <ul class="nav">
+
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-flag"></i> Escuelas <b class="icon-angle-down"></b>
+              </a>
+            <div class="dropdown-menu">
+              <ul>
+          <li><a href="/registrar-escuela-a/"><i class="icon-plus-sign"></i> Registrar </a></li>
+          <li><a href="/consultar-escuela-a/"><i class="icon-search"></i> Consultar </a></li>
+              </ul>
+            </div>
+            </li>
+
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-bar-chart"></i> Paquetes <b class="icon-angle-down"></b>
+              </a>
+            <div class="dropdown-menu">
+              <ul>
+          <li><a href="/consultar-paquetes-a/"><i class="icon-search"></i> Consultar </a></li>
+              </ul>
+            </div>
+            </li>
+
+
+
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-asterisk"></i> Categorias <b class="icon-angle-down"></b>
+              </a>
+            <div class="dropdown-menu">
+              <ul>
+                <li><a href="/asconsultar_prorroga/"><i class="icon-check"></i> Prorroga </a></li>
+                <li><a href="/asignarar-cuartos-asesor/"><i class="icon-briefcase"></i> Cuartos </a></li>
+                <li><a href="/consult-chaperon-programa/"><i class="icon-refresh"></i> Asignar Chaperón</a></li>
+                 <li><a href="/ver-dispvuelo-asesor/"><i class="icon-fighter-jet"></i> Disponibilidad de vuelos</a></li>
+                 <li><a href="/static/images/pdf/clausulas.pdf" target="_blank"><i class="icon-download"></i> Descargar Clausulas</a></li>
+                <li>
+                  <a href="/consulta-lugares/"><i class="icon-search">
+                  </i> Presentaciones </a>
+                </li>
+
+              </ul>
+            </div>
+
+
+            </li>
+
+            
+
+            <!-- inicio de los reportes-->
+
+  <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#"><i class="icon-file-alt"></i> Reportes <b class="icon-angle-down"></b></a>
+            <div class="dropdown-menu">
+              <ul>
+                <li class="dropdown-submenu"><a href="#"><i class="icon-user-md"></i> Asesor</a>
+                  <div class="dropdown-menu">
+                    <ul>
+                  <li>
+<a href="/reporte-admin-asesor/"><i class="icon-search"></i>Proyección de Ventas </a>
+                  </li>
+                   <li>
+<a href="/proyeccion-ventas-general/"><i class="icon-search"></i>Proyección de Ventas General</a>
+                  </li>
+                  <li>
+<a href="/reporte-control-admin-asesor/"><i class="icon-search"></i>Control semanal de ventas </a>
+                  </li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li class="dropdown-submenu"><a href="#"><i class="icon-building"></i> UGB</a>
+                  <div class="dropdown-menu">
+                    <ul>
+                      <li><a href="/reporte-ugb/"><i class="icon-search"></i> Consultar </a></li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li class="dropdown-submenu"><a href="#"><i class="icon-briefcase"></i> Rooming</a>
+                  <div class="dropdown-menu">
+                    <ul>
+                      <li><a href="/reporte-rooming-general/"><i class="icon-search"></i> Consultar </a></li>
+                    </ul>
+                  </div>
+                </li>
+
+
+                <li class="dropdown-submenu"><a href="#"><i class="icon-truck"></i> Chaperón</a>
+                  <div class="dropdown-menu">
+                    <ul>
+                      <li><a href="/reporte-chaperon-general/"><i class="icon-search"></i> Generar </a></li>
+                    </ul>
+                  </div>
+                </li>
+
+
+
+
+
+                <li class="dropdown-submenu"><a href="#"><i class="icon-user"></i> User Cliente</a>
+                  <div class="dropdown-menu">
+                    <ul>
+                      <li><a href="/reporte-show-user-cliente/{{user.id}}"><i class="icon-search"></i> Generar </a></li>
+                    </ul>
+                  </div>
+                </li>
+
+                <li class="dropdown-submenu"><a href="#"><i class="icon-user"></i> Resguardo</a>
+                  <div class="dropdown-menu">
+                    <ul>
+                      <li><a href="/reporte-resguardo-general/"><i class="icon-search"></i> Generar </a></li>
+                    </ul>
+                  </div>
+                </li>
+
+                            
+              </ul>
+            </div>
+            </li>
+
+            <!-- fin de los reportes-->
+
+            <!--  inicio de wl-->
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-pause"></i> Wl <b class="icon-angle-down"></b>
+              </a>
+            <div class="dropdown-menu">
+              <ul>
+          <li><a href="/asconsultar_cli/"><i class="icon-plus-sign"></i> Nuevo
+ </a></li>
+          <li><a href="/asconsultar_wl/"><i class="icon-search"></i> Consultar </a></li>
+              </ul>
+            </div>
+            </li>
+          <!--  fin de inicio de wl-->
+
+
+            {% if user.perfil.chaperon %}
+          <!--  inicio de perfil chaperon-->
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-refresh"></i>Ver Perfil Chaperon<b class="icon-angle-down"></b>
+              </a>
+
+            <div class="dropdown-menu">
+              <ul>
+          <li><a href="/perfil-chaperon-asesor/"><i class="icon-plus-sign"></i> Ver Perfil Chaperón</a></li>
+          
+              </ul>
+            </div>
+            
+            </li>
+          <!--  fin de inicio de perfil chaperon-->
+          {% endif %}
+
+
+          <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-bar-chart"></i> Manual <b class="icon-angle-down"></b>
+              </a>
+            <div class="dropdown-menu">
+              <ul>
+
+                <li>
+                  <a href="/lista-responsabilidad-recomendaciones/"><i class="icon-search">
+                  </i> Responsabilidades </a>
+                </li>
+
+                <li>
+                  <a href="/lista-recomendaciones/"><i class="icon-search">
+                  </i>Recomendaciones </a>
+                </li>
+
+                <li>
+                  <a href="/list-vuelos/"><i class="icon-search">
+                  </i> Vuelos </a>
+                </li>
+
+                <li>
+                  <a href="/view-prog-add-hotel/"><i class="icon-search">
+                  </i> Hoteles </a>
+                </li>
+
+                 <li>
+                  <a href="/list-programas-disponibles-transportacion/"><i class="icon-search">
+                  </i> Transportación </a>
+                </li>
+
+                <li>
+                  <a href="/list-programas-disponibles-alimentos/"><i class="icon-search">
+                  </i> Alimentos </a>
+                </li>
+
+                <li>
+                  <a href="/list-programas-disponibles-buses/"><i class="icon-search">
+                  </i> Bus </a>
+                </li>
+                <!-- <li>
+                  <a href="/add-guardias-form-list-programa/"><i class="icon-search">
+                  </i> Guardias </a>
+                </li> -->
+
+                <li>
+                  <a href="/lista-procedimientos-aeropuerto/"><i class="icon-search">
+                  </i> Procedimientos Aeropuerto </a>
+                </li>
+
+                <li>
+                  <a href="/lista-junta-grupo/"><i class="icon-search">
+                  </i> Procedimientos junta de grupo </a>
+                </li>
+
+                <li>
+                  <a href="/lista-procedimiento-programa/"><i class="icon-search">
+                  </i> Procedimientos por programa </a>
+                </li>
+
+                <li>
+                  <a href="/add-actividades-form-list-programa/"><i class="icon-search">
+                  </i> Itinerario </a>
+                </li>
+
+                <li>
+                  <a href="/consultar-mapas-asignados/"><i class="icon-search">
+                  </i> Mapas </a>
+                </li>
+
+
+                </ul>
+              </div>
+              </li>
+
+
+              <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-screenshot"></i> Ubicacion de visitas <b class="icon-angle-down"></b>
+              </a>
+            <div class="dropdown-menu">
+              <ul>
+                <li><a href="/formulario-visitas/"><i class="icon-plus-sign"></i> Nuevo </a></li>
+                <li><a href="/consulta-visitas/"><i class="icon-search"></i> Consultar </a></li>
+              </ul>
+            </div>
+            </li>
+
+
+          {% if user.perfil.agencia.id == 5 %}   
+          <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+              <i class="icon-refresh"></i>Chaperon<b class="icon-angle-down"></b>
+            </a>
+            <div class="dropdown-menu">
+              <ul>
+                     <li><a href="/registrar-chaperon/"><i class="icon-plus-sign"></i> Nuevo</a></li>
+                     <li><a href="/consulta-chaperon/"><i class="icon-search"></i> Consultar </a></li>
+                     <li><a href="/cuenta-chaperon/"><i class="icon-key"></i> Cuentas </a></li>
+                     <!-- <li><a href="/consultar-chaperon-programa/"><i class="icon-plus-sign"></i> Asignar</a></li> -->
+                    </ul>
+            </div>
+          </li>
+          {% endif %}
+
+
+
+
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+  </div>

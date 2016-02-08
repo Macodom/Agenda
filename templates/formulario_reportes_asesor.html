@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+      Formulario Reportes por Asesor
+</title>
+
+{% include "base_administrador.html" %} 
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+{% if request.session.tipous == 4 %}
+  {% include 'headercaja.html' %}
+  {% include 'menuizquierdocaja.html' %}
+{% endif %}
+
+{% if request.session.tipous == 7 %}
+  {% include 'headermarketing.html' %}
+  {% include 'menuizquierdomarketing.html' %}
+{% endif %}
+
+{% if request.session.tipous == 8 %}
+  {% include 'headeragencias.html' %}
+  {% include 'menuizquierdoagencias.html' %}
+{% endif %}
+
+
+
+  
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Base de Datos Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 3 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Base de Datos Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+ {% if request.session.tipous == 4 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-caja/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Base de Datos Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+{% if request.session.tipous == 7 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-marketing/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Base de Datos Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+{% if request.session.tipous == 8 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-agencias/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Base de Datos Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+  
+
+
+
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+
+            <h3>Reporte por Semanas   </h3>            
+      
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="reporteasesor" class="form-horizontal left-align" id="reporteasesor" method="POST" action="">
+                  {% csrf_token %}
+                   
+
+                <div class="control-group">
+                <label class="control-label">Asesor
+                </label>
+                <div class="controls">
+                    <select id="cvease" class="span6" name="cvease">
+                        <option selected="selected" value="">---------</option>
+                         {% for a in ase %}  
+                        <option value="{{a.user.id}}">{{a.user.first_name}} {{a.user.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+  
+
+                  </div>
+<!-- btn  -->
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Consultar</button>
+
+                  </div>
+
+                </form>
+
+
+{% if cva != 0 %}
+                  <div class="form-actions">
+<a href="/admin-reporte-pdf-asesor-semanal/{{cva}} "    
+target="_blank">
+                  <button class="btn btn-success" data-original-title="PDF">
+                      <i class="icon-print"></i> PDF
+                  </button>
+</a>
+<a href="/admin-reporte-excel-asesor-semanal/{{cva}}"   
+target="_blank">
+                  <button class="btn btn-info" data-original-title="EXCEL">
+                      <i class="icon-print"></i> EXCEL
+                  </button>
+</a>
+
+                  </div>
+{% endif %}                  
+               
+
+
+{% if esta %}
+              <table class="table responsive table-stats table-striped table-sortable table-bordered">
+                <tbody>
+                  <tr>
+                    <th colspan="25" class="center">
+<h4><strong>Proyección de Ventas por Asesor Semanal</strong></h4>
+                    </th>
+                    </tr>
+                    <tr>
+
+                    <th colspan="2" class="center">
+<strong>Nombre del Asesor</strong>
+                    </th>
+                    <th colspan="6" class="center">
+{{asesor.user.first_name}} {{asesor.user.last_name}}
+                    </th>
+                    <th colspan="3" class="center">
+<strong>Agencia/Sucursal</strong>
+                    </th>
+                    <th colspan="7" class="center">
+{{asesor.agencia}}
+                    </th>
+                    <th colspan="2" class="center">
+<strong>Semana</strong>
+                    </th>
+                    <th colspan="5" class="center">
+                      {{haceochodia}} - {{ayer}} 
+                    </th>
+
+                  </tr>
+                  {% for t in ti %}
+                  <tr>
+                    <th class="center"> {{t.ase}}</th>
+                    <th class="center"> {{t.p1f}} </th>
+                    <th class="center"> {{t.p1m}} </th>
+                    <th class="center"> {{t.e1f}} </th>
+                    <th class="center"> {{t.e1m}} </th>
+                    <th class="center"> {{t.nc1f}} </th>
+                    <th class="center"> {{t.nc1m}} </th>
+                    <th class="center"> {{t.nv1f}}</th>
+                    <th class="center"> {{t.nv1m}}</th>
+
+                    <th class="center"> {{t.p2f}} </th>
+                    <th class="center"> {{t.p2m}} </th>
+                    <th class="center"> {{t.e2f}} </th>
+                    <th class="center"> {{t.e2m}} </th>
+                    <th class="center"> {{t.nc2f}} </th>
+                    <th class="center"> {{t.nc2m}} </th>
+                    <th class="center"> {{t.nv2f}}</th>
+                    <th class="center"> {{t.nv2m}}</th>
+
+                    <th class="center"> {{t.p3f}} </th>
+                    <th class="center"> {{t.p3m}} </th>
+                    <th class="center"> {{t.e3f}} </th>
+                    <th class="center"> {{t.e3m}} </th>
+                    <th class="center"> {{t.nc3f}} </th>
+                    <th class="center"> {{t.nc3m}} </th>
+                    <th class="center"> {{t.nv3f}}</th>
+                    <th class="center"> {{t.nv3m}}</th>
+                    <th class="center"> {{t.vttotal}}</th>
+                  </tr>
+                  {% endfor %}
+                
+                   {% for r in rp %}
+                  <tr>
+                    <th class="center red"> {{r.cvep}}</th>
+
+                    <th class="center"> {{r.p1f}} </th>
+                    <th class="center"> {{r.p1m}} </th>
+                    <th class="center"> {{r.e1f}} </th>
+                    <th class="center"> {{r.e1m}} </th>
+                    <th class="center"> {{r.nc1f}} </th>
+                    <th class="center"> {{r.nc1m}} </th>
+                    <th class="center"> {{r.nv1f}}</th>
+                    <th class="center"> {{r.nv1m}}</th>
+
+                    <th class="center"> {{r.p2f}} </th>
+                    <th class="center"> {{r.p2m}} </th>
+                    <th class="center"> {{r.e2f}} </th>
+                    <th class="center"> {{r.e2m}} </th>
+                    <th class="center"> {{r.nc2f}} </th>
+                    <th class="center"> {{r.nc2m}} </th>
+                    <th class="center"> {{r.nv2f}}</th>
+                    <th class="center"> {{r.nv2m}}</th>
+
+                    <th class="center"> {{r.p3f}} </th>
+                    <th class="center"> {{r.p3m}} </th>
+                    <th class="center"> {{r.e3f}} </th>
+                    <th class="center"> {{r.e3m}} </th>
+                    <th class="center"> {{r.nc3f}} </th>
+                    <th class="center"> {{r.nc3m}} </th>
+                    <th class="center"> {{r.nv3f}}</th>
+                    <th class="center"> {{r.nv3m}}</th>
+                    <th class="center"> {{r.vtotal}}</th>
+
+                  </tr>
+                  {% endfor %}
+                  {% for t2 in total %}
+                  <tr>
+                    <th class="center red"> {{t2.total}}</th>
+
+                    <th class="center"> {{t2.p1f}} </th>
+                    <th class="center"> {{t2.p1m}} </th>
+                    <th class="center"> {{t2.e1f}} </th>
+                    <th class="center"> {{t2.e1m}} </th>
+                    <th class="center"> {{t2.nc1f}} </th>
+                    <th class="center"> {{t2.nc1m}} </th>
+                    <th class="center"> {{t2.nv1f}}</th>
+                    <th class="center"> {{t2.nv1m}}</th>
+
+                    <th class="center"> {{t2.p2f}} </th>
+                    <th class="center"> {{t2.p2m}} </th>
+                    <th class="center"> {{t2.e2f}} </th>
+                    <th class="center"> {{t2.e2m}} </th>
+                    <th class="center"> {{t2.nc2f}} </th>
+                    <th class="center"> {{t2.nc2m}} </th>
+                    <th class="center"> {{t2.nv2f}}</th>
+                    <th class="center"> {{t2.nv2m}}</th>
+
+                    <th class="center"> {{t2.p3f}} </th>
+                    <th class="center"> {{t2.p3m}} </th>
+                    <th class="center"> {{t2.e3f}} </th>
+                    <th class="center"> {{t2.e3m}} </th>
+                    <th class="center"> {{t2.nc3f}} </th>
+                    <th class="center"> {{t2.nc3m}} </th>
+                    <th class="center"> {{t2.nv3f}}</th>
+                    <th class="center"> {{t2.nv3m}}</th>
+                    <th class="center"> {{t2.vtotal}}</th>  
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+{%  endif %}
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

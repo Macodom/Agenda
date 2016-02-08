@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Edición de clientes</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% include 'menu_navegacion_cliente.html' %}
+
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="stepy-widget">
+
+
+            <div class="widget-head clearfix bondi-blue">
+
+              <div id="top_tabby" class="pull-right">
+
+              </div>
+            </div>
+            <div class="widget-container gray ">
+              <div class="form-container">
+                <form id="stepy_form" class=" form-horizontal" method="POST" action="">
+                  {% csrf_token %}
+
+                  <fieldset title="Datos del Viajero">
+                    <legend>Datos Personales</legend>
+
+                 
+                  
+                  <div class="control-group">
+                    <label class="control-label">Nombre</label>
+                    <div class="controls">
+                      {{u.first_name}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Apellido Paterno</label>
+                    <div class="controls">
+                      {{u.last_name}}
+                    </div>
+                  </div>
+                   <div class="control-group">
+                    <label class="control-label">Apellido Materno</label>
+                    <div class="controls">
+                      {{c.apmat}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Email/Facebook/Twitter</label>
+                    <div class="controls">
+                     {{u.email}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                  <label class="control-label">Fecha de Nacimiento</label>
+                  <div class="controls">
+                   <div id="datetimepicker4" class="input-append">
+                    {{c.fecha_nacimiento}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span>    
+                    </div>         
+                  </div>
+                </div>
+
+                
+               
+
+                  <div class="control-group">
+                    <label class="control-label">País</label>
+                    <div class="controls">
+                      {{c.pais}}
+                    </div>
+                  </div>
+                 <div class="control-group">
+                  <label class="control-label">Estado</label>
+                  <div class="controls">
+
+                    {{c.estado}}
+              
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Municipio</label>
+                  <div class="controls">
+
+               {{c.localidad}}
+     
+                  </div>
+                </div>
+
+                 <div class="control-group">
+                    <label class="control-label">Dirección</label>
+                    <div class="controls">
+                      {{c.direccion}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Escuela</label>
+                    <div class="controls">
+                     {{c.escuela}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Nacionalidad</label>
+                    <div class="controls">
+                     {{c.nacionalidad}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Código Postal</label>
+                    <div class="controls">
+                     {{c.codigo_postal}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Celular</label>
+                    <div class="controls">
+                     {{c.celular}}
+                    </div>
+                  </div>
+
+                    <div class="control-group">
+                    <label class="control-label">Teléfono</label>
+                    <div class="controls">
+                     {{c.telefono}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Talla</label>
+                    <div class="controls">
+                     {{c.talla}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Personalidad</label>
+                    <div class="controls">
+                     {{c.personalidad}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Sabe nadar</label>
+                    <div class="controls">
+                     {{c.sabe_nadar}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Viaja Con</label>
+                    <div class="controls">
+                     {{c.viaja_con}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">¿ Como se enteró de nuestros programas ?</label>
+                    <div class="controls">
+                     {{c.fuente}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">¿ Asiste a fiesta ?</label>
+                    <div class="controls">
+                     {{c.fiesta}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Seguro de viaje/Upgrade</label>
+                    <div class="controls">
+                     {{c.segumedico}}
+                    </div>
+                  </div>
+
+<div id="seguroupgrade">
+                  <div class="control-group">
+                    <label class="control-label">#Voucher</label>
+                    <div class="controls">
+                     {{c.upgrade_seguro}}
+                     {{ c.upgrade_seguro.errors}}
+                    </div>
+                  </div>
+</div>                  
+
+                  <div class="control-group">
+                    <label class="control-label">Seguro de cancelación</label>
+                    <div class="controls">
+                     {{c.segucancelacion}}
+                    </div>
+                  </div>
+
+<div id="voucherform">
+                  <div class="control-group">
+                    <label class="control-label">Número de voucher</label>
+                    <div class="controls">
+                     {{c.voucher}}
+                    </div>
+                  </div>
+</div>
+
+                  <div class="control-group">
+                    <label class="control-label">Solicito factura</label>
+                    <div class="controls">
+                     {{c.solifactura}}
+                    </div>
+                  </div>
+
+<div id="datosfiscales">
+                  <div class="control-group">
+                    <label class="control-label">Datos fiscales</label>
+                    <div class="controls">
+                     {{c.datosfiscales}}
+                    </div>
+                  </div>
+</div>                  
+
+                  </fieldset>
+                  <fieldset title="Historial Médico">
+                    <legend>Historial Médico</legend>
+
+                  <div class="control-group">
+                    <label class="control-label">Tipo de Sangre</label>
+                    <div class="controls">
+                     {{c.tipo_sangre}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Condición Crónica (diabetes, asma, epilepsia, etc)</label>
+                    <div class="controls">
+                     {{c.condicion_cronica}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Discapacidad Física o Motriz</label>
+                    <div class="controls">
+                     {{c.discapacidad_fm}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Desorden Psicológico o Nervioso</label>
+                    <div class="controls">
+                     {{c.desorden_psn}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Restricción alimenticia por razones médicas o personales</label>
+                    <div class="controls">
+                     {{c.restriccion_aliment}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">¿Sufre algún padecimiento o alergias?</label>
+                    <div class="controls">
+                     {{c.padecimiento_aler}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Restricción en actividades deportivas</label>
+                    <div class="controls">
+                     {{c.restriccion_acde}}
+                    </div>
+                  </div>
+
+                   <div class="control-group">
+                    <label class="control-label">¿Estará tomando algún medicamento durante el viaje?</label>
+                    <div class="controls">
+                     {{c.medicamento_dv}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Cirugía o Accidentes</label>
+                    <div class="controls">
+                     {{c.cirugia_accidente}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Si marco SI, en una o más de las opciones, proveer mas información. Incluir Instrucciones de cuidado medico</label>
+                    <div class="controls">
+                     {{c.descripcion}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre del Médico Familiar</label>
+                    <div class="controls">
+                     {{c.name_medico_familiar}}
+                     {{ c.name_medico_familiar.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Seguro de Gastos Médicos</label>
+                    <div class="controls">
+                     {{c.segu_gasto_medic}}
+                     {{ c.segu_gasto_medic.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Número de Póliza</label>
+                    <div class="controls">
+                     {{c.num_poliza}}
+                     {{ c.num_poliza.errors}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono del Consultorio</label>
+                    <div class="controls">
+                     {{c.tel_consult}}
+                     {{ c.tel_consult.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono del Emergencia</label>
+                    <div class="controls">
+                     {{c.tel_emergencia}}
+                     {{ c.tel_emergencia.errors}}
+                    </div>
+                  </div>
+
+                  </fieldset>
+
+                   
+<!--                   <fieldset title="Datos del Tutor">
+                    <legend>Registro del Tutor</legend>
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre Papá</label>
+                    <div class="controls">
+                        {{p.nombre_papa}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Apellidos Papá</label>
+                    <div class="controls">
+                     {{p.apellidos_p}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono Papá</label>
+                    <div class="controls">
+                     {{p.telefono_p}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Email/ Papá</label>
+                    <div class="controls">
+                     {{p.email_p}}
+                    </div>
+                  </div>
+
+                   <div class="control-group">
+                    <label class="control-label">Facebook/Twitter Papá</label>
+                    <div class="controls">
+                     {{p.fatw_p}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre Mamá</label>
+                    <div class="controls">
+                        {{p.nombre_mama}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Apellidos Mamá</label>
+                    <div class="controls">
+                     {{p.apellidos_m}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono Mamá</label>
+                    <div class="controls">
+                     {{p.telefono_m}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Email</label>
+                    <div class="controls">
+                     {{p.email_m}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Facebook/Twitter Mamá</label>
+                    <div class="controls">
+                     {{p.fatw_m}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Otro Tel</label>
+                    <div class="controls">
+                     {{p.otro_tel}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre del Otro Tel</label>
+                    <div class="controls">
+                     {{c.otrotel_name}}
+                     {{ c.otrotel_name.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Dirección</label>
+                    <div class="controls">
+                     {{p.direccionp}}
+                    </div>
+                  </div>
+
+                  </fieldset> -->
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+                  <button type="submit" class="finish btn btn-extend"> Guardar</button>
+{% endif %}                  
+                </form>
+
+
+                
+                 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

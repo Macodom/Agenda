@@ -1,0 +1,246 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Admin Panel Template">
+<meta name="author" content="Westilian: Kamrujaman Shohel">
+<!-- styles -->
+<link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/jquery.gritter.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.css">
+
+<link href="{{STATIC_URL}}css/tablecloth.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/responsive-tables.css" rel="stylesheet">
+
+<link href="{{STATIC_URL}}css/chosen.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/styles.css" rel="stylesheet">
+
+
+<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+<!--fav and touch icons -->
+<link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{STATIC_URL}}ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{STATIC_URL}}ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{STATIC_URL}}ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="{{STATIC_URL}}ico/apple-touch-icon-57-precomposed.png">
+<!--============ javascript ===========-->
+
+<script src="{{STATIC_URL}}js/jquery.js"></script>
+
+
+
+<script src="{{STATIC_URL}}js/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="{{STATIC_URL}}js/bootstrap.js"></script>
+<script src="{{STATIC_URL}}js/bootstrap-fileupload.js"></script>
+<script src="{{STATIC_URL}}js/accordion.nav.js"></script>
+
+<script src="{{STATIC_URL}}js/jquery.tagsinput.js"></script>
+<script src="{{STATIC_URL}}js/chosen.jquery.js"></script>
+<script src="{{STATIC_URL}}js/bootstrap-colorpicker.js"></script>
+
+<script src="{{STATIC_URL}}js/bootstrap-datetimepicker.min.js"></script>
+
+<script src="{{STATIC_URL}}js/date.js"></script>
+<script src="{{STATIC_URL}}js/daterangepicker.js"></script>
+
+<script src="{{STATIC_URL}}js/custom.js"></script>
+<script src="{{STATIC_URL}}js/respond.min.js"></script>
+<script src="{{STATIC_URL}}js/ios-orientationchange-fix.js"></script>
+
+<script src="{{STATIC_URL}}js/jquery.validate.js"></script>
+
+<script src="{{STATIC_URL}}js/responsive-tables.js"></script>
+<script src="{{STATIC_URL}}js/jquery.dataTables.js"></script>
+<script src="{{STATIC_URL}}js/jquery.tablecloth.js"></script>
+<script src="{{STATIC_URL}}js/ZeroClipboard.js"></script>
+<script src="{{STATIC_URL}}js/dataTables.bootstrap.js"></script>
+<script src="{{STATIC_URL}}js/TableTools.js"></script>
+<script src="{{STATIC_URL}}js/jquery.collapsible.js"></script>
+<script src="{{STATIC_URL}}js/excanvas.js"></script>
+<script src="{{STATIC_URL}}js/jquery.tablesorter.js"></script>
+
+
+<script src="{{STATIC_URL}}js/jquery.flot.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.selection.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.pie.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.stack.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.time.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.tooltip.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.resize.js"></script>
+
+<script src="{{STATIC_URL}}js/stepy.jquery.js"></script>
+
+<link href="{{STATIC_URL}}site_media/spinner.css" rel="stylesheet" type="text/css" />
+
+<!-- link de las validacion con jquery realizado por Ing. Elder Lopez -->
+<script src="{{STATIC_URL}}js/validanumeroletras.js"></script>
+<script src="{{STATIC_URL}}js/validacionxv.js"></script>
+<!-- fin del link de las validacion con jquery realizado por Ing. Elder Lopez -->
+{% if graf %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+/*===============================================
+FLOT BAR CHART
+==================================================*/
+
+    var data7_1 = [
+    {% for pr in p %}    
+        [{{pr.uno}}, {{pr.dos}}],
+	{% endfor %} 
+    ];
+
+    var data7_2 = [
+        {% for ins in i %}    
+        [{{ins.uno}}, {{ins.dos}}],
+		{% endfor %} 
+    ];
+    $(function () {
+        $.plot($("#visitors-chart #visitors-container"), [{
+            data: data7_1,
+            label: "Prospetos",
+            lines: {
+                fill: true
+            }
+        }, {
+            data: data7_2,
+            label: "Inscritos",
+            points: {
+                show: true
+            },
+            lines: {
+                fill: true
+            },
+            yaxis: 1
+        }
+        ],
+        {
+            series: {
+                lines: {
+                    show: true,
+                    fill: false
+                },
+                points: {
+                    show: true,
+                    lineWidth: 2,
+                    fill: true,
+                    fillColor: "#ffffff",
+                    symbol: "circle",
+                    radius: 5,
+                },
+                shadowSize: 0,
+            },
+            grid: {
+                hoverable: true,
+                clickable: true,
+                tickColor: "#f9f9f9",
+                borderWidth: 1
+            },
+            colors: ["#b086c3", "#ea701b"],
+            tooltip: true,
+            tooltipOpts: {
+                  shifts: { 
+                      x: 10                   //10
+                  },
+                defaultTheme: false
+            },
+            xaxis: {
+                mode: "time",
+                timeformat: "%0m/%0d %0H:%0M"
+            },
+            yaxes: [{
+                /* First y axis */
+            }, {
+                /* Second y axis */
+                position: "right" /* left or right */
+            }]
+        }
+        );
+    });
+}); 
+
+</script>
+
+{% endif %}
+{% if graf2 %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+/*===============================================
+FLOT BAR CHART
+==================================================*/
+
+    var data7_1 = [
+    {% for pr in pagos %}    
+        [{{pr.uno}}, {{pr.dos}}],
+    {% endfor %} 
+    ];
+
+    $(function () {
+        $.plot($("#visitors-chart #visitors-container"), [{
+            data: data7_1,
+            label: "Pagos",
+            lines: {
+                fill: true
+            }
+        }, 
+        ],
+        {
+            series: {
+                lines: {
+                    show: true,
+                    fill: false
+                },
+                points: {
+                    show: true,
+                    lineWidth: 2,
+                    fill: true,
+                    fillColor: "#ffffff",
+                    symbol: "circle",
+                    radius: 5,
+                },
+                shadowSize: 0,
+            },
+            grid: {
+                hoverable: true,
+                clickable: true,
+                tickColor: "#f9f9f9",
+                borderWidth: 1
+            },
+            colors: ["#b086c3", "#ea701b"],
+            tooltip: true,
+            tooltipOpts: {
+                  shifts: { 
+                      x: 10                   //10
+                  },
+                defaultTheme: false
+            },
+            xaxis: {
+                mode: "time",
+                timeformat: "%0m/%0d %0H:%0M"
+            },
+            yaxes: [{
+                /* First y axis */
+            }, {
+                /* Second y axis */
+                position: "right" /* left or right */
+            }]
+        }
+        );
+    });
+}); 
+
+</script>
+
+{% endif %}
+
+</head>
+<body>
+    
+{% block admin %}
+
+{%endblock%}
+
+</body>
+
+</html>

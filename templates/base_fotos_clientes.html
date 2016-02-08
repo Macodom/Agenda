@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery lightbox clone - prettyPhoto - by Stephane Caron</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+        <script src=" https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+
+
+<link href="{{STATIC_URL}}css/cssslider/styles.css" type="text/css" rel="stylesheet" />
+    <link href="{{STATIC_URL}}css/cssslider/photoswipe.css" type="text/css" rel="stylesheet" />
+    
+    <script type="text/javascript" src="{{STATIC_URL}}js/jsslider/lib/simple-inheritance.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/jsslider/code-photoswipe-1.0.11.min.js"></script>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function(){
+            Code.photoSwipe('a', '#Gallery');
+        }, false);  
+    </script>
+    <script type="text/javascript">
+
+
+    function check_image_load() {  
+        $('[data-image]').each(function(e) { 
+            if (is_in_view($(this))){
+            $(this).append('<img src="'+$(this).attr('data-image')+'" width="'+$(this).attr('data-imagew')+'" height="'+$(this).attr('data-imageh')+'" />').removeAttr('data-image').hide();
+            }  
+
+        });  
+
+        $('[data-real-src]').each(function(e) { 
+            if (is_in_view($(this))){
+           if($(this).attr('data-real-type')=="image"){
+               $(this).attr('src',$(this).attr('data-real-src')).removeAttr('data-real-src').hide();
+           }
+          }  
+
+        });  
+    }  
+
+    function is_in_view(elem) {  
+        var docViewTop = $(window).scrollTop();  
+        var docViewBottom = docViewTop + $(window).height();  
+        var elemTop = $(elem).offset().top;  
+        var elemBottom = elemTop + $(elem).height();  
+        return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom)); 
+    }
+
+    // Llamado de la función check_image_load cuando se mueva el scroll y cuando cargue la página normalmente
+    $(window).scroll(function() { check_image_load(); });
+    $(document).ready(function() { check_image_load(); });
+
+
+    </script>
+
+
+
+</head>
+<body>
+    
+{% block admin %}
+
+{%endblock%}
+{% block extrajs %}
+{% endblock %}
+
+</body>
+
+</html>

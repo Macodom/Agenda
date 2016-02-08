@@ -1,0 +1,42 @@
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title> - jsFiddle demo</title>
+  
+  <script type='text/javascript' src='{{STATIC_URL}}js/angular/angular.min.js'>
+  </script>
+  <script  src = "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.16/angular-route.js" ></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/angular/app.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/angular/controller.js"></script>
+
+
+
+</head>
+<body >
+  
+<table ng-app="appimagen" >
+              
+                  <thead ng-controller="LisImagesController">
+                      <tr>
+                          <th>Nombre</th>
+                          <th>Fecha de Inicio</th>
+                      </tr>
+                      <tr ng-repeat=" valbum in album ">
+                          <td>
+                            //valbum.foto//dd
+                          </td>
+                          <td>
+                            //valbum.pk_cliente//ss
+                          </td>
+                            
+                      </tr>
+                  </thead>
+</table>
+
+
+	</body>
+</html>
+
+
+
+

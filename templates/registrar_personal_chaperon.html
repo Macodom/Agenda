@@ -1,0 +1,264 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Registro de chaperón
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+{% if request.session.tipous == 4 %}
+  {% include 'headercaja.html' %}
+  {% include 'menuizquierdocaja.html' %}
+{% endif %}
+
+{% if request.session.tipous == 5 %}
+  {% include 'headerecurso.html' %}
+  {% include 'menuizquierdorecurso.html' %}
+{% endif %}
+
+{% if request.session.tipous == 6 %}
+    {% include 'headercontraloria.html' %}
+    {% include 'menuizquierdocontraloria.html' %}
+  {% endif %}
+
+{% if request.session.tipous == 7 %}
+    {% include 'headermarketing.html' %}
+    {% include 'menuizquierdomarketing.html' %}
+  {% endif %}  
+
+{% if request.session.tipous == 8 %}
+  {% include 'headeragencias.html' %}
+  {% include 'menuizquierdoagencias.html' %}
+{% endif %}  
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+{% if not vchap %}
+<!-- Aqui van los roidfluid -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+              <h3> Registro de chaperón</h3>
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+                   
+
+                <div class="control-group">
+                  <label class="control-label">Número de pasaporte</label>
+                  <div class="controls">
+                    {{c.numpasaporte}}        
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Vencimiento</label>
+                  <div class="controls">
+                   <div id="datetimepicker8" class="input-append">
+                    {{c.vencimiento}}  
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span>    
+                    </div>         
+                  </div>
+                </div>
+
+                <div class="control-group">
+                <label class="control-label">Celular</label>
+                <div class="controls">
+
+                   {{c.celular}}  
+
+                </div>
+              </div>
+
+                <div class="control-group">
+                  <label class="control-label">Ingles</label>
+                  <div class="controls">
+                      {{c.ingles}}
+                  </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Otro Idioma</label>
+                <div class="controls">
+                    {{c.otroidio}}  
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Filmación y Fotografía</label>
+                <div class="controls">
+                  {{c.filvideo}}
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">C. Primeros auxilios</label>
+                <div class="controls">
+                    {{c.priaux}}
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Puesto</label>
+                <div class="controls">
+                    {{c.puestoc}}
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label">Porgrama</label>
+                <div class="controls">
+
+                   {{c.programa}}  
+
+                </div>
+              </div>
+
+
+              <div class="control-group">
+                <label class="control-label">Salida</label>
+                <div class="controls">
+                <select id="salida" class="span12 valid" name="salida">
+                    <option value="">---------</option>
+                    {% for s in objsalida %}
+                    <option  {% if s.id == id_salida %} selected="selected" {% endif %} value="{{s.id}}">{{s.nombre}}</option>
+                    {% endfor %}
+                </select>    
+                </div>
+              </div>
+
+
+
+                  <div class="form-actions">
+                    {% if status_chap_year == True%}
+                      {% if contrato == False %}
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                      {% else %}   
+                        Ya usted ha firmado el contrato, si quieres editar tus datos y firmar nuevamente el contrato contactarse con el administrador del sitio
+                      {% endif %}  
+                    {% else %}
+                      No estas activado para ser chaperón este año!!!!!
+                    {% endif %}    
+                  </div>
+               
+
+
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% else %}
+
+<div class="row-fluid">
+        <div class="span7">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+              <h3> Registro de chaperón</h3>
+            </div>
+
+            <div class="widget-container">
+
+             
+              <p>
+                Yo <b><u> {{p.user.last_name}} {{p.user.first_name}} </b></u> siendo chaperón elegido por CREATUR para su Programa Juvenil <b><u> {{p.programa}} </b></u>, con salida <b><u> {{vfsalida}} </b></u>  y regreso <b><u>{{vfregreso}}</b></u>, entiendo que establezco un compromiso formal con la empresa Creatur Mayorista de Viajes S.A. de C.V.; para participar en este viaje como chaperón en los términos que se indican en el presente contrato. En contraparte, Creatur cubrirá el costo de mi participación. Así mismo estoy consciente de que al firmar me comprometo a asistir a cada una de las actividades referentes al viaje como lo son pero no se limitan a: juntas, reuniones de trabajo y/o fiestas organizadas por Creatur Mayorista de Viajes, antes, durante y después del viaje, también estoy consciente de que durante el viaje estaré desarrollando el trabajo de Conductor y representante de Creatur, cuya imagen e información deberé salvaguardar, seguiré de la misma manera, en forma eficaz y expedita todos los procedimientos descritos en los manuales y lineamientos que se me indiquen, además de asumir las siguientes responsabilidades: <br><br>
+
+1.  Entregar Pasaporte y Visa vigentes, y Fotografía tamaño credencial<br>
+2.  Portar en todo momento la credencial vigente de la agencia y/o gafete o distintivo<br>
+3.  Asistir puntualmente y participar activamente en todas las actividades marcadas por la agencia<br>
+4.  Conocer el recorrido e itinerario del viaje, así como detalles del mismo<br>
+5.  Conocer las políticas establecidas en el Contrato de Servicios que firma el Cliente y su Padre/Tutor<br>
+6.  Apoyar y auxiliar a cualquier participante del grupo que así me lo solicite<br>
+7.  Proporcionar en todo momento a los viajeros información veraz y objetiva acerca del programa o cambios en él <br>
+8.  Vigilar la seguridad de todos los participantes del programa; asimismo prevenir y controlar cualquier situación que los ponga en riesgo <br>
+9.  9.  Estar siempre al pendiente de los jóvenes que me han sido asignados, saber siempre dónde están y que están haciendo<br>
+10. Verificar que todos los participantes muestren un comportamiento adecuado y que cumplan con las Políticas para Jóvenes establecidas en el Contrato de Creatur Mayorista de Viajes<br>
+11. Participar activamente en todas las actividades señaladas en el itinerario y en las que el Tour Conductor señale, además de procurar la participación de todos los viajeros<br>
+12. Colaborar en todo momento al buen desarrollo del itinerario y del programa, no obstaculizando con mi comportamiento, comentarios y/o actitudes el cumplimiento de las actividades<br>
+13. Cuidar mi comportamiento y vocabulario durante todo el viaje, tanto con los participantes como con los demás chaperones; comprendo que mi actitud y desenvolvimiento definirá en gran parte la impresión final que del viaje tengan los participantes.  –Este punto incluye: fumar, ingerir bebidas alcohólicas o tener un comportamiento poco profesional o amoral con los participantes o demás chaperones-.<br>
+14. Apegarme al orden impuesto por CREATUR durante el proceso del viaje, apoyando para que esté prevalezca en todo momento.<br>
+15. Estar en constante comunicación con el Tour Leader y enterarlo de cualquier imprevisto o situación que se presente dentro del grupo.<br>
+16. Conocer la información de habitaciones de cada participante asignado a mi cuidado, procurar la comunicación con sus padres y la retroalimentación con el personal de la agencia.<br>
+17. Memorizar desde el primer día de viaje, los nombres y caras de los jóvenes que me han sido asignados, así como sus cumpleaños, condiciones médicas o necesidades especiales.<br>
+18. Cuidar con total esmero mis documentos de viaje y todos aquellos documentos de los participantes que se me encarguen.<br>
+19. Mantener total confidencialidad de cualquier situación ocurrida durante el viaje así como de los documentos e información que me sean dados por CREATUR. Entiendo que si llego a divulgar información, documentación o hacer algún tipo de comentario que pudiera ser negativo, CREATUR actuará conforme a la ley.<br>
+
+Declaro que conozco y estoy de acuerdo con los puntos descritos en el presente contrato, así mismo declaro que doy por confirmada mi participación y tengo conocimiento de que si llego a cancelar mi participación después del 12 de Marzo, 2016 deberé pagar $350usd de cargos por cancelación. <br><br>
+
+
+              </p>
+              <form name="personal" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                {% csrf_token %}
+                  <div class="form-actions">
+                    <input type="hidden" name="contratofor" value="1" /> 
+                    <button type="submit" class="btn btn-primary" onclick="return confirm('Felicidades! Haz quedado formalmente registrado como Chaperón CREATUR!. \nPara cualquier duda o aclaración favor de enviar un correo a amanzur@creatuviaje.com')">ACEPTO TERMINOS Y CONDICIONES</button>
+                  </div>
+
+                </form>
+            </div>
+            
+          </div>
+        </div>
+</div>
+
+{% endif %}      
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

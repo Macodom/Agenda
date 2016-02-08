@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Consulta de paquetes generales
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Paquetes
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de paquetes</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Paquetes
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de paquetes</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Paquetes
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de paquetes</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+      
+
+
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Búsqueda de paquetes</h3>
+            </div>
+            <div class="widget-container">
+
+
+              <div class="btn-group" id="url2">
+
+                   <form name="formyearpaq" class="form-horizontal left-align" id="formyearpaq" method="POST" action="/vpg/">
+
+                        {% csrf_token %}
+                        <select name="year" onchange="this.form.submit(); return false;">
+                          {% for y in anioarray %}
+                          <option  {% if  vyearvalidar == y.year%} selected {% endif %} value="{{y.year}}">{{y.year}}</option>
+                          {% endfor %}
+                        </select>
+                        
+                    </form>
+
+                 </div>
+                 Año    
+                 {% if request.session.tipous == 1 or request.session.tipous == 2 %}   
+                  <div class="btn-group" id="url">
+                        <a href="/formulario-paquete/" title="Nuevo">
+                          <button class="btn btn-round-min btn btn-info" data-original-title="Consultar Precios">
+                                <span><i class="icon-plus"></i></span>
+                            </button>
+                        </a>
+                  </div>{% endif %} 
+
+
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Nombre del programa</th>
+                     <th> Salida </th>
+                    <th> Fecha de Salida </th>
+                    <th> Fecha de Regreso </th>
+                    <th> Stock Niños</th>
+                    <th> Stock Niñas</th>
+                    {% if request.session.tipous != 3 %}
+                    <th> Agregar precio</th>
+                    {% endif %}
+
+                    <th> Consultar precios</th>
+
+                    {% if user.perfil.agencia.id == 5 %}   
+                    <th> No Comisionable</th>                  
+                    {% endif %}
+
+                    {% if request.session.tipous != 3 %}
+                    <th> Acción</th>
+                    {% endif %}
+
+
+                  </tr>
+                </thead>
+                <tbody>
+             
+
+                  {%  for p in pa  %}
+                  <tr>
+                    <td>
+  {{p.programa}}
+                    </td>
+                     <td> {{p.salida}} </td>
+                     <td>  {{p.vigencia}} </td>
+                    <td>  {{p.regreso}} </td>
+                    <td class="center"> {% if p.ninos %} {{p.ninos}} {% else %} 0 {% endif %} </td>
+                    <td class="center"> {% if p.ninas %} {{p.ninas}} {% else %} 0 {% endif %} </td>
+{% if request.session.tipous != 3 %}
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or request.session.tipous == 3%}                          
+<a href="/ap/{{p.id}}">
+                        <button title="Agregar Precio" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-money">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+{% endif %}
+                        </div>
+                      </div>
+                    </td>
+ {% endif %}
+
+
+
+
+
+
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2%}                          
+<a href="/vprecio/{{p.id}}">
+                        <button title="Consultar Precios" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-search">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+{% endif %}
+
+ {% if request.session.tipous == 3 %}
+ <a href="/ver-precios-a/{{p.id}}">
+                        <button title="Consultar Precios" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-search">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+ {% endif %}
+                        
+                        </div>
+                      </div>
+                    </td>
+
+{% if user.perfil.agencia.id == 5 %}
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+                        
+<a href="/agencia-no-comisionable/{{p.id}}">
+                        <button title="Agregar No Comisionable" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-money">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+ 
+                        </div>
+                      </div>
+                    </td>
+ {% endif %}
+
+ {% if request.session.tipous == 1 or request.session.tipous == 2%}
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+                        
+<a href="/edicion-paquetes-admin/{{p.id}}">
+                        <button title="Editar Paquetes" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-edit">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+
+<a href="/delete-paquetes-admin/{{p.id}}" onclick="return confirm('Realmente desea eliminar este registro? \n Nota: \n Si este registro tiene relaciones, serán eliminados.')">
+                        <button title="Eliminar Paquetes" class="btn btn-round-min btn btn-danger" >
+                          <span>
+                            <i class="icon-remove-sign">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+ 
+                        </div>
+                      </div>
+                    </td>
+ {% endif %}
+
+
+
+
+                  </tr>
+
+                  {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

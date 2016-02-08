@@ -1,0 +1,17 @@
+
+
+
+
+
+<a href="/receta/nueva">Agregar una receta</a>
+<ul>
+	{% for dato in dato %}
+	<li>
+		<a href='{% url xv.views.detalle_receta dato.id %}'>{{dato.titulo}}</a>
+		<img src='{{MEDIA_URL}}{{dato.imagen}}'>
+	</li>
+	{% empty %}
+	<li>Aún no hay recetas registradas</li>
+	{% endfor %}
+</ul>
+

@@ -1,0 +1,70 @@
+<div>
+	
+        <div class="modal-header">
+            <h3 class="modal-title">Envío de correo de activacón</h3>
+        </div>
+
+        <div class="modal-body">
+            <form name="modal">
+
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+            
+            <div class="control-group">
+                <label class="control-label">Programa</label>
+                <div class="controls">
+                    <select class="span5" id="programa" ng-model="formData.programa">
+                        <option value="" selected="selected">---------</option>
+                        
+                        <option value="1">ORLANDO &amp; MIAMI + ALLURE</option>
+                        <option value="2">ORLANDO &amp; MIAMI + OASIS</option>
+                        <option value="4">ORLANDO &amp; MIAMI</option>
+                        <option value="5">EUROPA DE LUJO A</option>
+                        <option value="6">EUROPA DE LUJO B</option>
+                        <option value="7">EUROPA DE LUJO C</option>
+                        <option value="8">EUROPA CHIC</option>
+                        <option value="18">NEW YORK + LIBERTY</option>
+                        <option value="19">EUROPA VIP + EQUINOX</option>
+                        <option value="20">EUROPA JUNIOR + EQUINOX</option>
+                        <option value="24">NEW YORK + ANTHEM</option>
+                        <option value="25">EUROPA DE LUJO</option>
+                    </select>    
+                </div>
+            </div>
+
+
+            <div class="control-group">
+                <label class="control-label">Salida</label>
+                <div class="controls">
+                    <select class="span5" id="salida" ng-model="formData.salida">
+                        <option value="" selected="selected">---------</option>
+                        <option value="1">VSA</option>
+                        <option value="2">MEX</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Enviar Contrato?</label>
+                <div class="controls">
+                    <label class="radio">
+                    <input type="radio" name="optionsRadios" ng-model="formData.radio" value="1" checked = "checked">Sí </label>
+                    <label class="radio">
+                    <input type="radio" name="optionsRadios" ng-model="formData.radio" value="0">No </label>
+                </div>
+            </div>
+
+
+              </div>
+            </div>
+        </form>
+            
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="save()" ng-disabled="modal.$invalid">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    
+</div>

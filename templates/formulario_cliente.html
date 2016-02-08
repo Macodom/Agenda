@@ -1,0 +1,754 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+{% if edit %} 
+      Edición de Clientes                 
+  {% else %}
+      Registro de Clientes
+  {% endif %}
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Registro de Paquetes para los Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/vpg/">Consulta de Paquetes </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/vprecio/{{ id }}">Consulta de Precios  
+         
+  
+         
+              </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Registro de Paquetes para los Clientes </li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Registro de Paquetes para los Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/vpg/">Consulta de Paquetes </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/vprecio/{{ id }}">Consulta de Precios  
+         
+  
+         
+              </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Registro de Paquetes para los Clientes </li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Registro de Paquetes para los Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consultar-paquetes-a/">Consulta de Paquetes </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/ver-precios-a/{{ id }}">Consulta de Precios  
+         
+  
+         
+              </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Registro de Paquetes para los Clientes </li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="stepy-widget">
+
+
+            <div class="widget-head clearfix bondi-blue">
+
+              <div id="top_tabby" class="pull-right">
+
+              </div>
+            </div>
+            <div class="widget-container gray ">
+              <div class="form-container">
+                <form id="stepy_form" class=" form-horizontal" method="POST" action="">
+                  {% csrf_token %}
+
+                  <fieldset title="Datos del Viajero">
+                    <legend>Datos Personales</legend>
+
+                 <div class="control-group">
+                    <label class="control-label">Paquete</label>
+                    <div class="controls">
+                      <input name="p" maxlength="50" type="text" id="paquete" class="span12" value="{{pa.precio}}" readonly="readonly" />
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Precio</label>
+                    <div class="controls">
+                      <input name="pe" maxlength="50" type="text" id="paquete" class="span12" readonly="readonly" value="   
+{%  if pa.tipo_cambio_id == 1 %} &#36; {% endif %}{%  if pa.tipo_cambio_id == 2 %} &#8364; {% endif %}
+{{pa.precio_promo}}
+                      " />
+                    </div>
+                  </div>
+
+
+
+                    <div class="control-group">
+                      <label class="control-label">Descripción</label>
+                      <div class="controls">
+                        <input name="des" type="text"  value="{{pa.claveprecio}}"  class="span12" readonly="readonly" />
+                      </div>
+                    </div>
+                  
+                  <div class="control-group">
+                    <label class="control-label">Nombre</label>
+                    <div class="controls">
+                      {{u.first_name}}
+                      {{ u.first_name.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Apellido Paterno</label>
+                    <div class="controls">
+                      {{u.last_name}}
+                      {{ u.last_name.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Apellido Materno</label>
+                    <div class="controls">
+                      {{c.apmat}}
+                      {{ c.apmat.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Email</label>
+                    <div class="controls">
+                     {{u.email}}
+                     <span id="spinner">
+                          <img src="{{STATIC_URL}}site_media/spinner.gif"/>
+                        </span>
+                        <div id="results2"></div>
+                      {{ u.email.errors}}  
+                    </div>
+                  </div>
+
+
+
+
+
+                  <div class="control-group">
+                    <label class="control-label"> Sexo </label>
+                    <div class="controls">
+                      {% if sex == '1'%}
+                      <label class="radio">
+                        <input type="radio" checked="" value="Masculino" name="sexof"></input>
+                           Masculino
+                      </label>
+                      {% endif %}
+                     {% if sex == '2' %}
+                      <label class="radio">
+                        <input type="radio" checked="" value="Femenino" name="sexof"></input>
+                        Femenino
+                      </label>
+                      {% endif %}
+                    </div>
+                  </div>  
+              
+                <div class="control-group">
+                  <label class="control-label">Fecha de Nacimiento</label>
+                  <div class="controls">
+                   <div id="datetimepicker4" class="input-append">
+                    {{c.fecha_nacimiento}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span> 
+                      {{ c.fecha_nacimiento.errors}}   
+                    </div>         
+                  </div>
+                </div>
+
+                  <div class="control-group">
+                    <label class="control-label">País</label>
+                    <div class="controls">
+                      {{c.pais}}
+                    </div>
+                  </div>
+                 <div class="control-group">
+                  <label class="control-label">Estado</label>
+                  <div class="controls">
+
+                    {{c.estado}}
+              
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Ciudad</label>
+                  <div class="controls">
+
+               {{c.localidad}}
+     
+                  </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Dirección</label>
+                    <div class="controls">
+                      {{c.direccion}}
+                      {{ c.direccion.errors}} 
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Código Postal</label>
+                    <div class="controls">
+                     {{c.codigo_postal}}
+                     {{ c.codigo_postal.errors}} 
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Escuela</label>
+                    <div class="controls">
+                     {{c.escuela}}
+                     {{ c.escuela.errors}} 
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Nacionalidad</label>
+                    <div class="controls">
+                     {{c.nacionalidad}}
+                     {{ c.nacionalidad.errors}} 
+                    </div>
+                  </div>
+
+                  
+
+                  <div class="control-group">
+                    <label class="control-label">Celular</label>
+                    <div class="controls">
+                     {{c.celular}}
+                     {{ c.celular.errors}}
+                    </div>
+                  </div>
+
+                    <div class="control-group">
+                    <label class="control-label">Teléfono</label>
+                    <div class="controls">
+                     {{c.telefono}}
+                     {{ c.telefono.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Talla</label>
+                    <div class="controls">
+                     {{c.talla}}
+                     {{ c.talla.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Personalidad</label>
+                    <div class="controls">
+                     {{c.personalidad}}
+                     {{ c.personalidad.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Sabe nadar</label>
+                    <div class="controls">
+                     {{c.sabe_nadar}}
+                     {{ c.sabe_nadar.errors}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Viaja Con</label>
+                    <div class="controls">
+                     {{c.viaja_con}}
+                     {{ c.viaja_con.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">¿Como se enteró de nuestros programas?</label>
+                    <div class="controls">
+                     {{c.fuente}}
+                     {{ c.fuente.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">¿Asiste a fiesta?</label>
+                    <div class="controls">
+                     {{c.fiesta}}
+                     {{ c.fiesta.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Seguro de viaje/Upgrade</label>
+                    <div class="controls">
+                     {{c.segumedico}}
+                     {{ c.segumedico.errors}}
+                    </div>
+                  </div>
+
+<div id="seguroupgrade">
+                  <div class="control-group">
+                    <label class="control-label">#Voucher</label>
+                    <div class="controls">
+                     {{c.upgrade_seguro}}
+                     {{ c.upgrade_seguro.errors}}
+                    </div>
+                  </div>
+</div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Seguro de cancelación</label>
+                    <div class="controls">
+                     {{c.segucancelacion}}
+                     {{ c.segucancelacion.errors}}
+                    </div>
+                  </div>
+
+<div id="voucherform">
+                  <div class="control-group">
+                    <label class="control-label">Número de voucher</label>
+                    <div class="controls">
+                     {{c.voucher}}
+                     {{ c.voucher.errors}}
+                    </div>
+                  </div>
+</div>
+                  <div class="control-group">
+                    <label class="control-label">Solicitó factura</label>
+                    <div class="controls">
+                     {{c.solifactura}}
+                     {{ c.solifactura.errors}}
+                    </div>
+                  </div>
+                  
+<div id="datosfiscales">
+                  <div class="control-group">
+                    <label class="control-label">Ingrese los datos fiscales</label>
+                    <div class="controls">
+                     {{c.datosfiscales}}
+                     {{ c.datosfiscales.errors}}
+                    </div>
+                  </div>
+</div>
+
+                  </fieldset>
+                  <fieldset title="Historial Médico">
+                    <legend>Historial Médico</legend>
+
+                  <div class="control-group">
+                    <label class="control-label">Tipo de Sangre</label>
+                    <div class="controls">
+                     {{c.tipo_sangre}}
+                     {{ c.tipo_sangre.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Condición Crónica (diabetes, asma, epilepsia, etc)</label>
+                    <div class="controls">
+                     {{c.condicion_cronica}}
+                     {{ c.condicion_cronica.errors}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Discapacidad Física o Motriz</label>
+                    <div class="controls">
+                     {{c.discapacidad_fm}}
+                     {{ c.discapacidad_fm.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Desorden Psicológico o Nervioso</label>
+                    <div class="controls">
+                     {{c.desorden_psn}}
+                     {{ c.desorden_psn.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Restricción alimenticia por razones médicas o personales</label>
+                    <div class="controls">
+                     {{c.restriccion_aliment}}
+                     {{ c.restriccion_aliment.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">¿Sufre algún padecimiento o alergias?</label>
+                    <div class="controls">
+                     {{c.padecimiento_aler}}
+                     {{ c.padecimiento_aler.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Restricción en actividades deportivas</label>
+                    <div class="controls">
+                     {{c.restriccion_acde}}
+                     {{ c.restriccion_acde.errors}}
+                    </div>
+                  </div>
+
+                   <div class="control-group">
+                    <label class="control-label">¿Estará tomando algún medicamento durante el viaje?</label>
+                    <div class="controls">
+                     {{c.medicamento_dv}}
+                     {{ c.medicamento_dv.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Cirugía o Accidentes</label>
+                    <div class="controls">
+                     {{c.cirugia_accidente}}
+                     {{ c.cirugia_accidente.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Si marco SI, en una o más de las opciones, proveer mas información. Incluir Instrucciones de cuidado medico</label>
+                    <div class="controls">
+                     {{c.descripcion}}
+                     {{ c.descripcion.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre del Médico Familiar</label>
+                    <div class="controls">
+                     {{c.name_medico_familiar}}
+                     {{ c.name_medico_familiar.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Seguro de Gastos Médicos</label>
+                    <div class="controls">
+                     {{c.segu_gasto_medic}}
+                     {{ c.segu_gasto_medic.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Número de Póliza</label>
+                    <div class="controls">
+                     {{c.num_poliza}}
+                     {{ c.num_poliza.errors}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono del Consultorio</label>
+                    <div class="controls">
+                     {{c.tel_consult}}
+                     {{ c.tel_consult.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono del Emergencia</label>
+                    <div class="controls">
+                     {{c.tel_emergencia}}
+                     {{ c.tel_emergencia.errors}}
+                    </div>
+                  </div>
+
+                  </fieldset>
+
+                   
+<!--                   <fieldset title="Datos del Tutor">
+                    <legend>Registro del Tutor</legend>
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre Papá</label>
+                    <div class="controls">
+                        {{p.nombre_papa}}
+                        {{ p.nombre_papa.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Apellidos Papá</label>
+                    <div class="controls">
+                     {{p.apellidos_p}}
+                     {{ p.apellidos_p.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono Papá</label>
+                    <div class="controls">
+                     {{p.telefono_p}}
+                     {{ p.telefono_p.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Email</label>
+                    <div class="controls">
+                     {{p.email_p}}
+                     {{ p.email_p.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Facebook/Twitter Papá</label>
+                    <div class="controls">
+                     {{p.fatw_p}}
+                     {{ p.fatw_p.errors}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre Mamá</label>
+                    <div class="controls">
+                        {{p.nombre_mama}}
+                        {{ p.nombre_mama.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Apellidos Mamá</label>
+                    <div class="controls">
+                     {{p.apellidos_m}}
+                     {{ p.apellidos_m.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono Mamá</label>
+                    <div class="controls">
+                     {{p.telefono_m}}
+                     {{ p.telefono_m.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Email</label>
+                    <div class="controls">
+                     {{p.email_m}}
+                     {{ p.email_m.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Facebook/Twitter Mamá</label>
+                    <div class="controls">
+                     {{p.fatw_m}}
+                     {{ p.fatw_m.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Otro Tel</label>
+                    <div class="controls">
+                     {{p.otro_tel}}
+                     {{ p.otro_tel.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre del Otro Tel</label>
+                    <div class="controls">
+                     {{c.otrotel_name}}
+                     {{ c.otrotel_name.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Dirección</label>
+                    <div class="controls">
+                     {{p.direccionp}}
+                     {{ p.direccionp.errors}}
+                    </div>
+                  </div>
+
+                  </fieldset> -->
+
+
+
+                   <fieldset title="Cuenta">
+                    <legend>Registro de cuenta</legend>
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre de Usuario</label>
+                    <div class="controls">
+                      
+                        {{u.username}}
+                        <span id="spinner">
+                          <img src="{{STATIC_URL}}site_media/spinner.gif"/>
+                        </span>
+                        <div id="results"></div>
+                        {{ u.username.errors}}
+                        
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Contraseña</label>
+                    <div class="controls">
+                     {{u.password}}
+                     {{ u.username.errors}}
+                    </div>
+                  </div>
+
+                  </fieldset>
+
+
+
+
+                  <button id="btnguardar" type="submit" class="finish btn btn-extend"> Guardar</button> 
+                </form>
+                 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

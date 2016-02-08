@@ -1,0 +1,430 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+ Actividades
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}    
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+{% if request.session.tipous == 4 %}
+  {% include 'headercaja.html' %}
+  {% include 'menuizquierdocaja.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 8 %}
+  {% include 'headeragencias.html' %}
+  {% include 'menuizquierdoagencias.html' %}
+{% endif %}
+
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+{% if request.session.tipous == 1 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Actividades
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/add-actividades-form-list-programa/">Lista de Programas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Modulo Actividades</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Actividades
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/add-actividades-form-list-programa/">Lista de Programas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Modulo Actividades</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 8 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Actividades
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-agencias/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/add-actividades-form-list-programa/">Lista de Programas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Modulo Actividades</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="span5">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                       
+               <h3> Actividades</h3>             
+                        
+             
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="actividades" class="form-horizontal left-align" id="actividades" method="POST" action="">
+                  {% csrf_token %}
+
+                  <div class="control-group">
+                  <label class="control-label">Fecha/Actividad</label>
+                  <div class="controls">
+                   <div id="datetimepicker4" class="input-append">
+                    {{FormActividades.fecha_actividad}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span>    
+                    </div>     
+                  </div>
+                </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Programa</label>
+                    <div class="controls">
+                      {{FormActividades.programa}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Lugares</label>
+                    <div class="controls">
+                      {{FormActividades.lugares}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Playera Teens Ambos</label>
+                    <div class="controls">
+                      {{FormActividades.statusTennsColor}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <div id="slidingDivTitulo1">
+                      <label class="control-label">Playera Teens</label>
+                    </div>
+
+                    <div id="slidingDivTitulo2">
+                      <label class="control-label">Playera Teens M</label>
+                    </div>
+
+                    <div class="controls">
+                      {{FormActividades.teens_colorm}}
+                    </div>
+                  </div>
+
+
+<div id="slidingDiv">
+                  <div class="control-group">
+                    <label class="control-label">Playera Teens F</label>
+                    <div class="controls">
+                      {{FormActividades.teens_colorf}}
+                    </div>
+                  </div>
+</div>
+
+                  <div class="control-group">
+                    <label class="control-label">Playera Chaperon Ambos</label>
+                    <div class="controls">
+                       {{FormActividades.statusChapColor}}
+                    </div>
+                  </div> 
+
+                  <div class="control-group">
+                    <div id="slidingDivTitulo1c">
+                      <label class="control-label">Playera Chaperon</label>
+                    </div>
+
+                    <div id="slidingDivTitulo2c">
+                      <label class="control-label">Playera Chaperon M</label>
+                    </div>
+
+                    <div class="controls">
+                      {{FormActividades.chap_colorm}}
+                    </div>
+                  </div>  
+
+                
+<div id="slidingDivc">
+                  <div class="control-group">
+                    <label class="control-label">Playera Chaperon F</label>
+                    <div class="controls">
+                      {{FormActividades.chap_colorf}}
+                    </div>
+                  </div>
+</div>     
+
+
+                  <div class="control-group">
+                    <label class="control-label">De su Color</label>
+                    <div class="controls">
+                      {{FormActividades.statusChapDeSuColor}}
+                    </div>
+                  </div>             
+
+
+                  <div class="control-group">
+                    <label class="control-label">Chaperon del día</label>
+                    <div class="controls">
+                      {{FormActividades.dia_chaperon}}
+                      {{ FormActividades.dia_chaperon.errors}}    
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Guardia</label>
+                    <div class="controls">
+                      {{FormActividades.guardia}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Descripción</label>
+                    <div class="controls">
+                      {{FormActividades.manana}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Descripción</label>
+                    <div class="controls">
+                      {{FormActividades.tarde}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Descripción</label>
+                    <div class="controls">
+                      {{FormActividades.noche}}
+                    </div>
+                  </div>
+
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span7">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">        
+               <h3> Actividades Cargadas</h3>             
+            </div>
+            <div class="widget-container">
+
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Programa</th>
+                    <th> Fecha</th>
+                    <th> Lugar</th>
+                    <th> Itinerario Teens</th>
+                    <th> Itinerario Chaps</th>
+                    <th> Add Tips</th>
+                    <th> Add Avisos</th>
+                    <th> Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {%  for oa in ObjActividades  %}
+                  <tr>
+                    <td>
+                      <a href="/show-data-actividad/{{pk_prog}}/{{oa.id}}/" title="Datos Actividad">
+                      {{oa.programa.clave}}
+                      </a> 
+                    </td>
+                    <td>{{oa.fecha_actividad}}</td>
+                    <td>{{oa.lugares}}</td>
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+                          <a href="/add-actividades-teens/{{pk_prog}}/{{oa.id}}/">
+                          <button class="btn btn-info" title="Entrar">
+                            <i class="icon-cog"></i>
+                          </button>
+                          </a> 
+
+                        </div>
+                      </div>
+                    </td>
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+                          <a href="/add-actividades-chaps/{{pk_prog}}/{{oa.id}}/">
+                          <button class="btn btn-info" title="Entrar">
+                            <i class="icon-cog"></i>
+                          </button>
+                          </a> 
+
+                        </div>
+                      </div>
+                    </td>
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+                          <a href="/add-tips-itinerario/{{pk_prog}}/{{oa.id}}/">
+                          <button class="btn btn-info" title="Entrar">
+                            <i class="icon-cog"></i>
+                          </button>
+                          </a> 
+
+                        </div>
+                      </div>
+                    </td>
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+                          <a href="/add-avisos-form/{{pk_prog}}/{{oa.id}}/">
+                          <button class="btn btn-info" title="Entrar">
+                            <i class="icon-cog"></i>
+                          </button>
+                          </a> 
+
+                        </div>
+                      </div>
+                    </td>
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+                          <a href="/edit-actividad-form/{{pk_prog}}/{{oa.id}}/">
+                          <button class="btn btn-info" title="Entrar">
+                            <i class="icon-edit"></i>
+                          </button>
+                          </a> 
+
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

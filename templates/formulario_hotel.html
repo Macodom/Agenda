@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+{% if edit %} 
+      Edición de Hotel                 
+  {% else %}
+      Registro de Hotel  
+  {% endif %}
+
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 8 %}
+  {% include 'headeragencias.html' %}
+  {% include 'menuizquierdoagencias.html' %}
+{% endif %}
+
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta-hotel/">Consulta de Hotel</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Registro de Hotel</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta-hotel/">Consulta de Hotel</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+
+            <li class="active">Registro de Hotel</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta-hotel/">Consulta de Hotel</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Registro de Hotel</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 8 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-agencias/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta-hotel/">Consulta de Hotel</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Registro de Hotel</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+
+
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                        {% if edit %} 
+               <h3> Editar Hotel</h3>             
+                        {% else %}
+              <h3> Registro de Hotel</h3>          
+                        {% endif %}
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="fhotel" class="form-horizontal left-align" id="fescuela" method="POST" action="">
+                  {% csrf_token %}
+              
+                  <div class="control-group">
+                    <label class="control-label">Nombre del Hotel</label>
+                    <div class="controls">
+                      {{hotel.descripcion}}
+                      {{hotel.descripcion.errors}}
+                    </div>
+                  </div>
+
+
+                 <div class="control-group">
+                  <label class="control-label">Dirección</label>
+                  <div class="controls">
+                    {{hotel.direccion}}
+                    {{hotel.direccion.errors}}
+                  </div>
+                </div>
+
+
+
+                <div class="control-group">
+                    <label class="control-label">Cuidad Estado</label>
+                    <div class="controls">
+                      {{hotel.ciudad_estado}}
+                      {{hotel.ciudad_estado.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Código postal</label>
+                    <div class="controls">
+                      {{hotel.codigo_postal}}
+                      {{hotel.codigo_postal.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono</label>
+                    <div class="controls">
+                      {{hotel.telefono}}
+                      {{hotel.telefono.errors}}
+                    </div>
+                  </div>
+
+         
+
+
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

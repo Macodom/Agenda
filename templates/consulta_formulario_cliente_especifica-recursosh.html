@@ -1,0 +1,410 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Cliente
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+
+{% if request.session.tipous == 5 %}
+  {% include 'headerecurso.html' %}
+  {% include 'menuizquierdorecurso.html' %}
+{% endif %}
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-recursos-humanos/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li> 
+          </ul>
+        </div>
+      </div>
+
+
+<table class="paper-table responsive table table-paper table-striped table-sortable">
+
+    <tbody>
+        <tr> 
+          <td>
+<button id="verforcliente" class="btn btn-round-min btn btn-info " title="Abrir Formulario">
+  <span>
+    <i class="icon-pencil"></i>
+</span>
+</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+<div id="formulariocliente" style="display:none;">
+
+<div class="row-fluid">
+        <div class="span12">
+
+
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                
+              <h3> Consulta de Clientes</h3>          
+                        
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="forcliente1" class="form-horizontal left-align" id="forcliente1" method="POST" action="">
+                  {% csrf_token %}
+
+
+                  <div class="control-group">
+                    <label class="control-label">Seleccione el Asesor</label>
+                    <div class="controls">
+                    <select id="asesor" class="span12" name="asesor">
+                        <option selected="selected" value="0">---------</option>
+                        {% for a in obja %}
+                        <option value="{{a.id}}">{{a.user.first_name}} {{a.user.last_name}}</option>
+                        {% endfor %}
+                    </select>
+
+                    </div>
+                  </div>
+                   
+                  <div class="control-group">
+                    <label class="control-label">Seleccione el Programa</label>
+                    <div class="controls">
+                    <select id="programa" class="span12" name="programa">
+                        <option selected="selected" value="0">---------</option>
+                        {% for p in objp %}
+                        <option value="{{p.id}}">{{p.nombre}}</option>
+                        {% endfor %}
+                    </select>
+
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Ingrese la Clave de Salida</label>
+                    <div class="controls">
+                    <select id="cvsalida" class="span12" name="cvsalida">
+                        <option selected="selected" value="0">---------</option>
+                        {% for s in objs %}
+                        <option value="{{s.id}}">{{s.nombre}}</option>
+                        {% endfor %}
+                    </select>
+
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Estatus</label>
+                    <div class="controls">
+
+                      <select id="estatus" class="span12" name="estatus">
+                        <option selected="selected" value="">---------</option>
+                        
+                        <option value="0">Prospecto</option>
+                        <option value="1">Inscrito</option>
+                        <option value="6">Efectivo</option>
+                        <option value="2">Lista de Espera</option>
+                        <option value="3">No Contesta</option>
+                        <option value="4">No Va</option>
+                        <option value="5">Cancelado</option>
+                      </select>
+     
+                      </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Escuelas</label>
+                    <div class="controls">
+                    <select id="escuela" class="span12" name="escuela">
+                        <option selected="selected" value="0">---------</option>
+                        {% for e in obje %}
+                        <option value="{{e.id}}">{{e.nombre}}</option>
+                        {% endfor %}
+                    </select>
+
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Seguro de Cancelación</label>
+                    <div class="controls">
+                    <select id="seguro" class="span12" name="seguro">
+                        <option selected="selected" value="0">---------</option>
+                        
+                        <option value="Si">Si</option>
+                        <option value="No">No</option>
+                        
+                        
+                    </select>
+
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">País</label>
+                    <div class="controls">
+                      <select id="pais" class="span12" name="pais">
+                      <option selected="selected" value="">
+                              ---------
+                      </option>
+                      {% for p in objpais %}
+
+                       <option  value="{{p.id}}">{{p.nombre}}</option>
+
+                      {% endfor %}
+                    </select>
+                    </div>
+                </div>
+
+                 <div class="control-group">
+                  <label class="control-label">Estado</label>
+                  <div class="controls">
+                    <select id="estado" class="span12" name="estado">
+                      <option selected="selected" value="">
+                              ---------
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Ciudad</label>
+                  <div class="controls">
+
+               <select id="id_municipios" class="span12" name="localidad">
+                  <option selected="selected" value="">
+                      ---------
+                  </option>
+                </select>
+     
+                  </div>
+                </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Sexo</label>
+                    <div class="controls">
+
+                      <label class="radio">
+                        <input type="radio" checked="" value="3" name="sexo"></input>Ambos
+                      </label>
+
+                      <label class="radio">
+                            <input type="radio" value="1" name="sexo"></input>Masculino
+                      </label>
+
+                      <label class="radio">
+                        <input type="radio" value="2" name="sexo"></input>Femenino
+                      </label>
+
+                      </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Ingrese el Año de salida del viaje</label>
+                    <div class="controls">
+                    <input id="anio1" class="span12" type="text" placeholder="2013" name="anio" maxlength="4"></input>
+
+                    </div>
+                  </div>
+                  <input type="hidden" name="valor" value="1">
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Consultar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+</div>
+{% if ec %}
+
+<!-- Aqui van los roidfluid -->
+      <div class="row-fluid ">
+        <div class="span12">
+          {% if request.session.vvalor %}
+                <form  method="POST" action="/reporte_cliente_excel/">
+                   {% csrf_token %}
+
+              <div class="control-group">
+                  <input type="hidden" value="{{request.session.vvalor}}" name="valor">
+                  <input type="hidden" value="{{request.session.asesorf}}" name="asesor">
+                  <input type="hidden" value="{{request.session.programaf}}" name="programa">
+                  <input type="hidden" value="{{request.session.cvsalidaf}}" name="cvsalida">
+                  <input type="hidden" value="{{request.session.estatusf}}" name="estatus">
+                  <input type="hidden" value="{{request.session.escuelaf}}" name="escuela">
+                  <input type="hidden" value="{{request.session.segurof}}" name="seguro">
+                  <input type="hidden" value="{{request.session.sexof}}" name="sexo">
+                  <input type="hidden" value="{{request.session.aniof}}" name="anio">
+
+                  <input type="hidden" value="{{request.session.paisf}}" name="pais">
+                  <input type="hidden" value="{{request.session.estadof}}" name="estado">
+                  <input type="hidden" value="{{request.session.localidadf}}" name="localidad">
+                 
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-link">Exportar A Excel</button>
+                  </div>
+
+                </form>
+{% endif %}    
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Clientes Registrados</h3>
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid responsive table-bordered paper-table tbl-serach ">
+                <thead>
+
+
+                  <tr>
+                    <th> Nombre</th>
+                    <th> Apellidos </th>
+                    <th> Iris </th>
+                    <th> Programa </th>
+                    <th> Clave/Precio </th>
+                    <th> Salida </th>
+                    <th> Asesor </th>
+                    <th> Fecha de salida </th>
+                    <th> Status </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+              {%  for ci in cl  %}
+                  <tr>
+                    <td>
+                    {{ci.user.first_name}}
+                    </td>
+                  <td>
+                    {{ci.user.last_name}}
+                   {% if ci.apmat %} 
+                    {{ci.apmat}}
+                   {% endif %}
+                   
+
+
+                  </td>
+                   <td class="center">  
+                    {% if ci.iris %} 
+                    {{ci.iris}}
+                   {% endif %} </td>
+                   
+                    <td class="center"> {{ci.precio.precio.programa.clave}} </td>
+                    <td class="center"> {{ci.precio.claveprecio}} </td>
+                    <td class="center"> {{ci.precio.precio.salida}} </td>
+
+                    <td class="center">{{ci.asesor.clave}}</td>                    
+
+                    <td class="center"> {{ci.precio.precio.vigencia}} </td>
+                    
+                    <td class="center">
+
+                      {%  if ci.user.is_active and ci.status_prog == 0  %}
+                      <span class="label label-info">Prospecto</span>
+                      {% endif %}
+
+                      {% if ci.status_prog == 1 and ci.garantizado == False %}
+                        <span class="label label-success"> Inscrito</span>
+                      {% endif %}
+
+                      {% if ci.status_prog == 1 and ci.garantizado == True %}
+                        <span class="label label-success"> Garantizado</span>
+                      {% endif %}
+
+                      {%  if ci.status_prog == 2  %}
+                      <span class="label label-warning">Lista de espera</span>
+                      {% endif %}
+
+                      {%  if ci.status_prog == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if ci.status_prog == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                      {%  if ci.status_prog == 5 %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+
+                      {%  if ci.status_prog == 6 %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+
+
+                    </td>
+
+
+                  </tr>
+              {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+              
+
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

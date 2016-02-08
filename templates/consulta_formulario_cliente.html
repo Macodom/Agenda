@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Cliente
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+
+
+
+<!-- Aqui van los roidfluid -->
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Clientes Registrados</h3>
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid responsive table-bordered paper-table tbl-serach ">
+                <thead>
+
+
+                  <tr>
+                    <th> Reserva</th>
+                    <th> Registro </th>
+                    <th> Salida </th>
+
+                    
+                    <th> Asesor </th>
+                    
+                    <th> 1er Apellido</th>
+                    <th> 2do Apellido</th>
+                    <th> Nombre(s) </th>
+                    <th> Programa </th>
+                    <th> Foto </th>
+                    <th> Status </th>
+                    <th> Acción </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+              {%  for cl in clo  %}
+                  <tr>
+                     <td>
+                     {% if cl.iris %}
+                     {{cl.iris}}
+                     {% endif %}
+                     </td>
+                    
+
+                    <td>
+{{ cl.fecha_registro|date:" M. d, Y" }}
+
+                    </td>
+                   
+                    <td class="center"> {{cl.precio.precio.salida}} </td>
+{% if user.is_staff or request.session.tipous == 1 %}
+                      {% if cl.asesor == null %}
+                    <td class="center"> <a href="/ase/{{cl.user.id}}"> Asignar </a></td>
+                    {% else %}
+                    <td class="center">  {{cl.asesor.clave}}  </td>
+                    {% endif %}
+{% endif %}
+{% if request.session.tipous == 2 or request.session.tipous == 3 %}
+                       {% if cl.asesor == null %}
+                    <td class="center"> <a href="/asignar-asesor/{{cl.user.id}}"> Asignar </a></td>
+                    {% else %}
+                    <td class="center">  {{cl.asesor.clave}}  </td>
+                    {% endif %}
+{% endif %} 
+                    <td class="center"> {{cl.user.last_name}}</td>
+                    <td class="center"> {{cl.apmat}} </td>
+                    
+
+                    <td> {{cl.user.first_name}} </td>                    
+
+                    <td class="center"> {{cl.precio.precio.programa.clave}} </td>
+                    <td class="center">
+{% if user.is_staff %}
+                     {% if  cl.image %} 
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{cl.image}}">
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        <a href="/foto-cliente/{{cl.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        </a> 
+                    </div>
+                      {% endif %}
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+                      {% if  cl.image %}
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{cl.image}}">
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        <a href="/agregar-foto-cliente/{{cl.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        </a> 
+                    </div>
+                      {% endif %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+                      {% if  cl.image %}
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{cl.image}}">
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        <a href="/agregar-foto-cliente-a/{{cl.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        </a> 
+                    </div>
+                      {% endif %}
+{% endif %}                              
+                      
+                  </td>
+                    <td class="center">
+
+                      {%  if cl.status_prog == 0  %}
+                      <span class="label label-info">Prospecto</span>
+                      {% endif %}
+
+
+                      {% if cl.status_prog == 1 and cl.garantizado == False %}
+                        <span class="label label-success"> Inscrito</span>
+                      {% endif %}
+
+                      {% if cl.status_prog == 1 and cl.garantizado == True %}
+                        <span class="label label-success"> Garantizado</span>
+                      {% endif %}
+
+                      {%  if cl.status_prog == 2  %}
+                      <span class="label label-warning">Lista de espera</span>
+                      {% endif %}
+
+                      {%  if cl.status_prog == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if cl.status_prog == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                       {%  if cl.status_prog == 5 %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+                      
+                      {%  if cl.status_prog == 6 %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+
+                    </td>
+                  
+                    <td class="center"><div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+  {% if request.session.tipous == 3 %}
+    <a href="/opciones-clientes-a/{{cl.user.id}}"> <button class="btn btn-info" title="Consultar cliente">
+   <i class=" icon-search"></i>
+    </button></a>
+  {% endif %}
+                        {% if not request.session.tipous == 3 %} <!--validar para que no lo vea el asesor  -->
+
+ {% if user.is_staff or request.session.tipous == 1 %}
+
+ <a href="/cce/{{cl.user.id}}"> <button class="btn btn-info" title="Consultar cliente">
+ <i class=" icon-search"></i>
+  </button>
+  </a>
+  
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  <a href="/opciones-clientes/{{cl.user.id}}"> <button class="btn btn-info" title="Consultar cliente">
+ <i class=" icon-search"></i>
+  </button></a>
+{% endif %}
+
+
+
+{% if user.is_staff or request.session.tipous == 1 %}
+                        {%  if cl.user.is_active   %}
+ <a onclick="return confirm('¿Realmente desea eliminar este registro?')"  href="/suspenderc/{{cl.user.id}}">
+                          <button class="btn btn-danger" title="Suspender cliente">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>
+                        {% endif %}  
+                        {%  if not cl.user.is_active   %}
+                          <a href="/activarc/{{cl.user.id}}">
+                          <button class="btn btn-success" title="Aprovar cliente">
+                            <i class=" icon-ok"></i>
+                          </button>
+                          </a>
+                        {% endif %}                           
+{% endif %}
+{% if request.session.tipous == 2 %}
+                          {%  if cl.user.is_active   %}
+<a onclick="return confirm('¿Realmente desea eliminar este registro?')"  href="/suspender-cliente/{{cl.user.id}}">
+                          <button class="btn btn-danger" title="Suspender cliente">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>
+                          {% endif %}
+                        {%  if not cl.user.is_active   %}
+                          <a href="/activar-cliente/{{cl.user.id}}">
+                          <button class="btn btn-success" title="Aprovar cliente">
+                            <i class=" icon-ok"></i>
+                          </button>
+                          </a>
+                        {% endif %} 
+{% endif %}
+
+                
+                        
+ 
+                        </div>
+                      </div>
+          {% endif %} <!-- fin de validar para que no lo vea el asesor  -->
+                    </td>
+
+
+                  </tr>
+              {%  endfor %}
+
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+              </table>
+
+              
+
+              
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

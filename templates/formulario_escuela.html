@@ -1,0 +1,406 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+{% if edit %} 
+      Edición de Escuelas                 
+  {% else %}
+      Registro de Escuelas  
+  {% endif %}
+
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Escuelas
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta_escuela/">Consulta de Escuelas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+    <a href="/consulta_escuela_especifica/{{id}}">Consulta Especifica de Escuelas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Registro de Escuelas</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Escuelas
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta_escuela/">Consulta de Escuelas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+    <a href="/aconsulta-escuela-especifica/{{id}}">Consulta Especifica de Escuelas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Registro de Escuelas</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Escuelas
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta_escuela/">Consulta de Escuelas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+    <a href="/aconsulta-escuela-especifica/{{id}}">Consulta Especifica de Escuelas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Registro de Escuelas</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+
+
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                        {% if edit %} 
+               <h3> Editar escuela</h3>             
+                        {% else %}
+              <h3> Registro de Escuelas</h3>          
+                        {% endif %}
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="fescuela" class="form-horizontal left-align" id="fescuela" method="POST" action="">
+                  {% csrf_token %}
+                   
+                  <div class="control-group">
+                    <label class="control-label">Nombre de la Escuela</label>
+                    <div class="controls">
+                      {{e.nombre}}
+                      {{e.nombre.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre del Director</label>
+                    <div class="controls">
+                      {{e.director}}
+                      {{e.director.errors}}
+                    </div>
+                  </div>
+
+                <div class="control-group">
+                  <label class="control-label">Fecha de Nacimiento del Director</label>
+                  <div class="controls">
+                   <div id="datetimepicker4" class="input-append">
+                    {{e.fecha_nacimiento}}
+                    {{e.fecha_nacimiento.errors}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span>    
+                    </div>         
+                  </div>
+                </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Teléfono de la Escuela</label>
+                    <div class="controls">
+                      {{e.telefono}}
+                      {{e.telefono.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">País</label>
+                    <div class="controls">
+                      {{e.pais}}
+                    </div>
+                  </div>
+                 <div class="control-group">
+                  <label class="control-label">Estado</label>
+                  <div class="controls">
+
+                    {{e.estado}}
+                    {{e.estado.errors}}
+              
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Ciudad</label>
+                  <div class="controls">
+
+               {{e.localidad}}
+                {{e.localidad.errors}}
+     
+                  </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Dirección</label>
+                    <div class="controls">
+                      {{e.direccion}}
+                      {{e.direccion.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Código postal</label>
+                    <div class="controls">
+                      {{e.codigo_postal}}
+                      {{e.codigo_postal.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">E-mail de la Escuela</label>
+                    <div class="controls">
+                      {{e.email}}
+                      {{e.email.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Sitio web</label>
+                    <div class="controls">
+                      {{e.web}}
+                      {{e.web.errors}}
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Aniversario</label>
+                    <div class="controls">
+                      {{e.aniversario}}
+                      {{e.aniversario.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Evento</label>
+                    <div class="controls">
+                      {{e.evento}}
+                      {{e.evento.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Contacto</label>
+                    <div class="controls">
+                      {{e.contacto}}
+                      {{e.contacto.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Cargo del Contacto</label>
+                    <div class="controls">
+                      {{e.cargocont}}
+                      {{e.cargocont.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Fecha de Nacimiento del Contacto</label>
+                    <div class="controls">
+                      <div id="datetimepicker44" class="input-append">
+                    {{e.fecha_nacimiento_cont}}
+                    {{e.fecha_nacimiento_cont.errors}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span>    
+                    </div> 
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Teléfono del Contacto</label>
+                    <div class="controls">
+                      {{e.telefonoc}}
+                      {{e.telefonoc.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">E-mail del Contacto</label>
+                    <div class="controls">
+                      {{e.emailcont}}
+                      {{e.emailcont.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Promotor</label>
+                    <div class="controls">
+                      {{e.promotor}}
+                      {{e.promotor.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Cargo del Promotor</label>
+                    <div class="controls">
+                      {{e.cargopro}}
+                      {{e.cargopro.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Fecha de Nacimiento del Promotor</label>
+                    <div class="controls">
+                      <div id="datetimepicker444" class="input-append">
+                    {{e.fecha_nacimiento_pro}}
+                     {{e.fecha_nacimiento_pro.errors}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span>    
+                    </div>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Teléfono del Promotor</label>
+                    <div class="controls">
+                      {{e.telefonop}}
+                      {{e.telefonop.errors}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">E-mail del Promotor</label>
+                    <div class="controls">
+                      {{e.emailpro}}
+                      {{e.emailpro.errors}}
+                    </div>
+                  </div>
+
+                   <div class="control-group">
+                    <label class="control-label">Asesor</label>
+                    <div class="controls">
+                      {{e.asesor}}
+                      {{e.asesor.errors}}
+                    </div>
+                  </div>
+
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

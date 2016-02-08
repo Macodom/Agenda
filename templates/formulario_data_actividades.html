@@ -1,0 +1,394 @@
+<!DOCTYPE HTML>
+<html lang="en" data-ng-app="appimagen">
+<head>
+<meta charset="utf-8">
+<title>
+ Actividades
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}    
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+{% if request.session.tipous == 4 %}
+  {% include 'headercaja.html' %}
+  {% include 'menuizquierdocaja.html' %}
+{% endif %}
+
+
+ {% if request.session.tipous == 8 %}
+  {% include 'headeragencias.html' %}
+  {% include 'menuizquierdoagencias.html' %}
+{% endif %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid" ng-controller="AddHorario as hor">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+{% if request.session.tipous == 1 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Actividades
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/add-actividades-form-list-programa/">Lista de Programas  </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/add-actividades-form/{{pk_prog}}/">Modulo Actividades </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Actividades</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Actividades
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/add-actividades-form-list-programa/">Lista de Programas  </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/add-actividades-form/{{pk_prog}}/">Modulo Actividades </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Actividades </li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 8 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Actividades
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-agencas/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/add-actividades-form-list-programa/">Lista de Programas  </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/add-actividades-form/{{pk_prog}}/">Modulo Actividades </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Actividades </li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+
+<!-- Aqui van los roidfluid -->
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Datos de la Actividad</h3>
+            </div>
+            <div class="widget-container">
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th class="center"> 
+
+{{ObjActividades.fecha_actividad | date:"l d M Y"}} <br>
+                      {{ObjActividades.lugares}} <br>
+
+                      Playera: Teens -
+
+                      {% if ObjActividades.statusTennsColor != True %} <!-- si Playera Teens Ambos  no esta activado-->
+                        {%if ObjActividades.teens_colorm != None and ObjActividades.teens_colorf != None%} 
+                          {{ObjActividades.teens_colorm}} / {{ObjActividades.teens_colorf}}
+                        {% endif%} 
+                      {% endif%}   
+
+                      {% if ObjActividades.statusTennsColor == True %}
+                        {% if ObjActividades.teens_colorm != None %}  
+                          {{ObjActividades.teens_colorm}} 
+                        {% endif %}  
+                      {% endif %}
+
+                      / Chap - 
+                      
+                      {% if ObjActividades.statusChapColor != True %} <!-- si Playera Chaps Ambos  no esta activado-->
+                        {% if ObjActividades.chap_colorm != None and ObjActividades.chap_colorf != None %}
+                          {{ObjActividades.chap_colorm}} / {{ObjActividades.chap_colorf}}                   
+                        {% endif %}
+                      {% endif %} 
+
+
+                      {% if ObjActividades.statusChapColor == True and ObjActividades.statusChapDeSuColor != True%} 
+                        {% if ObjActividades.chap_colorm != None %}
+                          {{ObjActividades.chap_colorm}}
+                        {% endif %}
+                      {% endif %} 
+
+
+                      {% if ObjActividades.statusChapDeSuColor == True %}
+                            COLOR              
+                      {% endif %}
+
+
+
+                      <br>
+                      Por la mañana:
+                      {{ObjActividades.manana}}
+                      <br>
+                      Por la tarde:
+                      {{ObjActividades.tarde}}
+                      <br>
+                      Por la noche:
+                      {{ObjActividades.noche}}
+                      <br>
+
+
+                      Chaperón del día: 
+                      {%if ObjActividades.dia_chaperon != None%} 
+                         {% for fd  in ObjActividades.dia_chaperon.all%} 
+                            {% if fd.chaperonper != None %}
+                              {{ fd.chaperonper.user.first_name }} - {{ fd.color.nombre }}
+                            {% endif %}
+
+                            {% if fd.chaperonext != None %}
+                              {{ fd.chaperonext.nombre }} - {{ fd.color.nombre }}
+                            {% endif %}
+
+                         {% endfor %}
+
+                      {% endif%} <br>
+
+
+                      Guardia: 
+                      {% if ObjActividades.guardia.count >= 3 %} 
+                        Todos
+                      {% else %}
+                        {%if ObjActividades.guardia != None%} 
+                          {% for fd  in ObjActividades.guardia.all%} 
+                              {{ fd }}
+                                {% if ObjActividades.guardia.count > forloop.counter  %}
+                                ,
+                                {% endif %}
+                           {% endfor %}
+                        {% endif%} 
+                      {% endif %}
+                      <br>
+
+
+                    </th>
+                  </tr>
+                </thead>
+                <tfoot>
+                </tfoot>
+              </table>
+
+
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th class="center"> Itinerario Teens</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  
+                  <tr>
+                    <td>{{ObjActividaesteens.descripcion|safe}}</td>
+                  </tr>
+                  
+
+                </tbody>
+                <thead>
+                  <tr>
+                    <th class="center"> Itinerario Chaps</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  
+                  <tr>
+                    <td>{{ObjActividaeschaps.descripcion|safe}}</td>
+                  </tr>
+                  
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th class="center"> Tips</th>
+                    <th class="center"> Avisos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {% for t in ObjTips %}
+                        {{t.descripcion|safe}}
+                        <br>
+                      {% endfor %}
+                    </td>
+
+                    <td>
+                    {% for a in ObjAvisos %}
+                      {{a.descripcion|safe}}
+                      <br>
+                    {% endfor %}
+                    </td>
+                  </tr>
+                  
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th class="center"> Hotel</th>
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {{ObjActividades.hotelbyprog.hotel.descripcion}}
+                    </td>
+
+                  
+                  </tr>
+                  
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th class="center"> Birthday</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for b in ObjBirthday %}
+                  <tr>
+                    <td>
+                      {{b.cliente.user.first_name}} {{b.cliente.user.last_name}} -- {{b.chaperon_color}}
+                    </td>
+                  </tr>
+                {%  endfor %}  
+                  
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>    
+
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

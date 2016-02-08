@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Consulta de paquetes
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% include 'headeradmin.html' %}
+
+
+{% include 'menuizquierdoadmin.html' %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Paquetes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Paquetes</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Paquetes
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Paquetes</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Búsqueda de paquetes</h3>
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Nombre del programa</th>
+                    <th> Fecha de Salida </th>
+                    <th> Descripción </th>
+                    <th> Stock</th>
+                    <th> Agregar Cliente </th>
+                    <th> Acción </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {%  for p in pa  %}
+                  <tr>
+                    <td><a href="#">{{p.programa}}</a></td>
+                    <td> {{p.vigencia}} </td>
+                    <td class="center"> {{p.descripcion}} </td>
+                    
+
+                    <td class="center"> {{p.stock}} </td>
+
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+<a href="/agregar_cliente/{{id_paquete}}/{{p.id}}">
+                        <button title="Agregar Clientes" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-ok-sign">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+
+                        
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+                          <a href="/editarescuela/{{p.id}}">
+                          <button class="btn btn-info" title="Editar">
+                            <i class="icon-edit"></i>
+                          </button>
+                          </a> 
+
+                        </div>
+                      </div>
+                    </td>
+
+
+                  </tr>
+                  {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

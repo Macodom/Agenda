@@ -1,0 +1,1234 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Cliente
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+{% if request.session.tipous == 5 %}
+  {% include 'headerecurso.html' %}
+  {% include 'menuizquierdorecurso.html' %}
+{% endif %}
+
+{% if request.session.tipous == 6 %}
+  {% include 'headercontraloria.html' %}
+  {% include 'menuizquierdocontraloria.html' %}
+
+{% endif %}
+
+{% if request.session.tipous == 7 %}
+  {% include 'headermarketing.html' %}
+  {% include 'menuizquierdomarketing.html' %}
+{% endif %}
+
+
+{% if request.session.tipous == 8 %}
+  {% include 'headeragencias.html' %}
+  {% include 'menuizquierdoagencias.html' %}
+{% endif %}
+
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li> 
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+
+{% if request.session.tipous == 5 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-recursos-humanos/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li> 
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+
+{% if request.session.tipous == 6 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-contraloria/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li> 
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+{% if request.session.tipous == 7 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-marketing/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li> 
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+{% if request.session.tipous == 8 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header">Consulta de Clientes </h3>
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-agencias/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Clientes </li> 
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+
+<table class="paper-table responsive table table-paper table-striped table-sortable">
+
+    <tbody>
+        <tr> 
+          <td>
+<button id="verforcliente" class="btn btn-round-min btn btn-info " title="Abrir Formulario">
+  <span>
+    <i class="icon-pencil"></i>
+</span>
+</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+
+
+<div id="formulariocliente" style="display:none;">
+
+
+<div class="row-fluid">
+  <form name="forcliente1" class="form-horizontal" id="forcliente1" method="POST" action="">
+                  {% csrf_token %}
+        <div class="span12">
+
+
+          <div class="span6">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+              <h3> Formulario Consulta</h3>                   
+            </div>
+            <div class="widget-container">
+              <div class="form-horizontal">
+
+<div class="control-group">
+                    <label class="control-label">Seleccione el Asesor</label>
+                    <div class="controls">
+                    <select id="asesor" class="span12" name="asesor" size="9" multiple="multiple">
+                    
+                        <option value="0">------------TODOS------------</option>
+                        {% for a in obja %}
+                        <option value="{{a.id}}">{{a.user.first_name}} {{a.user.last_name}}</option>
+                        {% endfor %}
+
+
+
+                    </select>
+
+                    </div>
+                  </div>
+                   
+                  <div class="control-group">
+                    <label class="control-label">Seleccione el Programa</label>
+                    <div class="controls">
+                    <select id="programa" class="span12" name="programa" size="9" multiple="multiple">
+                        <option value="0">------------TODOS------------</option>
+                        {% for p in objp %}
+                        <option value="{{p.id}}">{{p.nombre}}</option>
+                        {% endfor %}
+
+                    </select>
+
+                    </div>
+                  </div>
+
+                  
+
+
+                  <div class="control-group">
+                    <label class="control-label">Estatus</label>
+                    <div class="controls">
+
+                      <select id="estatus" class="span12" name="estatus" size="7" multiple="multiple">
+                        <option value="None">------------TODOS------------</option>  
+                        <option value="0">Prospecto</option>
+                        <option value="1">Inscrito</option>
+                        <option value="6">Efectivo</option>
+                        <option value="3">No Contesta</option>
+                        <option value="4">No Va</option>
+                        <option value="5">Cancelado</option>
+                      </select>
+     
+                      </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Ingrese la Clave de Salida</label>
+                    <div class="controls">
+                    <select id="cvsalida" class="span12" name="cvsalida">
+                        <option selected="selected" value="0">---------</option>
+                        {% for s in objs %}
+                        <option value="{{s.id}}">{{s.nombre}}</option>
+                        {% endfor %}
+                    </select>
+
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Escuelas</label>
+                    <div class="controls">
+                      <!-- 
+                      <select  id="escuela" name="escuela" data-placeholder="Seleccione la escuela..." class="chzn-select span12" tabindex="10">
+                      -->  
+
+                        <select  id="escuela" name="escuela" class="span12">
+                        <option selected="selected" value="0">---------</option>
+                        {% for e in obje %}
+                        <option value="{{e.id}}">{{e.nombre}}</option>
+                        {% endfor %}
+                    </select>
+
+                    </div>
+                  </div>
+
+
+
+                <div class="control-group">
+                    <label class="control-label">País</label>
+                    <div class="controls">
+                      <select id="pais" class="span12" name="pais">
+                      <option selected="selected" value="">
+                              ---------
+                      </option>
+                      {% for p in objpais %}
+
+                       <option  value="{{p.id}}">{{p.nombre}}</option>
+
+                      {% endfor %}
+                    </select>
+                    </div>
+                </div>
+
+                 <div class="control-group">
+                  <label class="control-label">Estado</label>
+                  <div class="controls">
+                    <select id="estado" class="span12" name="estado">
+                      <option selected="selected" value="">
+                              ---------
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Ciudad</label>
+                  <div class="controls">
+
+               <select id="id_municipios" class="span12" name="localidad">
+                  <option selected="selected" value="">
+                      ---------
+                  </option>
+                </select>
+     
+                  </div>
+                </div>
+
+
+
+                  <div class="control-group">
+                    <label class="control-label">Sexo</label>
+                    <div class="controls">
+
+                      <label class="radio">
+                        <input type="radio" checked="" value="3" name="sexo"></input>Ambos
+                      </label>
+
+                      <label class="radio">
+                            <input type="radio" value="1" name="sexo"></input>Masculino
+                      </label>
+
+                      <label class="radio">
+                        <input type="radio" value="2" name="sexo"></input>Femenino
+                      </label>
+
+                      </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Datos Agencia</label>
+                    <div class="controls">
+
+                      <label class="radio">
+                        <input type="radio" checked="" value="0" name="agenciastatus"></input>No
+                      </label>
+
+                      <label class="radio">
+                            <input type="radio" value="1" name="agenciastatus"></input>Sí
+                      </label>
+
+                      </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Consulta</label>
+                    <div class="controls">
+
+                      <label class="radio">
+                        <input type="radio" checked="" value="0" name="statusconsulta"></input>General
+                      </label>
+
+                      <label class="radio">
+                            <input type="radio" value="1" name="statusconsulta"></input>Por programa
+                      </label>
+
+                      </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Ingrese el Año de salida del viaje</label>
+                    <div class="controls">
+                    <input id="anio1" class="span12" type="text" placeholder="{{ay}}" value="{{ay}}" name="anio" maxlength="4"></input>
+
+                    </div>
+                  </div>
+                  <input type="hidden" name="valor" value="1">
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Consultar</button>
+                  </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="span5">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+              <h3> Seleccione Columnas a Mostrar</h3>                   
+            </div>
+            <div class="widget-container">
+              <div class="form-horizontal">
+
+                <fieldset class="default">
+                  <legend>Datos Personales</legend>
+
+                  
+
+                  <div class="controls">
+
+                    
+
+                    
+                    <div id="dp1" style="display: block;">
+
+                      <label class="checkbox ">
+                    <input id="checkAlldp" onclick="funciondp(this.id,'dp1');" name="checkAlldp" type="checkbox" />
+                    Seleccionar / Deseleccionar todos 
+                    </label>
+
+                      
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="ciudad">
+                    CIUDAD 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="estadof">
+                    ESTADO 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="escuelaf">
+                    ESCUELA 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="nacionalidad">
+                    NAC 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="sexoff">
+                    SEXO 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="size">
+                    SIZE 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="edadcru">
+                    EDAD CRU 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="birth">
+                    BIRTH
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="pass">
+                    #PASS
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="notas">
+                    NOTAS
+                    </label>
+
+                  </div>
+                  </div>
+                </fieldset>
+
+
+                <fieldset class="default">
+                <legend>Datos de Contacto</legend>
+                  <div class="controls">
+
+                    <div id="dp2" style="display: block;">
+
+                      <label class="checkbox ">
+                    <input id="checkAlldc" onclick="funciondc(this.id,'dp2');" name="checkAlldc" type="checkbox" />
+                    Seleccionar / Deseleccionar todos 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="direccionc">
+                    DIRECCION 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="codigopostalc">
+                    CP 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="telefonoc">
+                    TELEFONO 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="celxvc">
+                    CEL XV 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="emailxvc">
+                    EMAIL XV 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="mamac">
+                    MAMA 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="telmamac">
+                    TEL MAMA 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="emailmamac">
+                    EMAIL MAMA
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="papac">
+                    PAPA
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="telpapac">
+                    TEL PAPA
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="emailpapac">
+                    EMAIL PAPA
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="otrotelc">
+                    OTRO TEL
+                    </label>
+
+                  </div>
+                  </div>
+                </fieldset>
+
+                <fieldset class="default">
+                <legend>Entrega-Recoge</legend>
+                  <div class="controls">
+
+                    <div id="dp3" style="display: block;">
+                      <label class="checkbox ">
+                    <input id="checkAller" onclick="funcioner(this.id,'dp3');" name="checkAller" type="checkbox" />
+                    Seleccionar / Deseleccionar todos 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="roomc">
+                    ROOM 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="chaperonc">
+                    CHAPERON 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="colorc">
+                    COLOR 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="llevallega">
+                    QUIEN LO LLEVA/COMO LLEGA 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="datosvc1">
+                    DATOS DEL VUELO 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="responrecibec">
+                    RESPONSABLE RECIBE 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="reciberegresa">
+                    QUIEN LO RECIBE/COMO REGRESA
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="datosvc2">
+                    DATOS DEL VUELO
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="responentraga">
+                    RESPONSABLE ENTREGA
+                    </label>
+
+
+                  </div>
+                  </div>
+                </fieldset>
+
+
+                <fieldset class="default">
+                <legend>Documentos</legend>
+                  <div class="controls">
+
+                    <div id="dp4" style="display: block;">
+                      <label class="checkbox ">
+                    <input id="checkAlld" onclick="funciond(this.id,'dp4');" name="checkAlld" type="checkbox" />
+                    Seleccionar / Deseleccionar todos 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="cartac">
+                    CARTA 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="copypassc">
+                    COPY PASS 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="copyvisac">
+                    COPY VISA 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="origpasc">
+                    ORIG PASS 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="origvisc">
+                    ORIG VISA 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="contc">
+                    CONT 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="ifec">
+                    IFE
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="rcc">
+                    RC
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="icec">
+                    ICE
+                    </label>
+
+                    <!-- Nuevo 13/10/2015-->
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="circ">
+                    CIR
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="flic">
+                    FLI
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="rsc">
+                    RS
+                    </label>
+                    <!-- Nuevo 13/10/2015-->
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="lrc">
+                    LR
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="clic">
+                    CLI
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="frc">
+                    FR
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="tirc">
+                    TIR
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="fmec">
+                    FME
+                    </label>
+
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="aduanamexc">
+                    ADUANA MEX(2)
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="aduanausac">
+                    ADUANA USA(2)
+                    </label>
+
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="autc">
+                    AUT
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="kitc">
+                    KIT
+                    </label>
+
+                  </div>
+                  </div>
+                </fieldset>
+
+                <fieldset class="default">
+                <legend>Pagos</legend>
+                  <div class="controls">
+
+                    <div id="dp5" style="display: block;">
+                      <label class="checkbox ">
+                    <input id="checkAllp" onclick="funcionp(this.id,'dp5');" name="checkAllp" type="checkbox" />
+                    Seleccionar / Deseleccionar todos 
+                    </label>
+
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="subtotalc">
+                    SUBTOTAL 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="50c">
+                    50% 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="70c">
+                    70% 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="pagadoc">
+                    PAGADO
+                    </label>
+                  </div>
+                  </div>
+                </fieldset>
+
+                <fieldset class="default">
+                <legend>Chaperón</legend>
+                  <div class="controls">
+
+                    <div id="dp6" style="display: block;">
+                      <label class="checkbox ">
+                    <input id="checkAllc" onclick="funcionc(this.id,'dp6');" name="checkAllc" type="checkbox" />
+                    Seleccionar / Deseleccionar todos 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="roomc">
+                    ROOM 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="chaperonc">
+                    CHAPERON 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="colorc">
+                    COLOR 
+                    </label>
+
+                  </div>
+                  </div>
+
+                </fieldset>
+
+
+
+                <fieldset class="default">
+                <legend>Otros</legend>
+                  <div class="controls">
+
+                    <div id="dp7" style="display: block;">
+                      <label class="checkbox ">
+                    <input id="checkAllo" onclick="funciono(this.id,'dp7');" name="checkAllo" type="checkbox" />
+                    Seleccionar / Deseleccionar todos 
+                    </label>
+                    
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="conmedc">
+                    CONDICION MEDICA 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="fuentec">
+                    FUENTE 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="mrc">
+                    MR 
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="partyc">
+                    PARTY
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="segupgc">
+                    SEGUPG
+                    </label>
+
+                    <label class="checkbox ">
+                    <input type="checkbox"  name="seguroclxc">
+                    SEGCLX
+                    </label>
+
+                    
+
+
+                  </div>
+                  </div>
+                </fieldset>
+
+
+
+
+
+                
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+        </form>
+      </div>
+
+</div>
+
+{% if ec %}
+
+<!-- Aqui van los roidfluid -->
+      <div class="row-fluid ">
+        <div class="span12">
+          {% if cl %}
+                <form  method="POST" action="/reporte_cliente_excel/">
+                   {% csrf_token %}
+
+              <div class="control-group">
+                  <input type="hidden" value="{{request.session.vvalor}}" name="valor">
+                  <input type="hidden" value="{{request.session.asesorf}}" name="asesor">
+                  <input type="hidden" value="{{request.session.programaf}}" name="programa">
+                  <input type="hidden" value="{{request.session.cvsalidaf}}" name="cvsalida">
+                  <input type="hidden" value="{{request.session.estatusf}}" name="estatus">
+                  <input type="hidden" value="{{request.session.escuelaf}}" name="escuela">
+                  <input type="hidden" value="{{request.session.segurof}}" name="seguro">
+                  <input type="hidden" value="{{request.session.sexof}}" name="sexo">
+                  <input type="hidden" value="{{request.session.aniof}}" name="anio">
+
+                  <input type="hidden" value="{{request.session.paisf}}" name="pais">
+                  <input type="hidden" value="{{request.session.estadof}}" name="estado">
+                  <input type="hidden" value="{{request.session.localidadf}}" name="localidad">
+                 
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-link">Exportar A Excel</button>
+                  </div>
+
+                </form>
+{% endif %}    
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Clientes Registrados</h3>
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid responsive table-bordered paper-table tbl-serach ">
+                <thead>
+
+
+                  <tr>
+                    <th> Nombre</th>
+                    <th> Apellidos </th>
+                    <th> Programa </th>
+                    <th> Clave/Precio </th>
+                    <th> Salida </th>
+                    {% if not request.session.tipous == 3 %}
+                    <th> Asesor </th>
+                    {% endif %}
+                    <th> Fecha de salida </th>
+                    <th> Foto </th>
+                    <th> Status </th>
+                    {% if not request.session.tipous == 3 %}
+                    <th> Acción </th>
+                    {% endif %}
+                  </tr>
+                </thead>
+                <tbody>
+
+              {%  for ci in cl  %}
+                  <tr>
+ {% if user.is_staff or request.session.tipous == 1%}
+ <td><a href="/cce/{{ci.user.id}}">{{ci.user.first_name}}</a></td>
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  <td><a href="/opciones-clientes/{{ci.user.id}}">{{ci.user.first_name}}</a></td>
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  <td><a href="/opciones-clientes-a/{{ci.user.id}}">{{ci.user.first_name}}</a></td>
+{% endif %}
+
+{% if request.session.tipous == 5 %}
+  <td>{{ci.user.first_name}}</td>
+{% endif %}
+
+{% if request.session.tipous == 6 %}
+  <td>{{ci.user.first_name}}</td>
+{% endif %}
+
+{% if request.session.tipous == 7 %}
+  <td>{{ci.user.first_name}}</td>
+{% endif %}
+                    
+
+                  <td>
+                    {{ci.user.last_name}}
+                   {% if ci.apmat %} 
+                    {{ci.apmat}}
+                   {% endif %}
+                   
+
+
+                  </td>
+                   
+                    <td class="center"> {{ci.precio}} </td>
+                    <td class="center"> {{ci.precio.claveprecio}} </td>
+                    <td class="center"> {{ci.precio.precio.salida}} </td>
+
+{% if user.is_staff or request.session.tipous == 1%}
+                      {% if ci.asesor == null %}
+                    <td class="center"> <a href="/ase/{{ci.user.id}}"> Asignar </a></td>
+                    {% else %}
+                    <td class="center">  {{ci.asesor.clave}}  </td>
+                    {% endif %}
+{% endif %}
+{% if request.session.tipous == 2 %}
+                       {% if ci.asesor == null %}
+                    <td class="center"> <a href="/asignar-asesor/{{ci.user.id}}"> Asignar </a></td>
+                    {% else %}
+                    <td class="center">  {{ci.asesor.clave}}  </td>
+                    {% endif %}
+{% endif %}    
+{% if request.session.tipous == 5 %}
+                    
+                    <td class="center"> {% if ci.asesor != null %}  {{ci.asesor.clave}} {% endif %} </td>
+                    
+{% endif %}
+{% if request.session.tipous == 6 %}
+                    
+                    <td class="center"> {% if ci.asesor != null %}  {{ci.asesor.clave}} {% endif %} </td>
+                    
+{% endif %}
+{% if request.session.tipous == 7 %}
+                    
+                    <td class="center"> {% if ci.asesor != null %}  {{ci.asesor.clave}} {% endif %} </td>
+                    
+{% endif %}                   
+
+                    <td class="center"> {{ci.precio.precio.vigencia}} </td>
+                    <td class="center">
+{% if user.is_staff or request.session.tipous == 1%}
+                     {% if  ci.image %} 
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{ci.image}}">
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        <a href="/foto-cliente/{{ci.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        </a> 
+                    </div>
+                      {% endif %}
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+                      {% if  ci.image %}
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{ci.image}}">
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        <a href="/agregar-foto-cliente/{{ci.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        </a> 
+                    </div>
+                      {% endif %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+                      {% if  ci.image %}
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{ci.image}}">
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        <a href="/agregar-foto-cliente-a/{{ci.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        </a> 
+                    </div>
+                      {% endif %}
+{% endif %}
+
+{% if request.session.tipous == 5 %}
+                      {% if  ci.image %}
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{ci.image}}">
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        <a href="/agregar-foto-cliente-a/{{ci.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        </a> 
+                    </div>
+                      {% endif %}
+{% endif %} 
+{% if request.session.tipous == 6 %}
+                      {% if  ci.image %}
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{ci.image}}">
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        
+                    </div>
+                      {% endif %}
+{% endif %}
+
+{% if request.session.tipous == 7 %}
+                      {% if  ci.image %}
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{ci.image}}">
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        
+                    </div>
+                      {% endif %}
+{% endif %}                             
+                      
+                  </td>
+                    <td class="center">
+
+                      {%  if ci.user.is_active and ci.status_prog == 0  %}
+                      <span class="label label-info">Prospecto</span>
+                      {% endif %}
+
+
+
+
+
+                       {% if ci.status_prog == 1 and ci.garantizado == False %}
+                        <span class="label label-success"> Inscrito</span>
+                      {% endif %}
+
+                      {% if ci.status_prog == 1 and ci.garantizado == True %}
+                        <span class="label label-success"> Garantizado</span>
+                      {% endif %}
+
+
+                      {%  if ci.status_prog == 2  %}
+                      <span class="label label-warning">Lista de espera</span>
+                      {% endif %}
+
+                      {%  if ci.status_prog == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if ci.status_prog == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                      {%  if ci.status_prog == 5 %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+
+                      {%  if ci.status_prog == 6 %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+
+
+                    </td>
+{% if not request.session.tipous == 3 %} <!--validar para que no lo vea el asesor  -->                  
+                    <td class="center"><div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+ {% if user.is_staff or request.session.tipous == 1%}
+                        {%  if ci.user.is_active  %}
+ <a onclick="return confirm('¿Realmente desea eliminar este registro?')"  href="/suspenderc/{{ci.user.id}}">
+                          <button class="btn btn-danger" title="Suspender cliente">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>
+                        {% endif %}  
+                        {%  if not ci.user.is_active  %}
+                          <a href="/activarc/{{ci.user.id}}">
+                          <button class="btn btn-success" title="Aprovar cliente">
+                            <i class=" icon-ok"></i>
+                          </button>
+                          </a>
+                        {% endif %}                           
+{% endif %}
+{% if request.session.tipous == 2 %}
+                          {%  if ci.user.is_active  %}
+<a onclick="return confirm('¿Realmente desea eliminar este registro?')"  href="/suspender-cliente/{{ci.user.id}}">
+                          <button class="btn btn-danger" title="Suspender cliente">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>
+                          {% endif %}
+                        {%  if not ci.user.is_active  %}
+                          <a href="/activar-cliente/{{ci.user.id}}">
+                          <button class="btn btn-success" title="Aprovar cliente">
+                            <i class=" icon-ok"></i>
+                          </button>
+                          </a>
+                        {% endif %} 
+{% endif %}
+                
+                        
+ 
+                        </div>
+                      </div>
+                    </td>
+{% endif %} <!-- fin de validar para que no lo vea el asesor  -->
+
+                  </tr>
+              {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+              
+
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

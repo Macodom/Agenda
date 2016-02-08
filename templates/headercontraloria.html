@@ -1,0 +1,38 @@
+ <div class="navbar navbar-inverse top-nav">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="home-link">
+          <a href="/p-contraloria/" class="icon-home"></a>
+        </span>
+        <a class="brand" href="/p-contraloria/">
+        <img src="{{STATIC_URL}}images/logo-falgun.png" width="103" height="50" alt="Falgun">
+       </a>
+        <div class="nav-collapse">
+          <ul class="nav">
+
+            {% if user.perfil.chaperon %}
+          <!--  inicio de perfil chaperon-->
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-refresh"></i>Ver Perfil Chaperon<b class="icon-angle-down"></b>
+              </a>
+            <div class="dropdown-menu">
+              <ul>
+          <li><a href="/perfil-chaperon-contraloria/"><i class="icon-plus-sign"></i> Ver Perfil Chaperón</a></li>
+          
+              </ul>
+            </div>
+            </li>
+          <!--  fin de inicio de perfil chaperon-->
+          {% endif %}
+
+
+
+
+
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,333 @@
+  <div class="leftbar leftbar-close clearfix">
+
+
+    <div class="admin-info clearfix">
+      
+      {% if user.perfil.image %}
+        <a href="/foto-personal/{{user.id}}">
+<img height="50" width="50" alt="User" src="{{MEDIA_URL}}{{user.perfil.image}}">
+        </a>
+      {% else%}
+      <div class="admin-thumb">
+        <a href="/foto-personal/{{user.id}}">
+          <i class="icon-user"></i>
+        </a>
+      </div>
+      {% endif %}  
+
+      <div class="admin-meta">
+        <ul>
+          <li class="admin-username"> {{user.first_name}}</li>
+          <li><a href="/cambiar-contrasena/">Cambiar contraseña</a></li>
+          {% if user.perfil.user_id%}
+                    <li><a href="/perfil/">Ver Perfil </a>
+            <a href="/logout_user/"><i class="icon-off"></i> Cerrar</a></li>
+          {% else %}
+          <li><a href="/perfiladmin/">Ver Perfil </a>
+            <a href="/logout_user/"><i class="icon-off"></i> Cerrar</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="left-nav clearfix">
+      <div class="left-primary-nav">
+        <ul id="myTab">
+
+          <li {% if activoc %} class="active" {% endif %}>
+            <a href="#clientes" class="icon-user" title="Clientes"></a>
+          </li>
+
+          <li {% if activop %} class="active" {% endif %}>
+            <a href="#main" class="icon-user-md " title="Personal"></a>
+          </li>
+
+          <li {% if activoa %} class="active" {% endif %}>
+            <a href="#features" class="icon-building" title="Agencias"></a>
+          </li>
+
+          <li {% if activod %} class="active" {% endif %}>
+            <a href="#ui-elements" class="icon-group" title="Departamentos"></a>
+          </li>
+
+          <li {% if activopu %} class="active" {% endif %}>
+            <a href="#pages" class="icon-hospital " title="Puestos"></a>
+          </li>
+
+          <li {% if activot %} class="active" {% endif %}>
+            <a href="#user" class="icon-key" title="Usuarios"></a>
+          </li>
+
+          <li {% if activomac %} class="active" {% endif %}>
+            <a href="#mac" class="icon-qrcode" title="App Movil"></a>
+          </li>
+
+
+        </ul>
+      </div>
+      <div class="responsive-leftbar">
+        <i class="icon-list"></i>
+      </div>
+      <div class="left-secondary-nav tab-content">
+
+        <div class=" 
+        {% if activoc %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        "
+        id="clientes">
+
+
+          <h4 class="side-head">Clientes</h4>
+
+  {% if not activoc2 %}
+          <ul id="nav" class="accordion-nav">
+
+            <li>
+              <a href="/consulta_cliente/"><i class="icon-search"></i> Consulta
+                <span>General</span>
+              </a>
+            </li>
+             <li>
+              <a href="/ver_cliente_especifica/"><i class="icon-search"></i> Consulta
+                <span>Especifica</span>
+              </a>
+            </li>
+
+            {% if user.perfil.agencia.id == 5 %}
+            <li>
+              <a href="/ver-cliente-especifica-general-status/"><i class="icon-search"></i> Consulta
+                <span>Especifica General</span>
+              </a>
+            </li>
+            {% endif %}
+
+             <li>
+              <a href="/a-cliente-es-a/"><i class="icon-search"></i> Consulta
+                <span>Cliente</span>
+              </a>
+            </li>
+
+          </ul>
+  {% endif %}
+
+          <ul class="metro-sidenav clearfix">
+            
+            {% if activoc2 %}
+            <li>
+              <a href="/editarc/{{usuario.id}}" class="bondi-blue"><i class="icon-edit"></i><span>Editar</span></a>
+            </li>
+            <li>
+              <a href="/formulario-tutor/{{usuario.id}}" class="blue"><i class="icon-user"></i><span>Tutor</span></a>
+            </li>
+            <li>
+              <a href="/custodia-cliente/{{usuario.id}}" class=" blue"><i class="icon-truck"></i><span>Lleva/Recoge</span></a>
+            </li>
+
+            <li>
+              <a href="/pagos/{{usuario.id}}" class="green"><i class="icon-money"></i><span>Pagos</span></a>
+            </li>
+
+            <li>
+              <a href="/foto-cliente/{{usuario.id}}" class="brown"><i class="icon-camera"></i><span>Foto</span></a>
+            </li>
+
+            <li>
+              <a href="/seg/{{usuario.id}}" class="magenta"><i class="icon-phone"></i><span>Seguimiento</span></a>
+            </li>
+
+            <li>
+              <a href="/apc/{{usuario.id}}" class="blue-violate"><i class="icon-plane"></i><span>Programa</span></a>
+            </li>
+            
+            
+            {%  if asesor != None %}
+            <li>
+              <a href="/acse/{{usuario.id}}" class="dark-yellow"><i class="icon-user-md"></i><span>Asesor</span></a>
+            </li>
+            {% endif %}
+
+            <li>
+              <a href="javascript:void(0);" onclick="javascript: window.open('/contrato-cliente/{{usuario.id}}', '_blank'); " class="bondi-blue"><i class="icon-print"></i><span>Contrato</span>
+              </a>
+            </li>
+             
+            <li>
+              <a href="/documentos-cliente/{{usuario.id}}" class="orange"><i class="icon-file"></i><span>Documentos</span></a>
+            </li>
+
+            <li>
+              <a href="/update-user-pass-cliente/{{usuario.id}}" class="dark-yellow"><i class="icon-user"></i><span>User-Pass</span></a>
+            </li>
+
+            
+            {% endif %}
+          </ul>
+
+
+        </div>
+
+      <div class=" 
+        {% if activop %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        "
+        id="main">
+
+
+          <h4 class="side-head">Personal</h4>
+          
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/fperso" class="green"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_personal/" class="green"><i class="icon-search"></i><span>Activos</span></a>
+            </li>
+            <li>
+              <a href="/consulta_personal_eliminados/" class="brown"><i class="icon-search"></i><span>Desactivados</span></a>
+            </li>
+
+          </ul>
+        </div>
+
+
+        <div class=" 
+        {% if activol %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="forms">
+          <h4 class="side-head">Localidad</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario_localidad/" class="blue-violate"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_localidad/" class="magenta"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+          </ul>
+        </div>
+
+        <div class=" 
+        {% if activoa %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="features">
+          <h4 class="side-head">Agencias/Sucursales</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario_agencia/" class="green"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_agencia/" class="bondi-blue"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+          </ul>
+        </div>
+
+        <div class=" 
+        {% if activod %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="ui-elements">
+          <h4 class="side-head">Departamentos</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario_departamento/" class="dark-yellow"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_departamento/" class=" blue"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+          </ul>
+        </div>
+
+        <div class=" 
+        {% if activopu %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="pages">
+          <h4 class="side-head">Puestos</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario_puesto/" class="magenta"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_puesto/" class="bondi-blue"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+          </ul>
+        </div>
+        
+
+        <div class=" 
+        {% if activot %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="user">
+          <h4 class="side-head">Tipos de Usuarios</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario_tipo_user/" class="green"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_tipo_user/" class="blue-violate"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+          </ul>
+        </div>
+
+
+        <div class=" 
+        {% if activomac %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="mac">
+          <h4 class="side-head">MAc Addres</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario-mac-teens/" class="green"><i class="icon-plus-sign"></i><span>Teens</span></a>
+            </li>
+            <li>
+              <a href="/formulario-mac-chaps/" class="blue-violate"><i class="icon-search"></i><span>Chaperon</span></a>
+            </li>
+          </ul>
+          <h4 class="side-head">User/Pass</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario-user-pass-teens/" class="green"><i class="icon-plus-sign"></i><span>Teens</span></a>
+            </li>
+            <li>
+              <a href="/formulario-user-pass-chaps/" class="blue-violate"><i class="icon-search"></i><span>Usuarios</span></a>
+            </li>
+          </ul>
+
+          <h4 class="side-head">Galeria</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/app-xv-image-principal/" class="green"><i class="icon-plus-sign"></i><span>Galeria</span></a>
+            </li>
+          </ul>
+
+          
+
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>

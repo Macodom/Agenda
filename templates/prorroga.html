@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+    Prorrogas
+</title>
+
+{% include "base_administrador.html" %}
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ 
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}    
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% include 'menu_navegacion_cliente.html' %}
+
+
+      <div class="row-fluid">
+
+        <div class="span5">
+          <div class="content-widgets light-gray">
+            <div class="btn-group" id="url">
+                        {% if user.is_staff or request.session.tipous == 1  %}
+                        <a href="/adformulario_prorroga/">
+                        {% endif %}
+                        {% if request.session.tipous == 2  %}
+                        <a href="/geformulario_prorroga/">
+                        {% endif %}
+                            <button class="btn btn-round-min btn btn-info" data-original-title="Consultar Precios">
+                                <span><i class="icon-plus"></i></span>
+                            </button>
+                        </a>
+                    </div>
+            <div class="widget-head blue clearfix">
+              <h3>Cargar Prorrogas</h3>
+            </div>
+            <div class="widget-container">
+
+<form name="prorroga" class="form-horizontal left-align" id="prorroga" method="POST" action="">
+                   {% csrf_token %}
+
+
+              <div class="control-group">
+                  <label class="control-label">Fecha Final</label>
+                  <div class="controls">
+                  <div id="datetimepicker4" class="input-append">
+                      <input id="fecha" type="text" name="fecha" data-format="yyyy-MM-dd"></input>
+                      <span class="add-on">
+              <i class="icon-calendar" data-date-icon="icon-calendar" data-time-icon="icon-time"></i>
+                      </span>
+                  </div>
+
+              </div>
+                </div>
+
+              <div class="control-group">
+                  <label class="control-label">Porcentaje</label>
+                  <div class="controls">
+                        <select id="por" class="span10" name="por">
+                            <option selected="selected" value="">---------</option>
+                            <option value="1"> 50% </option>
+                            <option value="2"> 70% </option>
+                            <option value="3"> 100% </option>  
+                        </select>
+                  </div>
+
+                 
+
+                </div>  
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Cargar</button>
+                    
+                  </div>
+
+
+
+</form>
+
+
+              
+              
+
+            </div>
+          </div>
+
+
+
+        </div>
+
+
+
+
+          <div class="span7">
+          <div class="content-widgets light-gray">
+            <div class="widget-head blue clearfix">
+              <h3>Prorrogas Cargadas</h3>
+            </div>
+            <div class="widget-container">
+
+                <table class="table paper-table">
+                    <thead>
+                    <tr>
+                      <th class="invoice-id">
+                        Id
+                      </th>
+                      <th class="invoice-date">
+                         Fecha Final
+                      </th>
+                      <th class="invoice-type">
+                        Porcentaje
+                      </th>
+                      <th class="invoice-qty">
+                         Status
+                      </th>
+
+                       <th class="invoice-qty">
+                         Acción
+                      </th>
+                      
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for p in pro %}  
+                    <tr>
+                <td>
+                  {{p.id}}
+                </td>
+                <td>
+                  {{p.fecha_final}}
+                </td>
+                <td>
+                   
+                   {% if p.porcentaje == 1 %}
+                    50%
+                  {% endif %}
+                  {% if p.porcentaje == 2 %}
+                    70%
+                  {% endif %}
+                  {% if p.porcentaje == 3 %}
+                    100%
+                  {% endif %}
+                </td>
+                 <td>
+                  {%  if p.status  %}
+                    Activo
+                  {% else %}
+                    Cancelado
+                  {%  endif %}
+                </td>
+                <td class="center ">
+                    <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+{%  if p.status  %}
+        {% if user.is_staff or request.session.tipous == 1 %}
+        <a href="/adeliminar-p/{{vc}}/{{p.id}}">
+                                        <button class="btn btn-danger" data-original-title="Eliminar Prorroga">
+                                            <i class=" icon-remove-sign"></i>
+                                        </button>
+                                    </a>
+         
+        {% endif %}
+        {% if request.session.tipous == 2 %}
+        <a href="/geeliminar-p/{{vc}}/{{p.id}}">
+                                        <button class="btn btn-danger" data-original-title="Eliminar Prorroga">
+                                            <i class=" icon-remove-sign"></i>
+                                        </button>
+                                    </a>
+        {% endif %}
+{% endif %}
+                            
+
+                        </div>
+                    </div>
+                  </td>
+                      
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

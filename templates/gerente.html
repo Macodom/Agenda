@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+    Gerente
+</title>
+
+{% include "base_gerente.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% include 'headergerente.html' %}
+
+
+{% include 'menuizquierdogerente.html' %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+
+
+
+<!-- Aqui van los roidfluid -->
+     <div class="row-fluid ">
+        <div class="span12">
+          <div class="board-widgets gray">
+            <div class="board-widgets-head clearfix">
+              <h4 class="pull-left">Ventas del Mes de: {{mes}} del {% now "Y"%} <B>¡FELICIDADES "{{vasesor}}"!</B></h4>
+              <a href="#" class="widget-settings"><i class="icon-group"></i></a>
+            </div>
+            <div class="board-widgets-content">
+              <div class="row-fluid">
+                <div class="span12">
+                  <div class="widget-container">
+                    <div id="visitors-chart">
+                      <!--
+                      <div id="chart1" style="width: 100%;height:300px; text-align: center; margin:0 auto;"></div>
+                      -->
+
+                      <div id="chart2" style="width: 100%;height:300px; text-align: center; margin:0 auto;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% for s in principalMatriz %}
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Seguimientos del {{s.year}}</h3>
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid responsive table-bordered paper-table tbl-serach ">
+                <thead>
+
+
+                  <tr>
+                    <th> Reserva</th>
+                    <th> Registro </th>
+                    <th> Salida </th>
+                    
+                    <th> 1er Apellido</th>
+                    <th> 2do Apellido</th>
+                    <th> Nombre(s) </th>
+                    <th> Programa </th>
+                    <th> Asesor </th>
+                    <th> Seguimiento </th>
+                    <th> Status </th>
+                    <th> Acción </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+              {%  for ci in s.seguimiento  %}
+                  <tr>
+                     <td>
+                     {% if ci.iris %}
+                     {{ci.iris}}
+                     {% endif %}
+                     </td>
+                    
+
+                    <td>
+{{ ci.fecha }}
+
+                    </td>
+                   
+                    <td class="center"> {{ci.salida}} </td>
+                    <td class="center"> {{ci.appat}}</td>
+                    <td class="center"> {{ci.apmat}} </td>
+                    
+
+                    <td> {{ci.nombre}} </td>                    
+
+                    <td class="center"> {{ci.cveprogra}} </td>
+                    <td class="center"> {{ci.cveasesor}} </td>
+                    <td class="center"> {{ci.seguimiento}} </td>
+                    <td class="center">
+
+                      {%  if ci.status_programa == 0  %}
+                      <span class="label label-info">Prospecto</span>
+                      {% endif %}
+
+                      {%  if ci.status_programa == 1  %}
+                      <span class="label label-success">Inscrito</span>
+                      {% endif %}
+
+                      {%  if ci.status_programa == 2  %}
+                      <span class="label label-warning">Lista de espera</span>
+                      {% endif %}
+
+                      {%  if ci.status_programa == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if ci.status_programa == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                       {%  if ci.status_programa == 5 %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+                      
+                      {%  if ci.status_programa == 6 %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+
+                    </td>
+                  
+                    <td class="center"><div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+                         <a href="/seguimiento-cliente/{{ci.id}}"> <button class="btn btn-info" title="Consultar cliente">
+                         <i class=" icon-search"></i>
+                          </button>
+                          </a>
+
+
+
+                        </div>
+                      </div>
+                    </td>
+
+
+                  </tr>
+              {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+  {% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

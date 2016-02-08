@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+    Contraloria
+</title>
+
+{% include "base_gerente.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% include 'headercontraloria.html' %}
+
+
+{% include 'menuizquierdocontraloria.html' %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Prorrogas
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-contraloria/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Lista de prorroga</li>
+          </ul>
+        </div>
+      </div> 
+
+
+
+
+<a href="/reporte_contraloria_cliente_excel_activos/">
+  <button class="btn btn-success" title="Editar">
+    <i class="icon-print"> Exportar a Excel</i>
+  </button>
+</a> 
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+     <div class="row-fluid ">
+        <div class="span12">
+
+
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Prorroga Activas</h3>
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid responsive table-bordered paper-table tbl-serach">
+                    <thead>
+                    <tr>
+                      <th class="invoice-id">
+                        Id
+                      </th>
+                      <th class="invoice-date">
+                         Asesor
+                      </th>
+                      <th class="invoice-date">
+                         Cliente
+                      </th>
+                      <th class="invoice-date">
+                         Iris
+                      </th>
+                      <th class="invoice-date">
+                         Programa
+                      </th>
+                      <th class="invoice-date">
+                         Salida
+                      </th>
+                      <th class="invoice-date">
+                         Fecha Final
+                      </th>
+                      <th class="invoice-type">
+                        Porcentaje
+                      </th>
+                      <th class="invoice-qty">
+                         Status
+                      </th>
+
+                       
+                      
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for p in pro %}  
+                    <tr>
+                <td>
+                  {{p.id}}
+                </td>
+                 <td>
+                  {{p.cliente.asesor.clave}} 
+                </td>
+                <td>
+                  {{p.cliente.user.first_name}} {{p.cliente.user.last_name}} {{p.cliente.apmat}}
+                </td>
+                <td>
+                  {{p.cliente.iris}}
+                </td>
+                <td>
+                  {{p.cliente.precio.precio.programa.clave}} 
+                </td>
+                <td>
+                  {{p.cliente.precio.precio.salida}} 
+                </td>
+                 <td>
+                  {{p.fecha_final}}
+                </td>
+                <td>
+                   
+                   {% if p.porcentaje == 1 %}
+                    50%
+                  {% endif %}
+                  {% if p.porcentaje == 2 %}
+                    70%
+                  {% endif %}
+                  {% if p.porcentaje == 3 %}
+                    100%
+                  {% endif %}
+                </td>
+                 <td>
+                      {%  if p.cliente.status_prog == 0  %}
+                      <span class="label label-info">Prospecto</span>
+                      {% endif %}
+
+                      {%  if p.cliente.status_prog == 1  %}
+                      <span class="label label-success">Inscrito</span>
+                      {% endif %}
+
+                      {%  if p.cliente.status_prog == 2  %}
+                      <span class="label label-warning">Lista de espera</span>
+                      {% endif %}
+
+                      {%  if p.cliente.status_prog == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if p.cliente.status_prog == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                      {%  if p.cliente.status_prog == 5 %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+
+                      {%  if p.cliente.status_prog == 6 %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+                </td>
+
+                      
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  {% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

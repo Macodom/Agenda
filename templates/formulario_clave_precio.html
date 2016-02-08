@@ -1,0 +1,238 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+  {% if edit %} 
+      Edición de Clave precio             
+  {% else %}
+      Registro de Clave precio    
+  {% endif %}
+</title>
+
+{% include "base_administrador.html" %}
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Clave precio  
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Registro de Clave precio</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Clave precio
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Registro de Clave precio</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+<!-- Aqui van los roidfluid -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="span6">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                       
+              <h3> Registro de Clave precio</h3>          
+                      
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+                   
+                  <div class="control-group">
+                    <label class="control-label">Nombre</label>
+                    <div class="controls">
+                      {{forclaveprecio.nombre}}
+                    </div>
+                  </div>
+ 
+
+                  
+
+
+                  <div class="control-group">
+                    <label class="control-label">Status</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{forclaveprecio.statuscve}}
+                        </div>  
+                    </div>
+                  </div>  
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span6">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                       
+              <h3> Lista de claves registradas</h3>          
+                       
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Id</th>
+                    <th> Nombre</th>
+                     <th> Status </th>
+                     <th> Acción </th>
+                   
+                    
+                  </tr>
+                </thead>
+                <tbody>
+             
+
+                  {%  for cp in objClaveprecio  %}
+                  <tr>
+                    <td>{{cp.id}}</td>
+                    <td>{{cp.nombre}}</td>
+                     <td> 
+                      {% if cp.statuscve ==  0 %} Libre {% endif %} 
+                      {% if cp.statuscve ==  1 %} VSA {% endif %} 
+                      {% if cp.statuscve ==  2 %} MEX {% endif %}
+                      {% if cp.statuscve ==  3 %} CME {% endif %}
+                      {% if cp.statuscve ==  4 %} CTZ {% endif %}
+                      {% if cp.statuscve ==  5 %} AGEN {% endif %}
+                      {% if cp.statuscve ==  6 %} ADMIN {% endif %}
+                    </td>
+                     <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+ {% if request.session.tipous == 2 %}
+ <a href="/edit-clave-precio/{{cp.id}}">
+                        <button title="Editar precio" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-edit">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+
+
+                        
+                      
+
+                      {% if cp.status ==  True %}
+<a href="/desactivar-clave-precio/{{cp.id}}">
+                        <button title="Desactivar clave" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-remove-sign">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+                      {% endif %} 
+                    {% if cp.status ==  False %}
+<a href="/activar-clave-precio/{{cp.id}}">
+                        <button title="Activar clave" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-ok">
+                            </i>
+                          </span>
+                        </button>
+</a>
+                    {% endif %} 
+
+
+ {% endif %}
+
+ 
+                        
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+          
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

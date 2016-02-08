@@ -1,0 +1,213 @@
+  <div class="leftbar leftbar-close clearfix">
+
+
+    <div class="admin-info clearfix">
+
+      {% if user.perfil.image %}
+        <a href="/cargar-foto-personal/{{user.id}}">
+<img height="50" width="50" alt="User" src="{{MEDIA_URL}}{{user.perfil.image}}">
+        </a>
+      {% else%}
+      <div class="admin-thumb">
+        <a href="/cargar-foto-personal/{{user.id}}">
+        <i class="icon-user"></i>
+        </a>
+      </div>
+      {% endif %}  
+
+      <div class="admin-meta">
+        <ul>
+          <li class="admin-username"> {{user.first_name}} {{user.last_name}}</li>
+          <li><a href="/cambiar-contrasena/">Cambiar contraseña</a></li>
+          <li><a href="/perfil-gerente/">Ver Perfil </a><a href="/logout_user/"><i class="icon-off"></i> Cerrar</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="left-nav clearfix">
+      <div class="left-primary-nav">
+        <ul id="myTab">
+
+          <li {% if activoc %} class="active" {% endif %}>
+            <a href="#clientes" class="icon-user" title="Clientes"></a>
+          </li>
+
+          <li {% if activop %} class="active" {% endif %}>
+            <a href="#main" class="icon-user-md " title="Personal"></a>
+          </li>
+
+          <li {% if activod %} class="active" {% endif %}>
+            <a href="#ui-elements" class="icon-group" title="Departamentos"></a>
+          </li>
+
+          <li {% if activopu %} class="active" {% endif %}>
+            <a href="#pages" class="icon-hospital " title="Puestos"></a>
+          </li>
+
+        </ul>
+      </div>
+      <div class="responsive-leftbar">
+        <i class="icon-list"></i>
+      </div>
+      <div class="left-secondary-nav tab-content">
+
+        <div class=" 
+        {% if activoc %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        "
+        id="clientes">
+
+
+          <h4 class="side-head">Clientes</h4>
+
+          {% if not activoc2 %}
+          <ul id="nav" class="accordion-nav">
+
+            <li>
+              <a href="/consulta-cliente/"><i class="icon-search"></i> Consulta
+                <span>General</span>
+              </a>
+            </li>
+             <li>
+              <a href="/ver_cliente_especifica/"><i class="icon-search"></i> Consulta
+                <span>Especifica</span>
+              </a>
+            </li>
+            {% if user.perfil.agencia.id == 5 %}   
+            <li>
+              <a href="/ver-cliente-especifica-general-status/"><i class="icon-search"></i> Consulta
+                <span>Especifica General</span>
+              </a>
+            </li>
+            {% endif %}
+             <li>
+              <a href="/g-cliente-es-a/"><i class="icon-search"></i> Consulta
+                <span>Cliente</span>
+              </a>
+            </li>
+
+             </ul>
+          {% endif %}
+          
+          <ul class="metro-sidenav clearfix">
+          {% if activoc2 %}
+            {% if request.session.tipous == 2 %}
+            <li>
+              <a href="/editar-cliente/{{usuario.id}}" class="bondi-blue"><i class="icon-edit"></i><span>Editar</span></a>
+            </li>
+
+            <li>
+              <a href="/formulario-tutor/{{usuario.id}}" class="blue"><i class="icon-user"></i><span>Tutor</span></a>
+            </li>
+            <li>
+              <a href="/cargar-custodia-cliente/{{usuario.id}}" class=" blue"><i class="icon-truck"></i><span>Lleva/Recoge</span></a>
+            </li>
+
+            <li>
+              <a href="/cambiar-programa/{{usuario.id}}" class="blue-violate"><i class="icon-plane"></i><span>Programa</span></a>
+            </li>
+            <li>
+              <a href="/seguimiento-cliente/{{usuario.id}}" class="magenta"><i class="icon-phone"></i><span>Seguimiento</span></a>
+            </li>
+            <li>
+              <a href="/pagos/{{usuario.id}}" class="green"><i class="icon-money"></i><span>Pagos</span></a>
+            </li>
+            <li>
+              <a href="/agregar-foto-cliente/{{usuario.id}}" class="brown"><i class="icon-camera"></i><span>Foto</span></a>
+            </li>
+            
+            {%  if asesor != None %}
+            <li>
+              <a href="/actualizar-asesor/{{usuario.id}}" class="dark-yellow"><i class="icon-user-md"></i><span>Asesor</span></a>
+            </li>
+            {% endif %}
+
+            
+            <li>
+              <a href="javascript:void(0);" onclick="javascript: window.open('/contrato-cliente/{{usuario.id}}', '_blank'); " class="magenta"><i class="icon-print"></i><span>Contrato</span>
+              </a>
+            </li>
+           
+            <li>
+              <a href="/cargar-documentos-cliente/{{usuario.id}}" class="orange"><i class="icon-file"></i><span>Documentos</span></a>
+            </li>
+            
+            
+            {% endif %}
+          {% endif %}
+
+
+          </ul>
+        </div>
+
+      <div class=" 
+        {% if activop %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        "
+        id="main">
+
+
+          <h4 class="side-head">Personal</h4>
+          
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/registrar-personal/" class="green"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consultar-personal/" class="green"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_personal_eliminados_g/" class="brown"><i class="icon-search"></i><span>Desactivados</span></a>
+            </li>
+
+          </ul>
+        </div>
+
+
+
+        <div class=" 
+        {% if activod %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="ui-elements">
+          <h4 class="side-head">Departamentos</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/registrar-departamento/" class="dark-yellow"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consultar-departamento/" class=" blue"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+          </ul>
+        </div>
+
+        <div class=" 
+        {% if activopu %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="pages">
+          <h4 class="side-head">Puestos</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/registrar-puesto/" class="magenta"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consultar-puesto/" class="bondi-blue"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+          </ul>
+        </div>
+        
+      </div>
+    </div>
+  </div>

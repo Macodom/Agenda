@@ -1,0 +1,251 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Consulta de Hotel
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 8 %}
+  {% include 'headeragencias.html' %}
+  {% include 'menuizquierdoagencias.html' %}
+{% endif %}
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/view-prog-add-hotel/">Listas de programas para hotel</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Consulta de Hotel</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/view-prog-add-hotel/">Listas de programas para hotel</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Consulta de Hotel</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/view-prog-add-hotel/">Listas de programas para hotel</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Consulta de Hotel</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+{% if request.session.tipous == 8 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-agencias/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/view-prog-add-hotel/">Listas de programas para hotel</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Consulta de Hotel</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Búsqueda de Hotel</h3>
+            </div>
+            <div class="widget-container">
+
+              <div class="btn-group" id="url">
+                <a href="/formulario-hotel/" title="Agregar Hotel">
+                  <button class="btn btn-round-min btn btn-info" data-original-title="Agregar Hotel">
+                        <span><i class="icon-plus"></i></span>
+                  </button>
+                </a>
+              </div>
+
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Nombre</th>
+                    <th> Dirección </th>
+                    <th> Ciudad - Estado </th>
+                    <th> Código postal </th>
+                    <th> Teléfono </th>
+                    <th> Acción </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {%  for ho in hotel  %}
+                  <tr>
+                    <td>{{ho.descripcion}}</td>
+                    <td>{{ho.direccion}}</td>
+                    <td>{{ho.ciudad_estado}}</td>
+                    <td>{{ho.codigo_postal}}</td>
+                    <td>{{ho.telefono}} </td>
+
+                    <td>
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or request.session.tipous == 8%}
+<a href="/editar-hotel/{{ho.id}}/">
+                          <button class="btn btn-info" title="Editar">
+                            <i class="icon-edit"></i>
+                          </button>
+</a>
+
+<a href="/eliminar-hotel/{{ho.id}}/">
+                          <button class="btn btn-danger" title="Eliminar">
+                            <i class="icon-remove"></i>
+                          </button>
+</a>  
+{% endif %}
+
+
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

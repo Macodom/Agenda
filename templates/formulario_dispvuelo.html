@@ -1,0 +1,294 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+  {% if edit %} 
+      Edición de Disponibilidad de Vuelo                
+  {% else %}
+      Registro de Disponibilidad de Vuelo  
+  {% endif %}
+</title>
+
+{% include "base_administrador.html" %}
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Disponibilidad de Vuelo
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Registro de Disponibilidad de Vuelo</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Disponibilidad de Vuelo
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Registro de Disponibilidad de Vuelo</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Disponibilidad de Vuelo
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Registro de Disponibilidad de Vuelo</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+<!-- Aqui van los roidfluid -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                        {% if edit %} 
+               <h3> Editar Disponibilidad de Vuelo</h3>             
+                        {% else %}
+              <h3> Registro de Disponibilidad de Vuelo</h3>          
+                        {% endif %}
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+                   
+                  <div class="control-group">
+                    <label class="control-label">Programa</label>
+                    <div class="controls">
+                      {{fordispvuelo.programa}}
+                    </div>
+                  </div>
+ 
+
+                  <div class="control-group">
+                    <label class="control-label">Mex Ninos</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.totalmexninos}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Mex Niñas</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.totalmexninas}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Total Mex Ninos</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.totalmex}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Chaperon Mex Masculino</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.chaperonmexm}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div> 
+
+                  <div class="control-group">
+                    <label class="control-label">Chaperon Mex Femenino</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.chaperonmexf}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Total Chaperon Mex</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.chaperonmex}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div>  
+
+                  
+
+                  <div class="control-group">
+                    <label class="control-label">Vsa Niños</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.totalvsaninos}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div> 
+
+                  <div class="control-group">
+                    <label class="control-label">Vsa Niñas</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.totalvsaninas}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div> 
+
+                  <div class="control-group">
+                    <label class="control-label">Total Vsa Niños</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.totalvsa}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div> 
+
+
+                  
+
+                  <div class="control-group">
+                    <label class="control-label">Chaperon Vsa Masculino</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.chaperonvsam}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div> 
+
+                  <div class="control-group">
+                    <label class="control-label">Chaperon Vsa Femenino</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.chaperonvsaf}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Total Chaperon Vsa</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.chaperonvsa}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div>  
+
+
+                  <div class="control-group">
+                    <label class="control-label">Año</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{fordispvuelo.year}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div>  
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

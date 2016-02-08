@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Chaperon por año
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Cargar Cuarto al Programa "{{pv.programa}}" con Fecha de Salida "{{pv.vigencia}}"
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/cargar-chaperon-programa/{{idq}}">
+Lista de los clientes disponibles para registrar</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Cargar Cuartos</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Cargar Cuarto al Programa "{{pv.programa}}" con Fecha de Salida "{{pv.vigencia}}"
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/cargar-chaperon-programa/{{idq}}">
+Lista de los clientes disponibles para registrar</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Cargar Cuartos</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+<div class="row-fluid">
+        <div class="span12">
+                  <div class="span5">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+               
+              <h3> Registro de Cuartos a los clientes</h3>          
+                     
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+            <form name="personal" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+
+
+
+              <div class="control-group">
+                    <label class="control-label">Personal</label>
+                    <div class="controls">
+                      <select id="chaperon" name="chaperon" class="span12">
+                        <option selected="selected" value="{{objc.id}}"> 
+                          {% if objc.chaperonext %}
+                      {{objc.chaperonext.nombre}} {{objc.chaperonext.apellidos}}
+                      {% endif %}
+                      {% if objc.chaperonper %}
+                      {{objc.chaperonper.user.first_name}} {{objc.chaperonper.user.last_name}}
+                      {% endif %}
+                        </option>
+                      </select>
+
+                      
+                    </div>
+              </div>
+
+               <div class="control-group">
+                    <label class="control-label">Cuarto</label>
+                    <div class="controls">
+                     <select id="cuarto" name="cuarto" class="span12">
+                      <option value="" selected="selected">--------</option>
+                      {% for cua in cuarto %}
+                      
+                      <option value="{{cua.id}}">{{cua.name}} </option>
+                      {% endfor %}
+
+                    </select>
+                    </div>
+              </div>
+
+
+              <div class="control-group">
+                    <label class="control-label">Cliente</label>
+                    <div class="controls">
+
+<select  {% if pv.programa_id <= 3  %} id="id_cliente" {% else %} id="id_cliente2" {% endif %}  class="span12" size="16" name="cliente" multiple="multiple">
+                      
+                      {% for c in clientearray %}
+
+            <option  value="{{c.id}}"> {{ c.name }} {{ c.last_name }} </option>
+                             
+                      {% endfor %}   
+                     </select>
+                     (Presione Ctrl para seleccionar varios Clientes) 
+                    </div>
+              </div>
+
+                        
+
+               <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+              </div>
+
+              <input type="hidden" value="{{pv.id}}" name="paquete"> 
+            </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- fin -->
+
+                <div class="span7">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+               
+              <h3> Lista de Chaperon con sus clientes</h3>          
+                     
+
+            </div>
+            <div class="widget-container">
+
+              <div class="form-container grid-form form-background">
+                <table class="table  table-bordered paper-table  ">
+                  {% for chp in vchapagregado %}
+                    <thead>
+                      {% if chp.chaperonper.id %}
+                      <tr>
+                        <th>  {{ chp.chaperonper.user.first_name }} {{chp.chaperonper.user.last_name }} -- {{chp.color }}</th> <th>Cuarto</th> <th>Acción</th>
+                      </tr>
+                    {% endif %}
+                   {% if chp.chaperonext.id %}
+                      <tr>
+                        <th>  {{ chp.chaperonext.nombre }} {{chp.chaperonext.apellidos }} -- {{chp.color }}</th> <th>Cuarto</th> <th>Acción</th>
+                      </tr>
+                    {% endif %}
+                    
+                    </thead>
+                    <tbody> 
+                     {% if chp.chaperonper.id %}  
+                    {% for cl in lisc %}                 
+                      <tr>
+                        <td>
+        <a href="#">{{cl.chapeyear.cliente.user.first_name}} {{cl.chapeyear.cliente.user.last_name}} </a>
+                        </td>
+                        <td>
+                         {{cl.cuarto}}
+                        </td>
+                        <td>
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="btn-toolbar row-action">
+    <div class="btn-group">
+        <a href="/eliminarcc/{{cl.id}}/{{idpq}}/{{idq}}/">
+            <button class="btn btn-danger" data-original-title="Quitar cliente">
+                <i class=" icon-remove-sign"></i>
+            </button>
+        </a>
+    </div>
+
+</div>
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  <div class="btn-toolbar row-action">
+    <div class="btn-group">
+        <a href="/eliminar-cc/{{cl.id}}/{{idpq}}/{{idq}}/">
+            <button class="btn btn-danger" data-original-title="Quitar cliente">
+                <i class=" icon-remove-sign"></i>
+            </button>
+        </a>
+    </div>
+
+</div>
+{% endif %}
+
+
+
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    {% endif %}
+                    {% if chp.chaperonext.id %}
+                    {% for cl in lisc %}                
+                      <tr>
+                        <td>
+        <a href="#">{{cl.chapeyear.cliente.user.first_name}} {{cl.chapeyear.cliente.user.last_name}}</a>
+                        </td>
+                        <td>
+                         {{cl.cuarto}}
+                        </td>
+                        <td>
+                          
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="btn-toolbar row-action">
+    <div class="btn-group">
+        <a href="/eliminarcc/{{cl.id}}/{{idpq}}/{{idq}}/">
+            <button class="btn btn-danger" data-original-title="Quitar cliente">
+                <i class=" icon-remove-sign"></i>
+            </button>
+        </a>
+    </div>
+
+</div>
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  <div class="btn-toolbar row-action">
+    <div class="btn-group">
+        <a href="/eliminar-c/{{cl.id}}/{{idpq}}/{{idq}}/">
+            <button class="btn btn-danger" data-original-title="Quitar cliente">
+                <i class=" icon-remove-sign"></i>
+            </button>
+        </a>
+    </div>
+
+</div>
+{% endif %}
+                          
+                        </td>
+                      </tr>
+                      {% endfor %}
+                      {% endif %}
+                    </tbody>
+                {% endfor  %}
+              </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

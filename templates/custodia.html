@@ -1,0 +1,536 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+custodia
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+	<div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% include 'menu_navegacion_cliente.html' %}
+
+    	<div class="row-fluid">
+    		<div class="span12">
+    			<div class="content-widgets gray">
+    				           
+                      <div class="widget-head blue">
+					              <h3>Custodia</h3>
+					            </div>
+
+					            <div class="widget-container">
+              					<div class="form-container grid-form form-background">
+
+
+                          
+              <table class="stat-table table table-stats table-striped table-sortable table-bordered">
+              <tbody>
+
+              <tr>
+                <th>Quien lo lleva / como llega</th>
+                <th>Datos de Vuelo</th>
+                <th>Responsable recibe</th>
+                <th>Quien lo recibe / como regresa</th>
+                <th>Datos de Vuelo</th>
+                <th>Responsable entrega</th>
+                <th>Acción</th>
+              </tr>
+
+            
+              <tr>
+                <td>
+                  {{cc.llevallega}}
+                </td>
+                <td>
+                    {{cc.dv1}}
+                </td>
+                <td>
+                  {%  if cc.status1 == 1 %}
+                  {{cc.personal1.user.first_name}} {{cc.personal1.user.last_name}}
+                  {% endif %}
+                  {%  if cc.status1 == 2 %}
+                  {{cc.chaperon1}}
+                  {% endif %}
+                  {%  if cc.status1 == 3 %}
+                  {{cc.otro1}}
+                  {% endif %}
+                </td>
+                <td>
+                {{cc.recibeentraga}}
+                </td>
+                <td>
+
+                    {{cc.dv2}}
+                
+                </td>
+                <td>
+                  {%  if cc.status2 == 1 %}
+                  
+                  {{cc.personal2.user.first_name}} {{cc.personal2.user.last_name}}
+                  
+                  {% endif %}
+
+                  {%  if cc.status2 == 2 %}
+                  {{cc.chaperon2}}
+                  {% endif %}
+                  {%  if cc.status2 == 3 %}
+                  {{cc.otro2}}
+                  {% endif %}
+                </td>
+                <td class="center ">
+                  <div class="btn-toolbar row-action">
+                    <div class="btn-group">
+{% if user.is_staff or request.session.tipous == 1 %}
+   <a href="/actualizar-custodia-cliente/{{cliente.user_id}}">
+                        <button class="btn btn-info" data-original-title="Editar">
+                          <i class="icon-edit"></i>
+                        </button>
+                      </a>
+{% endif %}
+{% if request.session.tipous == 2 %}
+    <a href="/actualizar-custodia-clienteg/{{cliente.user_id}}">
+                        <button class="btn btn-info" data-original-title="Editar">
+                          <i class="icon-edit"></i>
+                        </button>
+                      </a>
+{% endif %}
+
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+    <a href="/actualizar-custodia-clienteg-a/{{cliente.user_id}}">
+                        <button class="btn btn-info" data-original-title="Editar">
+                          <i class="icon-edit"></i>
+                        </button>
+                      </a>
+{% endif %}
+                    
+
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+
+        
+
+
+              </tbody>
+              </table>
+
+
+{% if not statuscustodia%}
+
+<form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+	{% csrf_token %}
+
+
+
+                    
+	                  <div class="control-group">
+                    <label class="control-label">Quien lo lleva/ Como llega</label>
+                    <div class="controls">
+                      {{c.llevallega}}
+                    </div>
+                  </div>
+
+
+<div id="dv1">
+                  <div class="control-group">
+                    <label class="control-label">Ingrese los Datos de Vuelo</label>
+                    <div class="controls">
+                      {{c.dv1}}
+                    </div>
+                  </div>
+</div>
+                <div class="control-group">
+                  <label class="control-label">
+                      Responsable recibe
+                  </label>
+                  <div class="controls">
+                    <label class="radio">
+                      <input type="radio" id="p1" checked="" value="1" name="rr"></input>
+                      Personal
+                    </label>
+                    <label class="radio">
+                      <input type="radio" id="c1" value="2" name="rr"></input>
+                      Chaperon    
+                    </label>
+                    <label class="radio">
+                      <input type="radio" id="o1" value="3" name="rr"></input>
+                      Otro    
+                    </label>
+                  </div>
+                </div>
+<div id="divp1">
+
+                <div class="control-group">
+                    <label class="control-label">Personal</label>
+                    <div class="controls">
+                      <select id="personal1" class="span12" name="personal1">
+                        <option selected="selected" value="0">--------</option>
+                    {%  for u in usuario2  %}
+                      {%  for p in perfil  %}
+                        {% if p.user_id == u.id %}
+                        <option  value="{{p.user_id}}"> {{u.first_name}} {{u.last_name}}</option>
+                        {% endif%}
+                      {% endfor%}
+                    {% endfor%}
+                    </select>    
+                    </div>
+                  </div>
+</div>
+<div id="divc1">
+
+                <div class="control-group">
+                    <label class="control-label">Chaperon</label>
+                    <div class="controls">
+                    <select id="chaperon1" class="span12" name="chaperon1">
+                      <option selected="selected" value="0">--------</option>
+                     {%  for cp in chap  %}
+                      <option  value="{{cp.id}}"> {{cp.nombre}} {{cp.apellidos}}</option>
+                     {% endfor%}
+                     </select>    
+                    </div>
+                  </div>
+</div>
+<div id="divo1">
+
+                <div class="control-group">
+                    <label class="control-label">Nombre completo</label>
+                    <div class="controls">
+                    <input id="otro1" class="span12" type="text" name="otro1"></input>
+                    </div>
+                  </div>
+</div>
+
+                  <div class="control-group">
+                    <label class="control-label">Quien lo recibe/Como regresa</label>
+                    <div class="controls">
+                     {{c.recibeentraga}}
+                    </div>
+                  </div>
+
+                 
+<div id="dv2">
+                <div class="control-group">
+                  <label class="control-label">Ingrese los Datos de Vuelo</label>
+                  <div class="controls">
+                    {{c.dv2}}             
+                  </div>
+                </div>
+ </div>
+
+                <div class="control-group">
+                  <label class="control-label">
+                      Responsable entrega
+                  </label>
+                  <div class="controls">
+                    <label class="radio">
+                      <input type="radio" id="p2" checked="" value="1" name="re"></input>
+                      Personal
+                    </label>
+                    <label class="radio">
+                      <input type="radio" id="c2" value="2" name="re"></input>
+                      Chaperon    
+                    </label>
+                    <label class="radio">
+                      <input type="radio" id="o2" value="3" name="re"></input>
+                      Otro    
+                    </label>
+                  </div>
+                </div>
+
+
+<div id="divp2">
+
+                <div class="control-group">
+                    <label class="control-label">Personal</label>
+                    <div class="controls">
+                      <select id="personal2" class="span12" name="personal2">
+                        <option selected="selected" value="0">--------</option>
+                    {%  for u in usuario2  %}
+                      {%  for p in perfil  %}
+                        {% if p.user_id == u.id %}
+                        <option  value="{{p.user_id}}"> {{u.first_name}} {{u.last_name}}</option>
+                        {% endif%}
+                      {% endfor%}
+                    {% endfor%}
+                    </select>    
+                    </div>
+                  </div>
+</div>
+<div id="divc2">
+
+                <div class="control-group">
+                    <label class="control-label">Chaperon</label>
+                    <div class="controls">
+                    <select id="chaperon2" class="span12" name="chaperon2">
+                      <option selected="selected" value="0">--------</option>
+                     {%  for cp in chap  %}
+                      <option  value="{{cp.id}}"> {{cp.nombre}} {{cp.apellidos}} </option>
+                     {% endfor%}
+                     </select>    
+                    </div>
+                  </div>
+</div>
+<div id="divo2">
+
+                <div class="control-group">
+                    <label class="control-label">Nombre completo</label>
+                    <div class="controls">
+                    <input id="otro2" class="span12" type="text" name="otro2"></input>
+                    </div>
+                  </div>
+</div>
+
+<div id="boton">
+                  	{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+{% endif %}
+</div>
+
+					</form>
+{%  endif %}
+
+
+{% if s %}
+
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+  {% csrf_token %}
+
+
+
+                    
+                    <div class="control-group">
+                    <label class="control-label">Quien lo lleva/ Como llega</label>
+                    <div class="controls">
+                      {{c.llevallega}}
+                    </div>
+                  </div>
+
+<!--
+<div id="dv1">
+-->  
+                  <div class="control-group">
+                    <label class="control-label">Ingrese los Datos de Vuelo</label>
+                    <div class="controls">
+                      {{c.dv1}}
+                    </div>
+                  </div>
+<!--
+</div>
+-->
+                <div class="control-group">
+                  <label class="control-label">
+                      Responsable recibe
+                  </label>
+                  <div class="controls">
+                    <label class="radio">
+                      <input type="radio" id="p1" {% if estcus.status1 == 1 %} checked="" {% endif %}  value="1" name="rr"></input>
+                      Personal
+                    </label>
+                    <label class="radio">
+                      <input type="radio" id="c1" {% if estcus.status1 == 2 %} checked="" {% endif %} value="2" name="rr"></input>
+                      Chaperon    
+                    </label>
+                    <label class="radio">
+                      <input type="radio" id="o1" {% if estcus.status1 == 3 %} checked="" {% endif %} value="3" name="rr"></input>
+                      Otro    
+                    </label>
+                  </div>
+                </div>
+<div id="divp1">
+
+                <div class="control-group">
+                    <label class="control-label">Personal</label>
+                    <div class="controls">
+                      <select id="personal1" class="span12" name="personal1">
+                        <option selected="selected" value="0">--------</option>
+                    {%  for u in usuario2  %} 
+                      {%  for p in perfil  %}
+                        {% if p.user_id == u.id %} 
+                        <option {% if estcus.personal1_id == p.user_id  %} selected="selected" {%  endif %}  value="{{p.user_id}}"> {{u.first_name}} </option>
+                        {% endif%}
+                      {% endfor%}
+                    {% endfor%}
+                    </select>    
+                    </div>
+                  </div>
+</div>
+<div id="divc1">
+
+                <div class="control-group">
+                    <label class="control-label">Chaperon</label>
+                    <div class="controls">
+                    <select id="chaperon1" class="span12" name="chaperon1">
+                      <option selected="selected" value="0">--------</option>
+                     {%  for cp in chap  %}
+                      <option {% if estcus.chaperon1_id == cp.id  %} selected="selected" {%  endif %}   value="{{cp.id}}"> {{cp.nombre}} </option>
+                     {% endfor%}
+                     </select>    
+                    </div>
+                  </div>
+</div>
+<div id="divo1">
+
+                <div class="control-group">
+                    <label class="control-label">Nombre completo</label>
+                    <div class="controls">
+                    <input id="otro1" class="span12" type="text" name="otro1"></input>
+                    </div>
+                  </div>
+</div>
+
+                  <div class="control-group">
+                    <label class="control-label">Quien lo recive/Como regresa</label>
+                    <div class="controls">
+                     {{c.recibeentraga}}
+                    </div>
+                  </div>
+
+<!--                 
+<div id="dv2">
+-->
+                <div class="control-group">
+                  <label class="control-label">Ingrese los Datos Vuelo</label>
+                  <div class="controls">
+                    {{c.dv2}}             
+                  </div>
+                </div>
+<!--
+</div>
+-->
+
+                <div class="control-group">
+                  <label class="control-label">
+                      Responsable recibe
+                  </label>
+                  <div class="controls">
+                    <label class="radio">
+                      <input type="radio" id="p2" {% if estcus.status2 == 1 %} checked="" {% endif %} checked="" value="1" name="re"></input>
+                      Personal
+                    </label>
+                    <label class="radio">
+                      <input type="radio" id="c2" {% if estcus.status2 == 2 %} checked="" {% endif %} value="2" name="re"></input>
+                      Chaperon    
+                    </label>
+                    <label class="radio">
+                      <input type="radio" id="o2" {% if estcus.status2 == 3 %} checked="" {% endif %} value="3" name="re"></input>
+                      Otro    
+                    </label>
+                  </div>
+                </div>
+
+
+<div id="divp2">
+
+                <div class="control-group">
+                    <label class="control-label">Personal</label>
+                    <div class="controls">
+                      <select id="personal2" class="span12" name="personal2">
+                        <option selected="selected" value="0">--------</option>
+                    {%  for u in usuario2  %}
+                      {%  for p in perfil  %}
+                        {% if p.user_id == u.id %}
+                        <option {% if estcus.personal2_id == p.user_id  %} selected="selected" {%  endif %}  value="{{p.user_id}}"> {{u.first_name}} </option>
+                        {% endif%}
+                      {% endfor%}
+                    {% endfor%}
+                    </select>    
+                    </div>
+                  </div>
+</div>
+<div id="divc2">
+
+
+
+                <div class="control-group">
+                    <label class="control-label">Chaperon </label>
+                    <div class="controls">
+                    <select id="chaperon2" class="span12" name="chaperon2">
+                      <option selected="selected" value="0">--------</option>
+                     {%  for cp in chap  %}
+                      <option {% if estcus.chaperon2_id == cp.id  %} selected="selected" {%  endif %}  value="{{cp.id}}"> {{cp.nombre}}</option>
+                     {% endfor%}
+                     </select>    
+                    </div>
+                  </div>
+</div>
+<div id="divo2">
+
+                <div class="control-group">
+                    <label class="control-label">Nombre completo</label>
+                    <div class="controls">
+                    <input id="otro2" class="span12" type="text" name="otro2"></input>
+                    </div>
+                  </div>
+</div>
+
+<div id="boton">
+                   {% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or cliente.asesor_id == user.perfil.id  %}
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+{% endif %}
+</div>
+
+          </form>
+{%  endif %}
+
+     
+		  </div>
+		  </div>
+		  
+
+      </div>
+		  </div>
+      </div>
+    </div>
+    </div>
+{% include 'footer.html' %}
+      <div class="scroll-top">
+        <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+      </div>
+</div>
+
+{% endblock %}	
