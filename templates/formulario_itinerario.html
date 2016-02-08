@@ -1,0 +1,214 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+  {% if edit %} 
+      Edición de Disponibilidad de Vuelo                
+  {% else %}
+      Registro de Disponibilidad de Vuelo  
+  {% endif %}
+</title>
+
+{% include "base_administrador.html" %}
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Disponibilidad de Vuelo
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Registro de Itinerario</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Disponibilidad de Vuelo
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Registro de Itinerario</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+<!-- Aqui van los roidfluid -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="span6">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                       
+              <h3> Registro de Itinerarios</h3>          
+                      
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+                   
+                  <div class="control-group">
+                    <label class="control-label">Programa</label>
+                    <div class="controls">
+                      {{foritinerario.programa}}
+                    </div>
+                  </div>
+ 
+
+                  
+
+
+                  <div class="control-group">
+                    <label class="control-label">Año</label>
+                    <div class="controls">
+                       <div class="input-prepend input-append">
+                        {{foritinerario.year}}
+                        <span class="add-on">.00</span>
+                        </div>  
+                    </div>
+                  </div>  
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span6">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                       
+              <h3> Lista de programas cargados</h3>          
+                       
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Id</th>
+                    <th> Nombre del programa</th>
+                     <th> Año </th>
+                     <th> Acción </th>
+                   
+                    
+                  </tr>
+                </thead>
+                <tbody>
+             
+
+                  {%  for it in objItinerario  %}
+                  <tr>
+                    <td>{{it.id}}</td>
+                    <td>{{it.programa}}</td>
+                     <td> {{it.year}} </td>
+                     <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+{% if user.is_staff or request.session.tipous == 1%}                          
+<a href="/add-fecha-itinerario-admin/{{it.id}}">
+                        <button title="Agregar Fechas" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-plus">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+{% endif %}
+ {% if request.session.tipous == 2 %}
+ <a href="/add-gerent-fecha-itinerario/{{it.id}}">
+                        <button title="Agregar Precio" class="btn btn-round-min btn btn-info" >
+                          <span>
+                            <i class="icon-money">
+                            </i>
+                          </span>
+                        </button>
+</a> 
+ {% endif %}
+
+ 
+                        
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+          
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,429 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+      Formulario Reportes por Asesor
+</title>
+
+{% include "base_administrador.html" %} 
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+{% if request.session.tipous == 4 %}
+  {% include 'headercaja.html' %}
+  {% include 'menuizquierdocaja.html' %}
+{% endif %}
+
+{% if request.session.tipous == 7 %}
+  {% include 'headermarketing.html' %}
+  {% include 'menuizquierdomarketing.html' %}
+{% endif %}
+
+{% if request.session.tipous == 8 %}
+  {% include 'headeragencias.html' %}
+  {% include 'menuizquierdoagencias.html' %}
+{% endif %}
+
+  
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Control Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 3 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Control Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+ {% if request.session.tipous == 4 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-caja/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Control Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+
+{% if request.session.tipous == 7 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-marketing/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Control Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+{% if request.session.tipous == 8 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Reportes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-agencias/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Reportes de Control Asesor</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+  
+
+
+
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+
+            <h3>Reporte por Semanas   </h3>            
+      
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="reporteasesor" class="form-horizontal left-align" id="reporteasesor" method="POST" action="">
+                  {% csrf_token %}
+                   
+
+                <div class="control-group">
+                <label class="control-label">Asesor
+                </label>
+                <div class="controls">
+                    <select id="cvease" class="span6" name="cvease">
+                        <option selected="selected" value="">---------</option>
+                         {% for a in ase %}  
+                        <option value="{{a.user.id}}">{{a.user.first_name}} {{a.user.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+  
+
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Consultar</button>
+
+                  </div>
+
+                </form>
+
+
+{% if cva != 0 %}
+                  <div class="form-actions">
+<a href="/admin-control-reporte-pdf-asesor-semanal/{{cva}} "    
+target="_blank">
+                  <button class="btn btn-success" data-original-title="PDF">
+                      <i class="icon-print"></i> PDF
+                  </button>
+</a>
+<a href="/admin-control-reporte-excel-asesor-semanal/{{cva}}"   
+target="_blank">
+                  <button class="btn btn-info" data-original-title="EXCEL">
+                      <i class="icon-print"></i> EXCEL
+                  </button>
+</a>
+
+                  </div>
+{% endif %}                  
+               
+
+
+{% if esta %}
+              <table class="table responsive table-stats table-striped table-sortable table-bordered">
+                <tbody>
+                  <tr>
+                    <th colspan="25" class="center">
+<h4><strong>Control de Ventas por Asesor Semanal</strong></h4>
+                    </th>
+                    </tr>
+                    <tr>
+
+                    <th colspan="2" class="center">
+<strong>Nombre del Asesor</strong>
+                    </th>
+                    <th colspan="6" class="center">
+{{asesor.user.first_name}} {{asesor.user.last_name}}
+                    </th>
+                    <th colspan="3" class="center">
+<strong>Agencia/Sucursal</strong>
+                    </th>
+                    <th colspan="7" class="center">
+{{asesor.agencia}}
+                    </th>
+                    <th colspan="2" class="center">
+<strong>Semana</strong>
+                    </th>
+                    <th colspan="5" class="center">
+                      {{haceochodia}} - {{ayer}} 
+                    </th>
+                </tbody>
+              </table>
+
+              <table class="table responsive table-stats table-striped table-sortable table-bordered">
+                <tbody>
+
+                  </tr>
+                  
+                  <tr>
+                    <th class="center"> {{y1}}</th>
+                    {% for p in titulo1 %}
+                    <th class="center"> {{p.pf}}</th>
+                    <th class="center"> {{p.pm}}</th>
+                    
+                    {% endfor %}
+                    <th class="center"> TOTAL</th>
+                  </tr>
+                  
+
+                    <tr>
+                      <th class="center">MEX</th>
+                      {% for c1 in cont1 %}
+                      <th class="center"> {{c1.mf}}</th>
+                      <th class="center"> {{c1.mm}}</th>
+                      {% endfor %}
+                      <th class="center"> {{t1a1}}</th>
+                    </tr>
+
+                    <tr>
+                      <th class="center">VSA</th>
+                      {% for c1 in cont1 %}
+                      <th class="center"> {{c1.vf}}</th>
+                      <th class="center"> {{c1.vm}}</th>
+                      {% endfor %}
+                      <th class="center"> {{t2a1}}</th>
+                    </tr>
+
+                    <tr>
+                      <th class="center">TOTAL</th>
+                      {% for c1 in cont1 %}
+                      <th class="center"> {{c1.t1a1f}}</th>
+                      <th class="center"> {{c1.t2a1f}}</th>
+                      {% endfor %}
+                      <th class="center"> {{rta1}}</th>
+                    </tr>
+
+                   
+                </tbody>
+              </table>
+
+              <table class="table responsive table-stats table-striped table-sortable table-bordered">
+                <tbody>
+
+                  </tr>
+                  
+                  <tr>
+                    <th class="center"> {{y2}}</th>
+                    {% for p in titulo1 %}
+                    <th class="center"> {{p.pf}}</th>
+                    <th class="center"> {{p.pm}}</th>
+                    
+                    {% endfor %}
+                    <th class="center"> TOTAL</th>
+                  </tr>
+                  
+
+                    <tr>
+                      <th class="center">MEX</th>
+                      {% for c1 in cont2 %}
+                      <th class="center"> {{c1.mf}}</th>
+                      <th class="center"> {{c1.mm}}</th>
+                      {% endfor %}
+                      <th class="center"> {{t1a2}}</th>
+                    </tr>
+
+                    <tr>
+                      <th class="center">VSA</th>
+                      {% for c1 in cont2 %}
+                      <th class="center"> {{c1.vf}}</th>
+                      <th class="center"> {{c1.vm}}</th>
+                      {% endfor %}
+                      <th class="center"> {{t2a2}}</th>
+                    </tr>
+
+                    <tr>
+                      <th class="center">TOTAL</th>
+                      {% for c1 in cont2 %}
+                      <th class="center"> {{c1.t1a1f}}</th>
+                      <th class="center"> {{c1.t2a1f}}</th>
+                      {% endfor %}
+                      <th class="center"> {{rta2}}</th>
+                    </tr>
+
+                   
+                </tbody>
+              </table>
+
+              <table class="table responsive table-stats table-striped table-sortable table-bordered">
+                <tbody>
+
+                  </tr>
+                  
+                  <tr>
+                    <th class="center"> {{y3}}</th>
+                    {% for p in titulo1 %}
+                    <th class="center"> {{p.pf}}</th>
+                    <th class="center"> {{p.pm}}</th>
+                    
+                    {% endfor %}
+                    <th class="center"> TOTAL</th>
+                  </tr>
+                  
+
+                    <tr>
+                      <th class="center">MEX</th>
+                      {% for c1 in cont3 %}
+                      <th class="center"> {{c1.mf}}</th>
+                      <th class="center"> {{c1.mm}}</th>
+                      {% endfor %}
+                      <th class="center"> {{t1a3}}</th>
+                    </tr>
+
+                    <tr>
+                      <th class="center">VSA</th>
+                      {% for c1 in cont3 %}
+                      <th class="center"> {{c1.vf}}</th>
+                      <th class="center"> {{c1.vm}}</th>
+                      {% endfor %}
+                      <th class="center"> {{t2a3}}</th>
+                    </tr>
+
+                    <tr>
+                      <th class="center">TOTAL</th>
+                      {% for c1 in cont3 %}
+                      <th class="center"> {{c1.t1a1f}}</th>
+                      <th class="center"> {{c1.t2a1f}}</th>
+                      {% endfor %}
+                      <th class="center"> {{rta3}}</th>
+                    </tr>
+
+                   
+                </tbody>
+              </table>
+{%  endif %}
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

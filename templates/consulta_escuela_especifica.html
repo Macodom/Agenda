@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+
+      Consulta Especifica de Escuela                 
+
+
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Escuelas
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta_escuela/">Consulta de Escuelas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+
+            <li class="active">Consulta Especifica de Escuelas</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Escuelas
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consultar-escuela/">Consulta de Escuelas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+
+            <li class="active">Consulta Especifica de Escuelas</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Escuelas
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+
+            <li>
+              <a href="/consultar-escuela-a/">Consulta de Escuelas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+
+            <li class="active">Consulta Especifica de Escuelas</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+
+
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">                       
+              <h3> Consulta Especifica de Escuela</h3>               
+            </div>
+              <div class="widget-container">
+              <table class="stat-table table responsive paper-table table-stats table-striped table-sortable table-bordered">
+              <tbody>
+
+              <tr>
+                <th>Asesor</th>
+                <th>Escuela</th>
+                <th>Nivel</th>
+                <th> Director</th>
+                <th> Fecha de Nacimiento</th>
+                <th> Acción</th>
+               
+                
+              </tr>
+
+              <tr>
+                <td>
+                  {{e.asesor.clave}}
+                </td>
+                <td>
+                  {{e.nombre}}
+                </td>
+                <td>
+                 {% for es in e2 %}
+                    {{es.nivel}}
+                  {% endfor %}
+                </td>
+                <td> 
+                {{e.director}} 
+                </td>
+               
+                <td>
+                {% if e.fecha_nacimiento %}
+                  {{e.fecha_nacimiento}}
+                {%  endif %}
+                </td>
+
+                <td>
+{% if user.is_staff or request.session.tipous == 1 %}
+<a href="/editarescuela/{{e.id}}" title="Editar Escuela">
+<button class="btn btn-round-min btn btn-info " type="submit">
+   <span>
+        <i class="icon-edit"></i>
+    </span>
+</button>
+</a>
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+<a href="/editar-escuela/{{e.id}}" title="Editar Escuela">
+<button class="btn btn-round-min btn btn-info " type="submit">
+   <span>
+        <i class="icon-edit"></i>
+    </span>
+</button>
+</a>
+{% endif %}
+
+{% if request.session.tipous == 3 and e.asesor_id == user.perfil.id %}
+<a href="/editar-escuela-a/{{e.id}}" title="Editar Escuela">
+<button class="btn btn-round-min btn btn-info " type="submit">
+   <span>
+        <i class="icon-edit"></i>
+    </span>
+</button>
+</a>
+
+{% endif %}
+
+
+                </td>
+                
+              </tr>
+
+              <tr>
+                 <th> Dirección</th>
+                <th> Ciudad</th>
+                <th> Estado</th>
+                <th> Código Postal</th>
+                <th colspan="2"> Celular</th>
+              </tr>
+
+              <tr>
+                <td>
+                  {{e.direccion}}
+                </td>
+                <td>
+                   {{e.localidad}}
+                </td>
+                <td>
+                   {{e.estado}}
+                </td>
+                <td>
+                  {{e.codigo_postal}}
+                </td>
+                <td  <th colspan="2">
+                   {{e.telefono}}
+                </td>
+                
+
+              </tr>
+        <tr>
+                 <th colspan="1"> Aniversario</th>
+                <th colspan="5"> Eventos</th>
+              
+        </tr>
+        <tr>
+                <td colspan="1" >
+                  {% if e.aniversario %}
+                  {{e.aniversario}}
+                  {% endif %}
+                </td>
+                <td colspan="5">
+                   {% if e.aniversario %}
+                  {{e.contacto}}
+                  {% endif %}
+                </td>
+        </tr>
+        <tr>
+                 <th> Contacto</th>
+                <th colspan="2"> Cargo</th>
+                <th >Fecha de Nacimiento</th>.
+                <th >Telefono</th>
+                <th >Email</th>
+              
+        </tr>
+        <tr>
+                <td >
+                  {{e.contacto}}
+                </td>
+                <td colspan="2">
+                   {{e.cargocont}}
+                </td>
+                <td >
+                   {% if e.fecha_nacimiento_cont %}
+                  {{e.fecha_nacimiento_cont}}
+                  {% endif %}
+                </td>
+                <td >
+                  {{e.telefonoc}}
+                </td>
+                <td >
+                  {{e.emailcont}}
+                </td>
+        </tr>
+        <tr>
+                 <th> Promotor</th>
+                <th colspan="2"> Cargo</th>
+                <th >Fecha de Nacimiento</th>.
+                <th >Telefono</th>
+                <th >Email</th>
+              
+        </tr>
+        <tr>
+                <td >
+                  {{e.promotor}}
+                </td>
+                <td colspan="2">
+                   {{e.cargopro}}
+                </td>
+                <td >
+                  {% if e.fecha_nacimiento_pro %}
+                  {{e.fecha_nacimiento_pro}}
+                  {% endif %}
+                </td>
+                <td >
+                  {{e.telefonop}}
+                </td>
+                <td >
+                  {{e.emailpro}}
+                </td>
+        </tr>
+
+              </tbody>
+              </table>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

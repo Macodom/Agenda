@@ -1,0 +1,82 @@
+  <div class="leftbar leftbar-close clearfix">
+
+
+    <div class="admin-info clearfix">
+
+      
+      <div class="admin-thumb">
+       
+        <i class="icon-user"></i>
+       
+      </div>
+     
+     
+      <div class="admin-meta">
+        <ul>
+          <li class="admin-username"> {{user.first_name}}</li>
+          <li><a href="/cambiar-contrasena/">Cambiar contraseña</a></li>
+          <li><a href="/perfil-recursos-humanos/">Ver Perfil </a><a href="/logout_user/"><i class="icon-off"></i> Cerrar</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="left-nav clearfix">
+      <div class="left-primary-nav">
+        <ul id="myTab">
+
+          <li {% if activoc %} class="active" {% endif %}>
+            <a href="#clientes" class="icon-user" title="Clientes"></a>
+          </li>
+
+        </ul>
+      </div>
+      <div class="responsive-leftbar">
+        <i class="icon-list"></i>
+      </div>
+      <div class="left-secondary-nav tab-content">
+
+        <div class=" 
+        {% if activoc %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        "
+        id="clientes">
+
+
+          <h4 class="side-head">Comisión</h4>
+          
+          <ul class="accordion-nav">
+      
+            <li class="active">
+              <a href="#">
+                <i class="icon-search"></i>Consulta
+                <span>Lista de clientes para pago de comisión</span>
+              </a>
+            </li>
+
+
+            <li>
+              <a href="/reporte-ugb/">
+                <i class="icon-print"></i>Reporte
+                <span>Reporte por UGB</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="/ver-cliente-especifica-recursos-humanos/"><i class="icon-search"></i> Consulta
+                <span>Cliente especifica</span>
+              </a>
+            </li>
+     
+         
+
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+  </div>

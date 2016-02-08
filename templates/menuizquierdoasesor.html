@@ -1,0 +1,309 @@
+  <div class="leftbar leftbar-close clearfix">
+
+
+    <div class="admin-info clearfix">
+      
+        {% if user.perfil.image %}
+        
+<img height="50" width="50" alt="User" src="{{MEDIA_URL}}{{user.perfil.image}}">
+        
+      {% else%}
+      <div class="admin-thumb">
+        <i class="icon-user"></i>
+      </div>
+      {% endif %}  
+     
+      <div class="admin-meta">
+        <ul>
+          <li class="admin-username"> {{user.first_name}} </li>
+          <li><a href="/cambiar-contrasena/">Cambiar contraseña</a></li>
+          <li><a href="/perfil-asesor/">Ver Perfil </a><a href="/logout_user/"><i class="icon-off"></i> Cerrar</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="left-nav clearfix">
+      <div class="left-primary-nav">
+        <ul id="myTab">
+
+          <li {% if activoc %} class="active" {% endif %}>
+            <a href="#clientes" class="icon-user" title="Clientes"></a>
+          </li>
+
+          {% if user.perfil.agencia.id == 5 %}
+          <li {% if activoa %} class="active" {% endif %}>
+            <a href="#features" class="icon-building" title="Agencias"></a>
+          </li>
+
+           <li {% if activosu %} class="active" {% endif %}>
+            <a href="#sucursal" class="icon-hospital" title="Sucursal"></a>
+          </li>
+
+          <li {% if activoas %} class="active" {% endif %}>
+            <a href="#asesor" class="icon-user-md" title="Asesor"></a>
+          </li>
+
+          {% endif %}
+
+        </ul>
+      </div>
+      <div class="responsive-leftbar">
+        <i class="icon-list"></i>
+      </div>
+      <div class="left-secondary-nav tab-content">
+
+        <div class=" 
+        {% if activoc %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        "
+        id="clientes">
+
+
+          <h4 class="side-head">Clientes</h4>
+          
+          <ul class="accordion-nav">
+      {% if not activoc2 %}
+            <li {% if activom4 %}  class="active"  {% endif %}>
+              <a href="/mis-clientes/">
+                <i class="icon-search"></i>Consulta
+                <span>Mis Clientes</span>
+              </a>
+            </li>
+            <li {% if activom1 %}  class="active"  {% endif %}>
+              <a href="/asconsulta-cliente-as/">
+                <i class="icon-search"></i>Consulta
+                <span>Lista General de los Clientes</span>
+              </a>
+            </li>
+            <li {% if activom2 %}  class="active"  {% endif %}>
+              <a href="/c-cliente-es-a/">
+                <i class="icon-search"></i>Consulta
+                <span>Cliente</span>
+              </a>
+            </li>
+            <li {% if activom3 %}  class="active"  {% endif %}>
+              <a href="/ver_cliente_especifica/">
+                <i class="icon-search"></i>Consulta
+                <span>Especifica</span>
+              </a>
+            </li>
+
+            {% if user.perfil.agencia.id == 5 %}   
+            <li {% if activom3 %}  class="active"  {% endif %}>
+              <a href="/ver-cliente-especifica-general-status/">
+                <i class="icon-search"></i>Consulta
+                <span>Especifica General</span>
+              </a>
+            </li>
+            {% endif %}
+
+      {% endif %}
+          {% if activoc2 %}
+          
+            {% if request.session.tipous == 3 %}
+
+            <li {% if vc == "tutor" %} class="active" {% endif %}  >
+              <a href="/formulario-tutor/{{usuario.id}}">
+                <i class="icon-user"></i>Tutor
+                <span>Datos del Tutor ¡Nuevo...!</span>
+              </a>
+            </li>
+
+            <li {% if vc == "editarcliente" %} class="active" {% endif %}>
+              <a href="/editar-cliente-a/{{usuario.id}}">
+                <i class="icon-edit"></i> Editar
+                <span>Editar datos del cliente</span>
+              </a>
+            </li>
+
+            <li {% if vc == "nota" %} class="active" {% endif %}>
+              <a href="/cargar-nota-a/{{usuario.id}}">
+                <i class="icon-comments-alt"></i> Notas 
+                <span>Notas del cliente</span>
+              </a>
+            </li>
+
+            <li {% if vc == "seguimientoc" %} class="active" {% endif %}>
+              <a href="/seguimiento-cliente-a/{{usuario.id}}">
+              <i class="icon-phone"></i> Seguimiento
+              <span>Seguimiento Cliente</span> 
+              </a>
+            </li>
+
+            <li {% if vc == "actualizarpc" %} class="active" {% endif %}  >
+              <a href="/cambiar-programa-a/{{usuario.id}}">
+                <i class="icon-plane"></i>Programa
+                <span>Actualizar programa</span>
+              </a>
+            </li>
+
+            <li {% if vc == "pagosc" %} class="active" {% endif %}>
+              <a href="/pagos-cliente-a/{{usuario.id}}">
+                <i class="icon-money"></i> Pagos
+                <span>Registro de pagos</span> 
+              </a>
+            </li>
+
+            <li {% if vc == "custodiacliente" %} class="active" {% endif %}>
+              <a href="/cargar-custodia-cliente-a/{{usuario.id}}">
+                <i class="icon-truck"></i> Lleva/Recoge 
+                <span>Registrar datos</span>
+              </a>
+            </li>
+
+            <li {% if vc == "fotocliente" %} class="active" {% endif %}>
+              <a href="/agregar-foto-cliente-a/{{usuario.id}}">
+                <i class="icon-camera"></i> Foto 
+                <span>Subir fotografia del cliente</span>
+              </a>
+            </li>
+
+            
+            
+            <li>
+              <a href="javascript:void(0);" onclick="javascript: window.open('/contrato-cliente/{{usuario.id}}', '_blank'); ">
+                <i class="icon-print"></i> Contrato 
+                <span>Imprimir el contrato</span>
+              </a>
+            </li>
+            
+            <li {% if vc == "doccliente" %} class="active" {% endif %}>
+              <a href="/cargar-documentos-cliente-a/{{usuario.id}}">
+                <i class="icon-file"></i> Documentos 
+                <span>Cargar documentos al sistema</span>
+              </a>
+            </li>
+
+            <li {% if vc == "reserva" %} class="active" {% endif %}>
+              <a href="/registrar-reserva-a/{{usuario.id}}">
+                <i class="icon-barcode"></i> Reserva 
+                <span>Ingresar numero de reserva</span>
+              </a>
+            </li>
+
+            
+
+            <li {% if vc == "fechar" %} class="active" {% endif %}>
+              <a href="/modificar-fecha-registro-c/{{usuario.id}}">
+                <i class="icon-calendar"></i> Fecha Registro 
+                <span>Modificar la fecha de registro del cliente</span>
+              </a>
+            </li>
+
+            <li {% if fcuarto  %} class="active" {% endif %}>
+              <a href="/asignar-cuartos-cliente-year-asesor-i/{{usuario.id}}/{{pr.precio.programa_id}}">
+                <i class="icon-briefcase"></i> Room
+                <span>Asignar Room al cliente</span>
+              </a>
+            </li>
+
+{% if user.perfil.agencia.id == 5 %}            
+             <li {% if vc == "agencia" %} class="active" {% endif %}>
+              <a href="/add-agencia-cliente/{{usuario.id}}">
+                <i class="icon-building"></i> Agregar a Agencia 
+                <span>Agregar el cliente a una agencia</span>
+              </a>
+            </li>
+{% endif %}
+
+
+            <!-- <li {% if vc == "resguardo"  %} class="active" {% endif %}>
+              <a href="/resguardo-cliente-asesor/{{usuario.id}}/">
+                <i class="icon-lock"></i> Resguardo
+                <span>Dinero en Resguardo</span>
+              </a>
+            </li> -->
+
+
+            <li {% if vc == "userpass"  %} class="active" {% endif %}>
+              <a href="/update-user-pass-cliente/{{usuario.id}}/">
+                <i class="icon-cog"></i> User - Pass
+                <span>Actualizar User</span>
+              </a>
+            </li>
+
+
+
+           
+            {% endif %}
+
+
+          {% endif %}
+
+
+
+
+          </ul>
+        </div>
+
+
+        <div class=" 
+        {% if activoa %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="features">
+          <h4 class="side-head">Agencias</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario_agencia_asesor/" class="green"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_agencia_asesor/" class="bondi-blue"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+            <li>
+              <a href="/reportes-agencia-asesor/" class="bondi-blue"><i class="icon-print"></i><span>Reportes</span></a>
+            </li>
+            <li>
+              <a href="/cerrar-comision-cliente-agencia/" class="bondi-blue"><i class="icon-lock"></i><span>Cerrar C</span></a>
+            </li>
+          </ul>
+        </div>
+
+
+
+        <div class=" 
+        {% if activosu %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="sucursal">
+          <h4 class="side-head">Sucursal</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario_sucursal_asesor/" class="green"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_sucursal_asesor/" class="bondi-blue"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+          </ul>
+        </div>
+
+                <div class=" 
+        {% if activoas %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        " id="asesor">
+          <h4 class="side-head">Asesor</h4>
+          <ul class="metro-sidenav clearfix">
+            <li>
+              <a href="/formulario_asesor/" class="green"><i class="icon-plus-sign"></i><span>Registrar</span></a>
+            </li>
+            <li>
+              <a href="/consulta_asesor/" class="bondi-blue"><i class="icon-search"></i><span>Consultar</span></a>
+            </li>
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+  </div>

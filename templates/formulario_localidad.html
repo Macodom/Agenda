@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+  {% if edit %} 
+      Edición de Localidad                 
+  {% else %}
+      Registro de Localidad  
+  {% endif %}
+</title>
+
+{% include "base_administrador.html" %}
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% include 'headeradmin.html' %}
+
+
+{% include 'menuizquierdoadmin.html' %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i><strong>Ok!</strong>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+              {% if edit %} 
+               <h3> Edición de País, Estados, Municipios, Colonias...</h3>            
+                        {% else %}
+               <h3> Registro de País, Estados, Municipios, Colonias...</h3>    
+              {% endif %}
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="personal" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+                   
+                  <div class="control-group">
+                    <label class="control-label">Pertenece a</label>
+                    <div class="controls">
+                      {{l.padre}}
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <label class="control-label">Nombre de la localidad</label>
+                    <div class="controls">
+                      {{l.nombre}}
+                    </div>
+                  </div>
+
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn">Cancelar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="copyright">
+    <p>
+       &copy; 2013 westilian
+    </p>
+  </div>
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

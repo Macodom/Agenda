@@ -1,0 +1,210 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Consulta de escuelas
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Escuelas
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Escuelas</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Escuelas
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Escuelas</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Escuelas
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Escuelas</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Búsqueda de Escuelas</h3>
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Clave del Asesor</th>
+                    <th> Nombre de la Escuela </th>
+                    <th> Nivel </th>
+                    <th> Ciudad </th>
+                    <th> Estado </th>
+                    <th> Acción </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {%  for e in escu  %}
+                  <tr>
+                    <td>{{e.asesor_clave}}</td>
+                    <td>{{e.nombre}}</td>
+                    <td>
+                      {% ifequal  e.nivel "BRONCE" %}
+                        <span class="label label-warning">{{e.nivel}}</span>
+                      {% endifequal  %}
+                      {% ifequal  e.nivel "PLATA" %}
+                        <span class="label">{{e.nivel}}</span>
+                      {% endifequal %}
+                      {% ifequal  e.nivel "ORO" %}
+                        <span class="label label-important">{{e.nivel}}</span>
+                      {% endifequal %}
+                      {% ifequal  e.nivel "DIAMANTE" %}
+                        <span class="label label-info">{{e.nivel}}</span>
+                      {% endifequal %}
+                    </td>
+                    <td>{{e.localidad}}</td>
+                    <td class="center"> {{e.estado}} </td>
+                    <td class="center"><div class="btn-toolbar row-action">
+                        <div class="btn-group">
+{% if user.is_staff or request.session.tipous == 1 %}
+<a href="/consulta_escuela_especifica/{{e.id}}">
+                          <button class="btn btn-info" title="Consultar">
+                            <i class="icon-zoom-in"></i>
+                          </button>
+                          </a> 
+{% endif %}
+{% if request.session.tipous == 2 %}
+<a href="/gconsulta-escuela-especifica/{{e.id}}">
+                          <button class="btn btn-info" title="Consultar">
+                            <i class="icon-zoom-in"></i>
+                          </button>
+                          </a> 
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+
+<a href="/aconsulta-escuela-especifica/{{e.id}}">
+                          <button class="btn btn-info" title="Consultar">
+                            <i class="icon-zoom-in"></i>
+                          </button>
+                          </a> 
+{% endif %}
+
+                          
+
+
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

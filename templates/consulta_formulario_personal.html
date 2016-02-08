@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Personal
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Personal
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Personales activos en el sistema</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Personal
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Personales activos en el sistema</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Búsqueda de Usuarios</h3>
+            </div>
+            <div class="widget-container">
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Nombre</th>
+                    <th> Apellidos </th>
+                    <th> Email </th>
+                    <th> Foto </th>
+                    <th> Status </th>
+                    <th> Acción </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                      {%  for p in perfil  %}
+                       {% if not p.user.is_superuser %}
+                          {% if request.session.tipous != p.id_tipo_usuario_id %}
+                          
+
+                          
+
+                  <tr>
+                    <td>
+
+{% if user.is_staff or request.session.tipous == 1%}
+  <a href="/verp/{{p.user.id}}">{{p.user.first_name}}</a>
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+ <a href="/ver-personal/{{p.user.id}}">{{p.user.first_name}}</a>
+{% endif %}
+
+                      
+                    </td>
+                    <td>{{p.user.last_name}}</td>
+                    <td class="center"> {{p.user.email}} </td>
+                    <td class="center">
+
+{% if user.is_staff or request.session.tipous == 1%}
+
+                      {% if  p.image  %}
+                      <div class="user-thumb">
+                      <a href="/foto-personal/{{p.user.id}}"> 
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{p.image}}">
+                      </a>    
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        <a href="/foto-personal/{{p.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        </a> 
+                    </div>
+                      {% endif %}
+  
+{% endif %}
+{% if request.session.tipous == 2 %}
+                      {% if  p.image  %}
+                      <div class="user-thumb"> 
+                        <a href="/cargar-foto-personal/{{p.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{p.image}}">
+                          </a>
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                        <a href="/cargar-foto-personal/{{p.user.id}}">
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                        </a> 
+                    </div>
+                      {% endif %}
+ {% endif %}                 
+
+                  </td>
+                    <td class="center">
+                      
+                      {% for t in p.id_tipo_usuario.all%}
+                        <span class="label label-success">{{t.nombre}}</span>
+                      {% endfor %}  
+
+
+                      {%  if p.user.is_superuser  %}
+                      <span class="label label-info">Superusuario</span>
+                      {% endif %}
+                      {%  if not p.user.is_active  %}
+                      <span class="label label-important">Suspendido</span>
+                      {% endif %}
+
+
+
+                    </td>
+                    <td class="center"><div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+{% if user.is_staff or request.session.tipous == 1%}
+                          <a href="/editar/{{p.user.id}}">
+                          <button class="btn btn-info" title="Editar">
+                            <i class="icon-edit"></i>
+                          </button>
+                          </a>  
+                        
+                        {%  if not p.user.is_active  %}
+                          <a href="/activar/{{p.user.id}}">
+                          <button class="btn btn-success" title="Approve">
+                            <i class=" icon-ok"></i>
+                          </button>
+                          </a>
+                        {% endif %}
+                          {%  if  p.user.is_active  %}
+                              {%  if not u.is_superuser  %}  
+                          <a href="/suspender/{{p.user.id}}">
+                          <button class="btn btn-danger" title="Suspender">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>
+                              {% endif %}
+                          {% endif %}
+
+                          <a href="/desactivar-cuenta-personal-admin/{{p.user.id}}">
+                          <button class="btn btn-warning" title="Desactivaar cuenta personal">
+                            <i class="icon-lock"></i>
+                          </button>
+                          </a>                            
+  
+{% endif %}
+{% if request.session.tipous == 2 %}
+                         
+                         {%  if  p.user.is_active  %}
+                          
+                          <a onclick="return confirm('¿Realmente desea eliminar este registro?')" href="/suspender-personal/{{p.user.id}}">
+                          <button class="btn btn-danger" title="Suspender">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>
+                          
+                          {% endif %}
+
+                          {%  if not p.user.is_active  %}
+                          <a href="/activar-personal/{{p.user.id}}">
+                          <button class="btn btn-success" title="Approve">
+                            <i class=" icon-ok"></i>
+                          </button>
+                          </a>
+                        {% endif %}
+                        
+                        <a href="/desactivar-cuenta-personal-gerente/{{p.user.id}}">
+                          <button class="btn btn-warning" title="Desactivaar cuenta personal">
+                            <i class="icon-lock"></i>
+                          </button>
+                        </a> 
+{% endif %}
+
+                        
+
+
+                        
+                        </div>
+                      </div></td>
+                  </tr>
+                    {%  endif %}
+                  {%  endif %}
+                {%  endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

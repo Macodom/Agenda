@@ -1,0 +1,773 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Documentos del cliente
+</title>
+
+{% include "base_administrador.html" %}
+ 
+
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% include 'menu_navegacion_cliente.html' %}
+      <div class="row-fluid">
+
+
+        <div class="span12">
+            <div class="widget-container">
+
+
+              <div class="span6">
+                <div class="content-widgets light-gray">
+                  <div class="widget-head blue clearfix">
+                    <h3>Registros de documentos</h3>
+                  </div>
+                  <div class="widget-container">
+
+
+<form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" 
+
+{% if user.is_staff or request.session.tipous == 1 %}
+action="/registrar-documentos/"
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+action="/registrar-documentos2/"
+{% endif %}
+
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+action="/registrar-documentos2-a/"
+{% endif %}
+>
+
+                  {% csrf_token %}
+                   
+                  <div class="control-group">
+                    <label class="control-label">Numero de pasaporte</label>
+                    <div class="controls">
+                      {{formulario.numpasaporte}}
+                    </div>
+                  </div>
+{% if e %}
+                   
+<div class="control-group">
+                  <label class="control-label">Fecha de Vencimiento</label>
+                  <div class="controls">
+                   <div id="datetimepicker4" class="input-append">
+                    {{formulario.vencimiento}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span>    
+                    </div>         
+                  </div>
+                </div>                  
+{% else %}
+  
+               <div class="control-group">
+                  <label class="control-label">Fecha de Vencimiento</label>
+                  <div class="controls">
+                   <div id="datetimepicker4" class="input-append">
+                    {{formulario.vencimiento}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span>    
+                    </div>         
+                  </div>
+                </div>    
+
+{% endif %}
+
+
+                  <div class="control-group">
+                    <label class="control-label">ORIG/PASS</label>
+                    <div class="controls">
+                    {{formulario.originalpass}}
+                    </div>
+                  </div>
+                
+{% if cvu.precio.precio.programa_id == 1 or cvu.precio.precio.programa_id == 2 or cvu.precio.precio.programa_id == 3 or cvu.precio.precio.programa_id == 4 or cvu.precio.precio.programa_id == 18 or cvu.precio.precio.programa_id == 21 %}
+                   <div class="control-group">
+                    <label class="control-label">ORIG/VISA</label>
+                    <div class="controls">
+                    {{formulario.orginalvisa}}
+                    </div>
+                  </div>
+{% endif %}
+                  <div class="control-group">
+                    <label class="control-label">CONT</label>
+                    <div class="controls">
+                    {{formulario.contrato}}
+                    </div>
+                  </div>
+{% if cvu.precio.precio.programa_id == 1 or cvu.precio.precio.programa_id == 2 or cvu.precio.precio.programa_id == 9 or cvu.precio.precio.programa_id == 19 or cvu.precio.precio.programa_id == 20 or cvu.precio.precio.programa_id == 18 or cvu.precio.precio.programa_id == 21 or cvu.precio.precio.programa_id == 24%}
+                  <div class="control-group">
+                    <label class="control-label">RC</label>
+                    <div class="controls">
+                    {{formulario.responsivanaviera}}
+                    </div>
+                  </div>
+{% endif %}
+                  
+{% if cvu.precio.precio.programa_id == 24 %} <!-- NEW YORK + ANTHEM(AN) /07/10/2015 -->
+                  <div class="control-group">
+                    <label class="control-label">CIR</label>
+                    <div class="controls">
+                    {{formulario.cir}}
+                    </div>
+                  </div>
+{% endif %} 
+
+{% if cvu.precio.precio.programa_id == 1 or cvu.precio.precio.programa_id == 2 or cvu.precio.precio.programa_id == 9 or cvu.precio.precio.programa_id == 18 or cvu.precio.precio.programa_id == 21 or cvu.precio.precio.programa_id == 24 %}                    
+                  <div class="control-group">
+                    <label class="control-label">FR</label>
+                    <div class="controls">
+                    {{formulario.simuladorolas}}
+                    </div>
+                  </div>
+{% endif %}
+{% if cvu.precio.precio.programa_id == 24 %} <!-- NEW YORK + ANTHEM(AN) /07/10/2015 -->
+                  <div class="control-group">
+                    <label class="control-label">FLY</label>
+                    <div class="controls">
+                    {{formulario.fli}}
+                    </div>
+                  </div>
+{% endif %} 
+
+{% if cvu.precio.precio.programa_id == 1 or cvu.precio.precio.programa_id == 2 or cvu.precio.precio.programa_id == 9 or cvu.precio.precio.programa_id == 18 or cvu.precio.precio.programa_id == 21 or cvu.precio.precio.programa_id == 24 %}                   
+                  <div class="control-group">
+                    <label class="control-label">CLI</label>
+                    <div class="controls">
+                    {{formulario.paredescalable}}
+                    </div>
+                  </div>
+{% endif %} 
+{% if cvu.precio.precio.programa_id == 24 %} <!-- NEW YORK + ANTHEM(AN) /07/10/2015 -->
+                  <div class="control-group">
+                    <label class="control-label">RS</label>
+                    <div class="controls">
+                    {{formulario.rs}}
+                    </div>
+                  </div>
+{% endif %}                  
+
+
+                  
+
+{% if cvu.precio.precio.programa_id == 3 %}                    
+                  <div class="control-group">
+                    <label class="control-label">LR</label>
+                    <div class="controls">
+                    {{formulario.liberacionrespon}}
+                    </div>
+                  </div>
+{% endif %}                   
+
+
+{% if cvu.precio.precio.programa_id == 5 or cvu.precio.precio.programa_id == 6 or cvu.precio.precio.programa_id == 7 or cvu.precio.precio.programa_id == 8 or cvu.precio.precio.programa_id == 9 or cvu.precio.precio.programa_id == 19 or cvu.precio.precio.programa_id == 20 %}   
+                  <div class="control-group">
+                    <label class="control-label">MR</label>
+                    <div class="controls">
+                    {{formulario.mr}}
+                    </div>
+                  </div>             
+{% endif %}
+
+
+
+{% if cvu.precio.precio.programa_id == 1 or cvu.precio.precio.programa_id == 2 or cvu.precio.precio.programa_id == 9 or cvu.precio.precio.programa_id == 18 or cvu.precio.precio.programa_id == 21 %}                  
+                  <div class="control-group">
+                    <label class="control-label">ICE</label>
+                    <div class="controls">
+                    {{formulario.pistapatinaje}}
+                    </div>
+                  </div>                 
+{% endif %}
+
+
+{% if cvu.precio.precio.programa_id == 1 or cvu.precio.precio.programa_id == 2 or cvu.precio.precio.programa_id == 21 %}                  
+                  <div class="control-group">
+                    <label class="control-label">TIR</label>
+                    <div class="controls">
+                      {{formulario.tirolesa}}
+                    </div>
+                  </div>
+{% endif %}    
+
+                  <div class="control-group">
+                    <label class="control-label">FME</label>
+                    <div class="controls">
+                    {{formulario.formamigratoria}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Aduana Mex(2)</label>
+                    <div class="controls">
+                    {{formulario.aduanamex}}
+                    </div>
+                  </div>
+
+
+ {% if cvu.precio.precio.programa_id == 1 or cvu.precio.precio.programa_id == 2 or cvu.precio.precio.programa_id == 3 or cvu.precio.precio.programa_id == 4 or cvu.precio.precio.programa_id == 18 or cvu.precio.precio.programa_id == 21 %}                  
+                  <div class="control-group">
+                    <label class="control-label">
+                      {% if cvu.precio.precio.programa_id == 4 %}
+                          Aduana Usa
+                      {% else %}
+                          Aduana Usa(2)
+                      {% endif %} 
+                    </label>
+                    <div class="controls">
+                    {{formulario.aduanausa}}
+                    </div>
+                  </div>
+{% endif %} 
+
+
+                  <div class="control-group">
+                    <label class="control-label">Cartita</label>
+                    <div class="controls">
+                     {{formulario.carta}} 
+                    </div>
+                  </div>
+                  
+                  <div class="control-group">
+                    <label class="control-label">KIT</label>
+                    <div class="controls">
+                    {{formulario.kit}}
+                    </div>
+                  </div>
+ 
+
+
+                  {% if v1.cartacustodia%}               
+                  <div class="control-group">
+                    <label class="control-label">Carta Notariada</label>
+                    <div class="controls">
+                    {{formulario.cartacustodiavsa}}
+                    </div>
+                  </div>
+                  {% endif %}
+
+
+                  <input type="hidden" value="{{cvu.id}}" name="cve_cliente"> 
+                  <input type="hidden" value="{{idcli}}" name="id_cliente"> 
+                  <input type="hidden" value="{{e}}" name="es"> 
+                  
+
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+                  <div class="form-actions">
+                    {% if e %}
+                      <button type="submit" class="btn btn-primary">Actualizar</button>
+                    {% else %}
+                      <button type="submit" class="btn btn-primary">Guardar</button>
+                    {% endif %}
+
+                  </div>
+{% endif %}
+                </form>
+
+
+                    
+                    
+
+                  </div>
+                </div>
+              </div>
+{% if cvu.precio.precio.programa_id <= 4 %} 
+              <div class="span6">
+                <div class="content-widgets light-gray">
+                  <div class="widget-head blue clearfix">
+                    {% if v1.copypasaporte%}
+                     
+                    <h3>Descargar Copia de Pasaporte y Visa</h3>
+                    {% else %}
+                   
+                    <h3>Subir Copia de Pasaporte y Visa</h3>
+
+                    {% endif %}
+                  </div>
+                  <div class="widget-container">
+{% if v1.copypasaporte%}
+<table class="table paper-table">
+                    <thead>
+                    <tr>
+                      <th class="invoice-id">
+                       Descargar Archivo
+                      </th>
+                      <th class="invoice-id">
+                       Actualizar Archivo
+                      </th>
+                     
+                    </tr>
+                    </thead>
+                    <tbody>
+                   
+                    <tr>
+                      <td class="invoice-type">
+                        <a href="{{MEDIA_URL}}{{v1.copypasaporte}}" target="_blank">
+                          <button class="btn btn-round btn btn-info" title="Descargar">
+
+                            <span>
+                                <i class="icon-cloud-download"></i>
+                            </span>
+
+                        </button>
+                        </a>
+                       
+                      </td>
+                      <td>
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST"
+{% if user.is_staff or request.session.tipous == 1 %}
+ action="/upload-archivos/"
+{% endif %}
+{% if request.session.tipous == 2 %}
+  action="/upload-archivos2/"
+{% endif %}
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+  action="/upload-archivos2-a/"
+{% endif %}
+ enctype="multipart/form-data">
+                   {% csrf_token %}
+
+{{cpass.as_p}}
+
+<input type="hidden" value="{{cvu.id}}" name="cve_cliente"> 
+<input type="hidden" value="{{idcli}}" name="id_cliente">
+<input type="hidden" value="1" name="status_archivos">  
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+<p><input type='submit' value='Actalizar'/></p>
+{% endif %}        
+</form>
+                      </td>
+                    </tr>
+    
+                    </tbody>
+                    </table>
+{% else %}
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST"
+{% if user.is_staff or request.session.tipous == 1 %}
+ action="/upload-archivos/"
+{% endif %}
+{% if request.session.tipous == 2 %}
+  action="/upload-archivos2/"
+{% endif %}
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+  action="/upload-archivos2-a/"
+{% endif %}
+ enctype="multipart/form-data">
+                   {% csrf_token %}
+
+{{cpass.as_p}}
+
+<input type="hidden" value="{{cvu.id}}" name="cve_cliente"> 
+<input type="hidden" value="{{idcli}}" name="id_cliente">
+<input type="hidden" value="1" name="status_archivos">  
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+<p><input type='submit' value='Subir'/></p>
+{% endif %}        
+</form>
+ {% endif %}
+
+
+ 
+
+                    
+                    
+
+                  </div>
+                </div>
+              </div><!-- fin de span 6  form 1--> 
+ {% endif %}
+ {% if cvu.precio.precio.programa_id >= 5 %}
+<div class="span6">
+                <div class="content-widgets light-gray">
+                  <div class="widget-head blue clearfix">
+                    {% if v1.copyvisa%}
+                     
+                    <h3>Descargar copia de Pasaporte</h3>
+                    {% else %}
+                   
+                    <h3>Subir copia Pasaporte</h3>
+
+                    {% endif %}
+                  </div>
+                  <div class="widget-container">
+{% if v1.copyvisa%}
+<table class="table paper-table">
+                    <thead>
+                    <tr>
+                      <th class="invoice-id">
+                       Descargar Archivo
+                      </th>
+                      <th class="invoice-id">
+                       Actualizar Archivo
+                      </th>
+                     
+                    </tr>
+                    </thead>
+                    <tbody>
+                   
+                    <tr>
+                      <td class="invoice-type">
+                        <a href="{{MEDIA_URL}}{{v1.copyvisa}}" target="_blank">
+                          <button class="btn btn-round btn btn-info" title="Descargar">
+
+                            <span>
+                                <i class="icon-cloud-download"></i>
+                            </span>
+
+                        </button>
+                        </a>
+                       
+                      </td>
+                      <td>
+
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST"
+{% if user.is_staff or request.session.tipous == 1 %}
+ action="/upload-archivos/"
+{% endif %}
+{% if request.session.tipous == 2 %}
+  action="/upload-archivos2/"
+{% endif %}
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+  action="/upload-archivos2-a/"
+{% endif %}
+ enctype="multipart/form-data">
+                   {% csrf_token %}
+
+{{cpvis.as_p}}
+
+<input type="hidden" value="{{cvu.id}}" name="cve_cliente"> 
+<input type="hidden" value="{{idcli}}" name="id_cliente">
+<input type="hidden" value="2" name="status_archivos">  
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+<p><input type='submit' value='Actualizar'/></p>
+{% endif %}
+        
+</form>
+
+                      </td>
+                    </tr>
+    
+                    </tbody>
+                    </table>
+{% else %}
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST"
+{% if user.is_staff or request.session.tipous == 1 %}
+ action="/upload-archivos/"
+{% endif %}
+{% if request.session.tipous == 2 %}
+  action="/upload-archivos2/"
+{% endif %}
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+  action="/upload-archivos2-a/"
+{% endif %}
+ enctype="multipart/form-data">
+                   {% csrf_token %}
+
+{{cpvis.as_p}}
+
+<input type="hidden" value="{{cvu.id}}" name="cve_cliente"> 
+<input type="hidden" value="{{idcli}}" name="id_cliente">
+<input type="hidden" value="2" name="status_archivos">  
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+<p><input type='submit' value='Subir'/></p>
+{% endif %}
+        
+</form>
+ {% endif %}
+
+                    
+                    
+
+                  </div>
+                </div>
+              </div><!-- fin de span 6 form 2 -->
+ {% endif %}
+<div class="span6">
+                <div class="content-widgets light-gray">
+                  <div class="widget-head blue clearfix">
+                    {% if v1.ife%}
+                     
+                    <h3>Descargar Credencial de elector</h3>
+                    {% else %}
+                   
+                    <h3>Subir Credencial de elector</h3>
+
+                    {% endif %}
+                  </div>
+                  <div class="widget-container">
+{% if v1.ife%}
+<table class="table paper-table">
+                    <thead>
+                    <tr>
+                      <th class="invoice-id">
+                       Descargar Archivo
+                      </th>
+                      <th class="invoice-id">
+                       Actualizar Archivo
+                      </th>
+                     
+                    </tr>
+                    </thead>
+                    <tbody>
+                   
+                    <tr>
+                      <td class="invoice-type">
+                        <a href="{{MEDIA_URL}}{{v1.ife}}" target="_blank">
+                          <button class="btn btn-round btn btn-info" title="Descargar">
+
+                            <span>
+                                <i class="icon-cloud-download"></i>
+                            </span>
+
+                        </button>
+                        </a>
+                       
+                      </td>
+                      <td>
+
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST"
+{% if user.is_staff or request.session.tipous == 1 %}
+ action="/upload-archivos/"
+{% endif %}
+{% if request.session.tipous == 2 %}
+  action="/upload-archivos2/"
+{% endif %}
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+  action="/upload-archivos2-a/"
+{% endif %}
+ enctype="multipart/form-data">
+                   {% csrf_token %}
+
+{{ife.as_p}}
+
+<input type="hidden" value="{{cvu.id}}" name="cve_cliente"> 
+<input type="hidden" value="{{idcli}}" name="id_cliente">
+<input type="hidden" value="3" name="status_archivos">  
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+<p><input type='submit' value='Actualizar'/></p>
+{% endif %}
+        
+</form>
+
+                      </td>
+                    </tr>
+    
+                    </tbody>
+                    </table>
+{% else %}
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST"
+{% if user.is_staff or request.session.tipous == 1 %}
+ action="/upload-archivos/"
+{% endif %}
+{% if request.session.tipous == 2 %}
+  action="/upload-archivos2/"
+{% endif %}
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+  action="/upload-archivos2-a/"
+{% endif %}
+ enctype="multipart/form-data">
+                   {% csrf_token %}
+
+{{ife.as_p}}
+
+<input type="hidden" value="{{cvu.id}}" name="cve_cliente"> 
+<input type="hidden" value="{{idcli}}" name="id_cliente">
+<input type="hidden" value="3" name="status_archivos">  
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+<p><input type='submit' value='Subir'/></p>
+{% endif %}
+        
+</form>
+ {% endif %}
+
+                    
+                    
+
+                  </div>
+                </div>
+              </div><!-- fin de span 6 form 3 --> 
+
+<div class="span6">
+                <div class="content-widgets light-gray">
+                  <div class="widget-head blue clearfix">
+                    {% if v1.cartacustodia%}
+                     
+                    <h3>Descargar Carta Notariada</h3>
+                    {% else %}
+                   
+                    <h3>Subir Carta Notariada</h3>
+
+                    {% endif %}
+                  </div>
+                  <div class="widget-container">
+{% if v1.cartacustodia%}
+<table class="table paper-table">
+                    <thead>
+                    <tr>
+                      <th class="invoice-id">
+                       Descargar Archivo
+                      </th>
+                      <th class="invoice-id">
+                       Actualizar Archivo
+                      </th>
+                     
+                    </tr>
+                    </thead>
+                    <tbody>
+                   
+                    <tr>
+                      <td class="invoice-type">
+                        <a  href="{{MEDIA_URL}}{{v1.cartacustodia}} " target="_blank">
+                          <button class="btn btn-round btn btn-info" title="Descargar">
+
+                            <span>
+                                <i class="icon-cloud-download"></i>
+                            </span>
+
+                        </button>
+                        </a>
+                       
+                      </td>
+                      <td>
+
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST"
+{% if user.is_staff or request.session.tipous == 1 %}
+ action="/upload-archivos/"
+{% endif %}
+{% if request.session.tipous == 2 %}
+  action="/upload-archivos2/"
+{% endif %}
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+  action="/upload-archivos2-a/"
+{% endif %}
+ enctype="multipart/form-data">
+                   {% csrf_token %}
+
+{{cartacus.as_p}}
+
+<input type="hidden" value="{{cvu.id}}" name="cve_cliente"> 
+<input type="hidden" value="{{idcli}}" name="id_cliente">
+<input type="hidden" value="4" name="status_archivos">  
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+<p><input type='submit' value='Actualizar'/></p>
+{% endif %}
+        
+</form>
+                      </td>
+                    </tr>
+    
+                    </tbody>
+                    </table>
+{% else %}
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST"
+{% if user.is_staff or request.session.tipous == 1 %}
+ action="/upload-archivos/"
+{% endif %}
+{% if request.session.tipous == 2 %}
+  action="/upload-archivos2/"
+{% endif %}
+{% if request.session.tipous == 3 and clien.asesor_id == user.perfil.id %}
+  action="/upload-archivos2-a/"
+{% endif %}
+ enctype="multipart/form-data">
+                   {% csrf_token %}
+
+{{cartacus.as_p}}
+
+<input type="hidden" value="{{cvu.id}}" name="cve_cliente"> 
+<input type="hidden" value="{{idcli}}" name="id_cliente">
+<input type="hidden" value="4" name="status_archivos">  
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+<p><input type='submit' value='Subir'/></p>
+{% endif %}
+        
+</form>
+ {% endif %}
+
+                    
+                    
+
+                  </div>
+                </div>
+              </div><!-- fin de span 6 form 4 -->           
+
+
+
+
+            </div>
+
+
+              
+
+            </div>
+          </div>
+
+      </div>
+
+
+
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,307 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+    Agenda de seguimiento a los clientes, Prospecto
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% include 'menu_navegacion_cliente.html' %}
+
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">                   
+               <h3>Datos para comunicación</h3>             
+            </div>
+              <table class="stat-table table table-stats table-striped table-sortable table-bordered">
+              <tbody>
+
+              <tr>
+                <th>Datos</th>
+                <th>Datos de Prospecto</th>
+                <th>Datos de Padre</th>
+                <th>Datos de la madre</th>
+                <th>Otros</th>
+              </tr>
+
+            
+              <tr>
+                <td>
+                  Celular/Teléfono
+                </td>
+                <td>
+                {% if clien.celular %}
+                 {{clien.celular}} {% endif %} {% if clien.telefono %} / {{clien.telefono}} {% endif %}     
+                </td>
+
+                {% if ObjModelTutorCount == 0 %}
+                  <td>
+                  {% if pa.telefono_p%}
+                    {{pa.telefono_p}}
+                  {% endif %}  
+                  </td>
+                  <td>
+                  {% if pa.telefono_m%}
+                   {{pa.telefono_m}}
+                   {% endif %}   
+                  </td>
+                  <td>
+                   {% if pa.otro_tel%}
+                   {{pa.otro_tel}}
+                   {% endif %}
+                  </td>
+                {% endif %} 
+                {% if ObjModelTutorCount != 0 %} 
+                 
+
+                    <td> {% for t in ObjModelTutorQuery %}   {%if t.tipo_tutor.id == 1%}  {{t.telefono}} {% endif %} {% endfor %} </td>
+                    <td> {% for t in ObjModelTutorQuery %}   {%if t.tipo_tutor.id == 2%}  {{t.telefono}} {% endif %} {% endfor %} </td>
+                    <td> {% for t in ObjModelTutorQuery %}   {%if t.tipo_tutor.id == 3%}  {{t.telefono}} {% endif %} {% endfor %} </td>
+
+                  
+                {% endif %} 
+
+              </tr>
+              <tr>
+                <td>
+                  E-mail
+                </td>
+                <td>
+                 {{usuario.email}}
+                </td>
+
+                {% if ObjModelTutorCount == 0 %}
+                  <td>
+                    {{pa.email_p}}
+                  </td>
+                  <td>
+                  {{pa.email_m}}
+                    
+                  </td>
+                  <td>
+                 
+                  </td>
+                {% endif %} 
+                {% if ObjModelTutorCount != 0 %} 
+                 
+
+                    <td> {% for t in ObjModelTutorQuery %}   {%if t.tipo_tutor.id == 1%}  {{t.user.email}} {% endif %} {% endfor %} </td>
+                    <td> {% for t in ObjModelTutorQuery %}   {%if t.tipo_tutor.id == 2%}  {{t.user.email}} {% endif %} {% endfor %} </td>
+                    <td> {% for t in ObjModelTutorQuery %}   {%if t.tipo_tutor.id == 3%}  {{t.user.email}} {% endif %} {% endfor %} </td>
+
+                  
+                {% endif %} 
+
+              </tr>
+
+        
+
+
+              </tbody>
+              </table>
+
+
+            <div class="widget-head blue">                   
+               <h3>Seguimientos Registrados</h3>             
+            </div>
+<div class="widget-container">
+               <table class="table data-grid responsive table-bordered paper-table tbl-serach ">
+                <thead>
+              
+
+              <tr>
+                <th>Id</th>
+                <th>Fecha de Contacto</th>
+                <th>Tipo de comunicacion</th>
+                <th>Comentario</th>
+                <th>Fecha de la Nueva llamada</th>
+                <th>Status</th>
+              </tr>
+              </thead>
+<tbody>
+            {% for s in seg  %}
+              <tr>
+                <td>
+                  {{s.id}}
+                </td>
+                <td>
+                  {{s.fecha_contacto}}
+                </td>
+                <td>
+                  {{s.tipo_comunicacion}}
+                </td>
+                <td>
+                  {{s.comentario}}
+                </td>
+                <td>
+                  {% if s.fecha_seguimiento == None %}
+                  Seguimiento Cerrado
+                  {% else %}
+                  {{s.fecha_seguimiento}}
+                  {% endif  %}
+                  
+                </td>
+                <td>
+                  {% if s.status == '1' %}
+                  Prospecto
+                  {% endif  %}
+                  {% if s.status == '3' %}
+                  No contesta
+                  {% endif  %}
+                  {% if s.status == '4' %}
+                  No va
+                  {% endif  %}
+                  {% if s.status == '0' %}
+                  Cerrado
+                  {% endif  %}
+                  {%  if s.status == '5'  %}
+                   Efectivo   
+                  {% endif %}
+                </td>
+                
+              </tr>
+
+              {% endfor  %}
+
+
+              </tbody>
+              </table>
+            </div>  
+
+            <div class="widget-head blue">                   
+               <h3>Formulario de Seguimiento</h3>             
+            </div>
+
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+                   
+                  <div class="control-group">
+                    <label class="control-label">¿Como se comunico?</label>
+                    <div class="controls">
+                      {{s.tipo_comunicacion}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Comentario</label>
+                    <div class="controls">
+                      {{s.comentario}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Estatus</label>
+                    <div class="controls">
+                    {{s.status}}
+                    </div>
+                  </div>
+
+                  <div id="content">
+                        <div class="control-group">
+
+                        <div id="m1">
+                        <label class="control-label">Fecha de la proxima llamada</label>
+                        </div>
+                        <div id="m2">
+                         <label class="control-label">Fecha probable de inscripción</label>
+                        </div>
+
+                        
+
+                        
+
+                        <div class="controls">
+                          <div id="datetimepicker4" class="input-append date ">
+                          {{s.fecha_seguimiento}}
+                        <span class="add-on ">
+                          <i class="icon-calendar" data-date-icon="icon-calendar" data-time-icon="icon-time"></i>
+                        </span>
+                      </div>
+                        </div>
+                      </div>
+                  </div>
+                  
+
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+{% endif %}
+
+                </form>
+
+
+
+      
+
+              
+
+
+
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

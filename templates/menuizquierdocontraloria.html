@@ -1,0 +1,85 @@
+  <div class="leftbar leftbar-close clearfix">
+
+
+    <div class="admin-info clearfix">
+      
+        <div class="admin-thumb">
+        <i class="icon-user"></i>
+      </div> 
+     
+      <div class="admin-meta">
+        <ul>
+          <li class="admin-username"> {{user.first_name}}</li>
+          <li><a href="/cambiar-contrasena/">Cambiar contraseña</a></li>
+          <li><a href="/perfil-contraloria/">Ver Perfil </a><a href="/logout_user/"><i class="icon-off"></i> Cerrar</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="left-nav clearfix">
+      <div class="left-primary-nav">
+        <ul id="myTab">
+
+          <li {% if activoc %} class="active" {% endif %}>
+            <a href="#prorroga" class="icon-envelope" title="Prorrogas"></a>
+          </li>
+
+        </ul>
+      </div>
+      <div class="responsive-leftbar">
+        <i class="icon-list"></i>
+      </div>
+      <div class="left-secondary-nav tab-content">
+
+        <div class=" 
+        {% if activoc %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        "
+        id="prorroga">
+
+
+          <h4 class="side-head">Prorrogas</h4>
+          
+          <ul class="accordion-nav">
+     
+            <li {% if consultar_prorroga %} class="active" {% endif %}>
+              <a href="/p-contraloria/">
+                <i class="icon-search"></i>Activos
+                <span>Lista de prorrogas activas</span>
+              </a>
+            </li>
+
+
+            <li {% if consultar_prorroga_eliminados %} class="active" {% endif %}  >
+              <a href="/prorrogas-aliminadas-contraloria/">
+                <i class="icon-search"></i>Cancelados
+                <span>Lista de prorrogas canceladas</span>
+              </a>
+            </li>
+
+            <li {% if consularc %} class="active" {% endif %}  >
+              <a href="/consultar-clientes-inscritos-contraloria/">
+                <i class="icon-search"></i>Cliente
+                <span>Lista de clientes</span>
+              </a>
+            </li>
+
+            <li {% if consularces %} class="active" {% endif %}  >
+              <a href="/ver_cliente_especifica/">
+                <i class="icon-search"></i>Cliente
+                <span>Lista de clientes</span>
+              </a>
+            </li>
+
+
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,98 @@
+  <div class="leftbar leftbar-close clearfix">
+
+
+    <div class="admin-info clearfix">
+      
+        {% if user.perfil.image %}
+        <a href="/cargar-foto-personal-c/{{user.id}}">
+<img height="50" width="50" alt="User" src="{{MEDIA_URL}}{{user.perfil.image}}">
+        </a>
+      {% else%}
+      <div class="admin-thumb">
+        <a href="/cargar-foto-personal-c/{{user.id}}">
+        <i class="icon-user"></i>
+        </a>
+      </div>
+      {% endif %}  
+     
+      <div class="admin-meta">
+        <ul>
+          <li class="admin-username"> {{user.first_name}}</li>
+          <li><a href="/cambiar-contrasena/">Cambiar contraseña</a></li>
+          <li><a href="/perfil-caja/">Ver Perfil </a><a href="/logout_user/"><i class="icon-off"></i> Cerrar</a></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="left-nav clearfix">
+      <div class="left-primary-nav">
+        <ul id="myTab">
+
+          <li {% if activoc %} class="active" {% endif %}>
+            <a href="#clientes" class="icon-user" title="Clientes"></a>
+          </li>
+
+        </ul>
+      </div>
+      <div class="responsive-leftbar">
+        <i class="icon-list"></i>
+      </div>
+      <div class="left-secondary-nav tab-content">
+
+        <div class=" 
+        {% if activoc %} 
+        tab-pane active 
+        {% else %}
+        tab-pane
+        {% endif %}
+        "
+        id="clientes">
+
+
+          <h4 class="side-head">Clientes</h4>
+          
+          <ul class="accordion-nav">
+      {% if not activoc2 %}
+            <li class="active">
+              <a href="/buscar-cliente-c/">
+                <i class="icon-search"></i>Consulta
+                <span>Lista de clientes</span>
+              </a>
+            </li>
+      {% endif %}
+          {% if activoc2 %}
+          
+            {% if request.session.tipous == 4 %}
+
+
+            <li {% if vc == "pagosc" %} class="active" {% endif %}  >
+              <a href="/cargar-pagos-cliente/{{usuario.id}}">
+                <i class="icon-money"></i>Pagos
+                <span>Cliente</span>
+              </a>
+            </li>
+
+
+
+            <li {% if vc == "resguardo"  %} class="active" {% endif %}>
+              <a href="/resguardo-cliente-asesor/{{usuario.id}}/">
+                <i class="icon-lock"></i> Resguardo
+                <span>Dinero en Resguardo</span>
+              </a>
+            </li>
+
+           
+            {% endif %}
+
+
+          {% endif %}
+
+
+          </ul>
+        </div>
+
+
+      </div>
+    </div>
+  </div>

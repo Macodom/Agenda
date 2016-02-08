@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Ordenar programas
+</title>
+
+{% include "base_administrador.html" %}
+
+
+<script type="text/javascript">
+  $().ready(function() 
+  {
+    $('.pasar').click(function() { 
+
+      var selected = $("#origen").val();
+      var myJsonString = JSON.stringify(selected); 
+        $.post("/ordenar_programa/", {selected:myJsonString},"json");
+
+
+      return !$('#origen option:selected').remove().appendTo('#destino'); 
+    });  
+    $('.quitar').click(function() {
+      var selected = $("#destino").val();
+      var myJsonString = JSON.stringify(selected); 
+        $.post("/quitar_programa_lis/", {selected:myJsonString},"json");
+
+      return !$('#destino option:selected').remove().appendTo('#origen'); 
+    });
+  }); 
+  </script>
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Programa
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Ordenar programa</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Programa
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Ordenar programa</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left"> <i class="icon-plane"></i> Búsqueda de Programas  <i class="icon-plane"></i></h3>
+            </div>
+            <div class="widget-container">
+
+
+              <form action="" method="post" id="formulario">
+                {% csrf_token %}
+              <div>
+                  <select name="origen" id="origen" multiple="multiple" size="10" class="span12">
+                    {%  for p in programa  %}
+                        <option value="{{p.id}}">{{p.nombre}}</option>
+                    {%  endfor %}
+
+                  </select>
+              </div>
+              <div>
+              <input type="button" class="pasar btn btn-primary" value="Pasar »">
+              <input type="button" class="quitar btn btn-primary" value="« Quitar"><br /><br />
+              </div>
+              <div class="">
+                    <select name="destino" id="destino" multiple="multiple" size="10" class="span12">
+                      {%  for p2 in programa2  %}
+                        <option value="{{p2.id}}">{{p2.nombre}}</option>
+                      {%  endfor %}  
+                    </select>
+              </div>
+              </form>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

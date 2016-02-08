@@ -1,0 +1,300 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+    {% if edit %} 
+      Edición de Paquetes                
+  {% else %}
+      Registro de Paquetes  
+  {% endif %}
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+ {% if user.is_staff or request.session.tipous == 1%}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/vpg/">Consulta de paquetes</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Editar Stock de precio</li>
+          </ul>
+        </div>
+      </div>
+  
+{% endif %}
+{% if request.session.tipous == 2 %}
+ 
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/vpg/">Consulta de paquetes</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Editar Stock de precio</li>
+          </ul>
+        </div>
+      </div> 
+{% endif %}
+
+
+
+<!-- Aqui van los roidfluid -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                     
+               <h3> Editar Paquetes</h3>             
+
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+                <table class="paper-table responsive">
+              <tbody>
+              <tr>
+                <th>
+                  Programa
+                </th>
+                <th>
+                  Salida
+                </th>
+                <th>
+                  Fecha de Salida
+                </th>
+               
+              </tr>
+
+              <tr>
+                <td>
+                  {{paq.programa}}
+                </td>
+                <td>
+                 {{paq.salida}}
+                </td>
+                <td>
+                  {{paq.vigencia}}
+                </td>
+              </tr>
+              </tbody>
+              </table>
+<div class="widget-head blue">
+                     
+               <h3> Niños</h3>             
+
+
+            </div>
+              <table class="paper-table responsive">
+              <tbody>
+              <tr>
+                <th>
+                  Registrado
+                </th>
+                <th>
+                  Stock
+                </th>
+                <th>
+                  Vendidos
+                </th>
+                <th>
+                 Lista de espera
+                </th>
+                <th>
+                 Acción
+                </th>
+               
+              </tr>
+
+              <tr>
+                <td>
+                  {{paq.stockninos}}
+                </td>
+                <td>
+                  {{paq.ninos}}
+                </td>
+                <td>
+                  {{vnino}}
+                </td>
+                <td>
+                  {{paq.wlninos}}
+                </td>
+                 <td>
+                 
+                    <button id="nino" class="btn btn-round-min btn btn-info " title="Editar">
+                      <span>
+                          <i class="icon-pencil"></i>
+                      </span>
+                    </button>
+                  
+                </td>
+               
+
+              </tr>
+              </tbody>
+              </table>
+<div id="divnino">
+   <form name="personal" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                    {% csrf_token %}
+
+                    <div class="control-group">
+                        <label class="control-label"> Cantidad</label>
+                        <div class="controls">
+                            <input id="ninos" class="span12" type="text"  name="ninos"></input>
+                        </div>
+
+                    </div>
+
+                    <input type="hidden" name="n" value="1"></input>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+   </form>
+</div>
+<div class="widget-head blue">
+                     
+               <h3> Niñas</h3>             
+
+
+            </div>
+              <table class="paper-table responsive">
+              <tbody>
+              <tr>
+                <th>
+                  Registrado
+                </th>
+                <th>
+                  Stock
+                </th>
+                <th>
+                  Vendidos
+                </th>
+                <th>
+                  Lista de espera
+                </th>
+                <th>
+                 Acción
+                </th>
+               
+              </tr>
+
+              <tr>
+                <td>
+                 {{paq.stockninas}}
+                </td>
+                <td>
+                  {{paq.ninas}}
+                </td>
+                <td>
+                  {{vnina}}
+                </td>
+                <td>
+                 {{paq.wlninas}}
+                </td>
+                <td>
+                    <button id="nina" class="btn btn-round-min btn btn-info " title="Editar">
+                      <span>
+                          <i class="icon-pencil"></i>
+                      </span>
+                    </button>
+                </td>
+              </tr>
+              </tbody>
+              </table>
+<div id="divnina">
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                    {% csrf_token %}
+
+                    <div class="control-group">
+                        <label class="control-label"> Cantidad</label>
+                        <div class="controls">
+                            <input id="ninas" class="span12" type="text"  name="ninas"></input>
+                        </div>
+
+                    </div>
+
+                    <input type="hidden" name="n" value="2"></input>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+   </form></div>
+
+                
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

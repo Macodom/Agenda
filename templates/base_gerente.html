@@ -1,0 +1,317 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Admin Panel Template">
+<meta name="author" content="Westilian: Kamrujaman Shohel">
+<!-- styles -->
+<link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/jquery.gritter.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="{{STATIC_URL}}css/font-awesome.css">
+
+<link href="{{STATIC_URL}}css/tablecloth.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/responsive-tables.css" rel="stylesheet">
+
+<link href="{{STATIC_URL}}css/chosen.css" rel="stylesheet">
+<link href="{{STATIC_URL}}css/styles.css" rel="stylesheet">
+
+
+<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+<!--fav and touch icons -->
+<link rel="shortcut icon" href="{{STATIC_URL}}ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{STATIC_URL}}ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{STATIC_URL}}ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{STATIC_URL}}ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="{{STATIC_URL}}ico/apple-touch-icon-57-precomposed.png">
+<!--============ javascript ===========-->
+
+<script src="{{STATIC_URL}}js/jquery.js"></script>
+
+
+
+<script src="{{STATIC_URL}}js/jquery-ui-1.10.1.custom.min.js"></script>
+<script src="{{STATIC_URL}}js/bootstrap.js"></script>
+<script src="{{STATIC_URL}}js/bootstrap-fileupload.js"></script>
+<script src="{{STATIC_URL}}js/accordion.nav.js"></script>
+
+<script src="{{STATIC_URL}}js/jquery.tagsinput.js"></script>
+<script src="{{STATIC_URL}}js/chosen.jquery.js"></script>
+<script src="{{STATIC_URL}}js/bootstrap-colorpicker.js"></script>
+
+<script src="{{STATIC_URL}}js/bootstrap-datetimepicker.min.js"></script>
+
+<script src="{{STATIC_URL}}js/date.js"></script>
+<script src="{{STATIC_URL}}js/daterangepicker.js"></script>
+
+<script src="{{STATIC_URL}}js/custom.js"></script>
+<script src="{{STATIC_URL}}js/respond.min.js"></script>
+<script src="{{STATIC_URL}}js/ios-orientationchange-fix.js"></script>
+
+<script src="{{STATIC_URL}}js/jquery.validate.js"></script>
+
+<script src="{{STATIC_URL}}js/responsive-tables.js"></script>
+<script src="{{STATIC_URL}}js/jquery.dataTables.js"></script>
+<script src="{{STATIC_URL}}js/jquery.tablecloth.js"></script>
+<script src="{{STATIC_URL}}js/ZeroClipboard.js"></script>
+<script src="{{STATIC_URL}}js/dataTables.bootstrap.js"></script>
+<script src="{{STATIC_URL}}js/TableTools.js"></script>
+<script src="{{STATIC_URL}}js/jquery.collapsible.js"></script>
+<script src="{{STATIC_URL}}js/excanvas.js"></script>
+<script src="{{STATIC_URL}}js/jquery.tablesorter.js"></script>
+
+
+<script src="{{STATIC_URL}}js/jquery.flot.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.selection.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.pie.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.stack.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.time.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.tooltip.js"></script>
+<script src="{{STATIC_URL}}js/jquery.flot.resize.js"></script>
+
+<script src="{{STATIC_URL}}js/stepy.jquery.js"></script>
+
+<link href="{{STATIC_URL}}site_media/spinner.css" rel="stylesheet" type="text/css" />
+
+<!-- link de las validacion con jquery realizado por Ing. Elder Lopez -->
+<script src="{{STATIC_URL}}js/validanumeroletras.js"></script>
+<script src="{{STATIC_URL}}js/validacionxv.js"></script>
+<!-- fin del link de las validacion con jquery realizado por Ing. Elder Lopez -->
+
+
+
+<!-- grafica -->
+
+<link class="include" rel="stylesheet" type="text/css" href="{{STATIC_URL}}js/grafica/jquery.jqplot.min.css" />
+
+<script class="include" type="text/javascript" src="{{STATIC_URL}}js/grafica/jquery.jqplot.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}syntaxhighlighter/scripts/shCore.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}syntaxhighlighter/scripts/shBrushJScript.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}syntaxhighlighter/scripts/shBrushXml.min.js"></script>
+<!-- Additional plugins go here -->
+
+<script class="include" type="text/javascript" src="{{STATIC_URL}}js/grafica/jqplot.barRenderer.min.js"></script>
+<script class="include" type="text/javascript" src="{{STATIC_URL}}js/grafica/jqplot.pieRenderer.min.js"></script>
+<script class="include" type="text/javascript" src="{{STATIC_URL}}js/grafica/jqplot.categoryAxisRenderer.min.js"></script>
+<script class="include" type="text/javascript" src="{{STATIC_URL}}js/grafica/jqplot.pointLabels.min.js"></script>
+
+
+{% if graf %}
+
+<!--
+
+ <script class="code" type="text/javascript">$(document).ready(function(){
+        $.jqplot.config.enablePlugins = true;
+        var p1 = [
+        {% for pr in i %}    
+            {{pr.p1}},
+        {% endfor %} 
+        ];
+
+        var p2 = [
+        {% for pr in i %}    
+            {{pr.p2}},
+        {% endfor %} 
+        ];
+
+        var p3 = [
+        {% for pr in i %}    
+            {{pr.p3}},
+        {% endfor %} 
+        ];
+
+        var p4 = [
+        {% for pr in i %}    
+            {{pr.p4}},
+        {% endfor %} 
+        ];
+
+        var p5 = [
+        {% for pr in i %}    
+            {{pr.p5}},
+        {% endfor %} 
+        ];
+
+        var p6 = [
+        {% for pr in i %}    
+            {{pr.p6}},
+        {% endfor %} 
+        ];
+
+        var p7 = [
+        {% for pr in i %}    
+            {{pr.p7}},
+        {% endfor %} 
+        ];
+
+        var p8 = [
+        {% for pr in i %}    
+            {{pr.p8}},
+        {% endfor %} 
+        ];
+
+        var p9 = [
+        {% for pr in i %}    
+            {{pr.p9}},
+        {% endfor %} 
+        ];
+
+        var p10 = [
+        {% for pr in i %}    
+            {{pr.p10}},
+        {% endfor %} 
+        ];
+
+
+
+        var ticks = [
+        {% for ins in i %}    
+            '{{ins.asesor}}',
+        {% endfor %} 
+        ];
+
+        
+        plot1 = $.jqplot('chart1', [p1,p2,p3,p4,p5,p6,p7,p8,p9,p10], {
+            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+            animate: !$.jqplot.use_excanvas,
+            seriesDefaults:{
+                renderer:$.jqplot.BarRenderer,
+                pointLabels: { show: true }
+            },
+            axes: {
+                xaxis: {
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                    ticks: ticks
+                }
+            },
+            highlighter: { show: false }
+        });
+    
+        $('#chart1').bind('jqplotDataClick', 
+            function (ev, seriesIndex, pointIndex, data) {
+                $('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+            }
+        );
+    });</script>
+
+-->
+    <script class="code" type="text/javascript">$(document).ready(function(){
+        $.jqplot.config.enablePlugins = true;
+        var s1 = [
+        {% for pr in i %}    
+            {{pr.cliente}},
+        {% endfor %} 
+        ];
+
+
+        var ticks = [
+        {% for ins in i %}    
+            '{{ins.asesor}}',
+        {% endfor %} 
+        ];
+
+        
+        plot1 = $.jqplot('chart2', [s1], {
+            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+            animate: !$.jqplot.use_excanvas,
+            seriesDefaults:{
+                renderer:$.jqplot.BarRenderer,
+                pointLabels: { show: true }
+            },
+            axes: {
+                xaxis: {
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                    ticks: ticks
+                }
+            },
+            highlighter: { show: false }
+        });
+    
+        $('#chart2').bind('jqplotDataClick', 
+            function (ev, seriesIndex, pointIndex, data) {
+                $('#info1').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+            }
+        );
+    });</script>
+
+{% endif %}
+{% if graf2 %}
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+/*===============================================
+FLOT BAR CHART
+==================================================*/
+
+    var data7_1 = [
+    {% for pr in pagos %}    
+        [{{pr.uno}}, {{pr.dos}}],
+    {% endfor %} 
+    ];
+
+    $(function () {
+        $.plot($("#visitors-chart #visitors-container"), [{
+            data: data7_1,
+            label: "Pagos",
+            lines: {
+                fill: true
+            }
+        }, 
+        ],
+        {
+            series: {
+                lines: {
+                    show: true,
+                    fill: false
+                },
+                points: {
+                    show: true,
+                    lineWidth: 2,
+                    fill: true,
+                    fillColor: "#ffffff",
+                    symbol: "circle",
+                    radius: 5,
+                },
+                shadowSize: 0,
+            },
+            grid: {
+                hoverable: true,
+                clickable: true,
+                tickColor: "#f9f9f9",
+                borderWidth: 1
+            },
+            colors: ["#b086c3", "#ea701b"],
+            tooltip: true,
+            tooltipOpts: {
+                  shifts: { 
+                      x: 10                   //10
+                  },
+                defaultTheme: false
+            },
+            xaxis: {
+                mode: "time",
+                timeformat: "%0m/%0d %0H:%0M"
+            },
+            yaxes: [{
+                /* First y axis */
+            }, {
+                /* Second y axis */
+                position: "right" /* left or right */
+            }]
+        }
+        );
+    });
+}); 
+
+</script>
+
+{% endif %}
+
+</head>
+<body>
+    
+{% block admin %}
+
+{%endblock%}
+
+</body>
+
+</html>

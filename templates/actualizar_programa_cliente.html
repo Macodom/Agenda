@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+{% block title %}
+    Actualizar Programa Asesor
+  {% endblock %}
+</title>
+
+{% include "base_administrador.html" %}
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% include 'menu_navegacion_cliente.html' %}
+
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets light-gray">
+            <div class="widget-head blue clearfix">
+              <h3>Datos del Cliente</h3>
+            </div>
+            <div class="widget-container">
+              <h3>Datos Del Viaje </h3>
+              <table class="stat-table table table-stats table-striped table-sortable table-bordered">
+              <tbody>
+
+              <tr>
+                <th>Programa</th>
+                <th>Clave Precio</th>
+                <th>Precio</th>
+                <th>Salida</th>
+                <th>Asesor</th>
+                <th> Fecha de Inscripción</th>
+                <th>Status</th>
+                
+                
+              </tr>
+
+              <tr>
+                <td>
+                  {{pr.precio}}
+                  
+                </td>
+                <td>
+                  {{pr.claveprecio}}
+                </td>
+                <td>
+                 {% if pr.tipo_cambio_id == 1 %}
+                          $
+                      {% endif %}
+                      {% if pr.tipo_cambio_id == 2 %}
+                          €
+                      {% endif %} {{pr.precio_promo}}
+                </td>
+                 <td>{{pr.precio.salida}}</td>
+                <td>
+                    {% if clien.asesor == null %}
+                    No Asignado
+                    {% else %}
+                   {{ clien.asesor.user.first_name }}
+                    {% endif%}
+                </td>
+               
+                <td>
+                  {{clien.fecha_registro}}
+                </td>
+                <td>
+                {%  if clien.status_prog == 0  %}
+                      <span class="label">Prospecto</span>
+                      {% endif %}
+
+                      {% if clien.status_prog == 1 and clien.garantizado == False %}
+                        <span class="label label-success"> Inscrito</span>
+                      {% endif %}
+
+                    {% if clien.status_prog == 1 and clien.garantizado == True %}
+                        <span class="label label-success"> Garantizado</span>
+                      {% endif %}
+
+                      {%  if clien.status_prog == 2  %}
+                      <span class="label label-info">Lista de espera</span>
+                      {% endif %}
+<!-- otros estatus-->
+                      {%  if clien.status_prog == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if clien.status_prog == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                      {%  if clien.status_prog == 5  %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+                      {%  if clien.status_prog == 6  %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+<!-- otros estatus-->
+                </td>              
+                
+              </tr>
+
+
+
+     
+              </tbody>
+              </table>
+
+
+
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                   {% csrf_token %}
+
+
+              <div class="control-group">
+                  <label class="control-label">Programa</label>
+                  <div class="controls">
+                    <select  name="id_precio" id="id_precio" class="span5">
+                  <option value="" selected="selected" >---------</option>
+                    {%  for p in pro %}
+
+
+
+                      {%  if clien.sexo == 'Masculino'  %}
+                        <!-- si hay cupo para ninos p.ninos != 0-->
+                  <option value="{{p.id}}">{{p.programa}} -- {{p.vigencia}} -- {{p.salida}} </option>
+                        
+                      {% endif %}
+
+
+                      {%  if clien.sexo == 'Femenino'  %}
+                         <!-- si hay cupo para ninas  if p.ninas != 0-->
+                     
+                  <option value="{{p.id}}">{{p.programa}} -- {{p.vigencia}} -- {{p.salida}} </option>
+                        
+                      {% endif %}
+
+
+
+                    {% endfor %}  
+                  </select>
+
+
+               
+                  <select name="id_precio2" id="id_precio2" class="span5" size="1"></select>
+                </div>
+
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+{% endif %}
+                </form>
+
+                
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+ {% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

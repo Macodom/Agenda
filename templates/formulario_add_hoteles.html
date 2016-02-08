@@ -1,0 +1,335 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+ Hoteles
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}    
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+{% if request.session.tipous == 4 %}
+  {% include 'headercaja.html' %}
+  {% include 'menuizquierdocaja.html' %}
+{% endif %}
+
+
+ {% if request.session.tipous == 8 %}
+  {% include 'headeragencias.html' %}
+  {% include 'menuizquierdoagencias.html' %}
+{% endif %}
+
+
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+{% if request.session.tipous == 1 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/view-prog-add-hotel/">Lista de Programas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Agregar Hoteles</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/view-prog-add-hotel/">Lista de Programas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Agregar Hoteles</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/view-prog-add-hotel/">Lista de Programas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Agregar Hoteles</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+{% if request.session.tipous == 8 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Hotel
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-agencias/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/view-prog-add-hotel/">Lista de Programas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Agregar Hoteles</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+
+
+<!-- Aqui van los roidfluid -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="span5">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                       
+               <h3> Hotel </h3>             
+                        
+             
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="actividades" class="form-horizontal left-align" id="actividades" method="POST" action="">
+                  {% csrf_token %}
+
+                <div class="control-group">
+                  <label class="control-label">Fecha:</label>
+                  <div class="controls">
+                    <div class="input-prepend">
+                      <span class="add-on"><i class="icon-calendar"></i></span>
+                      <input type="text" name="fecha_range" id="fecha_range"/>
+                    </div>
+                  </div>
+                </div>
+
+
+                
+
+                <div class="control-group">
+                    <label class="control-label">Hotel</label>
+                    <div class="controls">
+                      <select class="span12" id="hotel" name="hotel">
+                        <option value="" selected="selected">---------</option>
+                        {%  for ho in hotel  %}
+                        <option value="{{ho.id}}">{{ho.descripcion}}</option>
+                        {%  endfor %}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Programa</label>
+                    <div class="controls">
+                      <select class="span12" id="programa" name="programa">
+                        <option value="{{objpro.id}}">{{objpro.nombre}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="span7">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">        
+               <h3> Lista de Hoteles agregados</h3>             
+            </div>
+            <div class="widget-container">
+
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Programa</th>
+                    <th> Hotel</th>
+                    <th> Fecha Inicial</th>
+                    <th> Fecha Final</th>
+                    <th> Rooming</th>
+                    <th> Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {%  for fbprog in objHotelbyprog  %}
+                  <tr>
+                    <td>{{fbprog.programa.clave}}</td>
+                    <td>{{fbprog.hotel}}</td>
+                    <td>{{fbprog.fecha_ini}}</td>
+                    <td>{{fbprog.fecha_fin}}</td>
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+                        <a href="/lista-roomig/{{objpro.id}}/{{fbprog.id}}/">
+                          <button class="btn btn-warning" title="Agregar Romming Chaperon">
+                            <i class="icon-building"></i>
+                          </button>
+                        </a>
+
+                        <a href="/lista-roomig-cliente/{{objpro.id}}/{{fbprog.id}}/">
+                          <button class="btn btn-primary" title="Agregar Romming Cliente">
+                            <i class="icon-building"></i>
+                          </button>
+                        </a>  
+
+                        </div>
+
+
+                      </div>
+                    </td>
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+                          <a href="/edit-hotel-by-prog-form/{{objpro.id}}/{{fbprog.id}}/">
+                          <button class="btn btn-info" title="Entrar">
+                            <i class="icon-edit"></i>
+                          </button>
+                          </a> 
+
+
+                          <a href="/eliminar-hotel-by-prog-form/{{objpro.id}}/{{fbprog.id}}/" onclick="return confirm('Realmente desea eliminar este registro? \n Nota: \n Si este registro tiene relaciones, serán eliminados.')">
+                          <button class="btn btn-danger" title="Eliminar">
+                            <i class="icon-remove"></i>
+                          </button>
+                          </a> 
+
+
+                        </div>
+
+
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

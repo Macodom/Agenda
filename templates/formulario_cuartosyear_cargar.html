@@ -1,0 +1,704 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Cuartos por años
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+{% if user.is_staff or request.session.tipous == 1%}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+{% if activoc %}
+
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+               Asignar cuarto al cliente  
+              :: 
+              {% if objcliente.iris %}
+                  {{objcliente.iris}}
+              {% endif %} -- 
+              {{usuario.last_name}} {{objcliente.apmat}} {{usuario.first_name}}  
+              --
+              {% if pv.clave %}
+                  {{pv.clave}}
+              {% endif %}  
+              
+              ::
+            </h3>
+          </div>
+          <ul class="breadcrumb">
+
+ 
+
+{% if request.session.tipous == 3 %}
+              <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/mis-clientes/">Mis Clientes </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/opciones-clientes-a/{{usuario.id}}">{{usuario.first_name}} {{usuario.last_name}} {{objcliente.apmat}}</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+{% endif %}                  
+            <li class="active">Actualizar Programa cliente</li>
+            
+          </ul>
+        </div>
+      </div>
+
+
+{% else %}
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Asignar cuartos al programa "{{pv.nombre}}" con Fecha de Salida "{{pva}}"
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+              <li>
+              <a href="/asignar-cuartos-cliente/">Cuartos por programas disponibles</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Lista de los clientes disponibles para asignar</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Asignar cuartos al programa "{{pv.nombre}}" con Fecha de Salida "{{pva}}"
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/asignar-cuartos-cliente-gerente/">Cuartos por programas disponibles</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Lista de los clientes disponibles para asignar</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Asignar cuartos al programa "{{pv.nombre}}" con Fecha de Salida "{{pva}}"
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/asignarar-cuartos-asesor/">Consulta de paquetes disponibles</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li class="active">Lista de los clientes disponibles para asignar</li>
+          </ul>
+        </div>
+      </div>  
+  {% endif %}
+
+{% endif %}
+
+<div class="row-fluid">
+        <div class="span12">
+                  <div class="span5">
+                  <div class="content-widgets gray">
+            <div class="widget-head blue">
+               
+              <h3> Asignar cuartos a los clientes</h3>          
+                     
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+    <form name="cargarcuartos" class="form-horizontal left-align" id="cargarcuartos" method="POST" action="">
+                  {% csrf_token %}
+
+
+              <div class="control-group">
+                    <label class="control-label">Cuarto</label>
+                    <div class="controls">
+                     <select id="cuarto" name="cuarto" class="span12">
+                      <option value="" selected="selected">--------</option>
+                      {% for cua in cuarto %}
+                      
+                      <option value="{{cua.id}}">{{cua.nombre}} </option>
+                      {% endfor %}
+
+                    </select>
+                    </div>
+              </div>     
+
+
+              <div class="control-group">
+                    <label class="control-label">Clientes</label>
+                    <div class="controls">
+
+<select  
+      {% if pv.id <= 8 or pv.id == 18 or pv.id == 21 %} 
+              id="id_cliente" 
+      {% else %} 
+              id="id_cliente2" 
+      {% endif %}  
+
+class="chzn-select span12" multiple tabindex="4" name="cliente" >   
+
+                      {% for file in clientearray %}  
+
+                      <option {%if file.id == objcliente.id%} selected {% endif%}  
+                          value="{{file.id}}">{{ file.last_name }} {{ file.apmat }} {{ file.name }} 
+                      </option>
+                      
+                      {% endfor %}     
+                         
+                     </select> 
+                    </div>
+              </div>
+      
+
+               <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" name="clienteformulario">Guardar</button>
+              </div>
+
+              <input type="hidden" value="{{pv.id}}" name="paquete"> 
+            </form>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+               
+              <h3> Asignar cuartos Chaperón</h3>          
+                     
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+    <form name="cargarcuartos" class="form-horizontal left-align" id="cargarcuartos" method="POST" action="">
+                  {% csrf_token %}
+
+
+              <div class="control-group">
+                    <label class="control-label">Cuarto</label>
+                    <div class="controls">
+                     <select id="cuartochap" name="cuartochap" class="span12">
+                      <option value="" selected="selected">--------</option>
+                      {% for cua in cuartoarraychap %}
+                      
+                      <option value="{{cua.id}}">{{cua.nombre}} </option>
+                      {% endfor %}
+
+                    </select>
+                    </div>
+              </div>     
+
+
+              <div class="control-group">
+                    <label class="control-label">Chaperon</label>
+                    <div class="controls">
+
+<select  
+      {% if pv.id <= 8 or pv.id == 18 or pv.id == 21 %} 
+              id="id_cliente" 
+      {% else %} 
+              id="id_cliente2" 
+      {% endif %}  
+
+class="multiple span12" multiple tabindex="8" name="chaperon" >   
+
+                      {% for file in chapeyeararray %}  
+
+                      <option {%if file.id == objcliente.id%} selected {% endif%}  
+                          value="{{file.id}}">{{ file.last_name }} {{ file.apmat }} {{ file.name }} 
+                      </option>
+                      
+                      {% endfor %}     
+                         
+                     </select> 
+                    </div>
+              </div>
+      
+
+               <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" name="chaperonformulario">Guardar</button>
+              </div>
+
+              <input type="hidden" value="{{pv.id}}" name="paquete"> 
+            </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- fin -->
+
+                <div class="span7">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+               
+              <h3> Cuartos Asignados 
+               
+               {% if user.is_staff or request.session.tipous == 1 %}
+              <a href="/cargar-chaperon-programa/{{idpq}}">
+                <button class="btn btn-primary" type="button">
+                  <i class="icon-star-empty"></i>Asignar chaperón
+                </button>
+              </a> 
+              {% endif %}
+              {% if request.session.tipous == 2 %}
+              <a href="/car-chaperon-programa/{{idpq}}">
+                <button class="btn btn-primary" type="button">
+                  <i class="icon-star-empty"></i>Asignar chaperón
+                </button>
+              </a> 
+              {% endif %}  
+
+              <a href="/reporte-roomig-por-programa/{{idpq}}">
+                <button class="btn btn-success" type="button">
+                  <i class="icon-print"></i>Imprimir
+                </button>
+              </a>
+
+              <a href="/reporte-roomig-por-programa-rv/{{idpq}}">
+                <button class="btn btn-success" type="button">
+                  <i class="icon-print"></i>Imprimir (RV)
+                </button>
+              </a>
+{% if pv.id == 3 %}
+              <a href="/reporte-roomig-por-programa-gt/{{idpq}}">
+                <button class="btn btn-success" type="button">
+                  <i class="icon-print"></i>Imprimir (GT)
+                </button>
+              </a>
+{% endif %}              
+  </h3>      
+                     
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+                <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+
+                
+                    <thead>
+                      <tr>
+                        <td>
+                          Cuarto
+                        </td>
+                         <td>
+                          Nombre
+                        </td>
+                         <td>
+                          Asesor
+                        </td>
+                         <td>
+                          Acción
+                        </td>
+                      </tr>
+                
+                    </thead>
+
+                    <tbody> 
+                    {% for cl in clienteagregado %}                 
+                      <tr>
+                        <td>
+                          {{cl.cuarto}}
+                        </td>
+                        <td>
+
+{% if user.is_staff or request.session.tipous == 1%}                          
+                          <a href="/cce/{{cl.cliente.user.id}}" target="_blank" title="Abrir propiedades del cliente">
+                               {{cl.cliente.user.last_name}} {{cl.cliente.apmat}} {{cl.cliente.user.first_name}}
+                          </a>
+{% endif %}
+{% if request.session.tipous == 2 %} 
+                        <a href="/opciones-clientes/{{cl.cliente.user.id}}" target="_blank" title="Abrir propiedades del cliente">
+                               {{cl.cliente.user.last_name}} {{cl.cliente.apmat}} {{cl.cliente.user.first_name}}
+                        </a>
+{% endif %}
+
+{% if request.session.tipous == 3 %} 
+                        <a href="/opciones-clientes-a/{{cl.cliente.user.id}}" target="_blank" title="Abrir propiedades del cliente">
+                               {{cl.cliente.user.last_name}} {{cl.cliente.apmat}} {{cl.cliente.user.first_name}}
+                        </a>
+{% endif %}
+        
+                        </td>
+                        <td>
+                           {{cl.cliente.asesor.clave}}
+                        </td>
+                        <td>
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="btn-toolbar row-action">
+    <div class="btn-group">
+        <a href="/eliminarc/{{cl.cliente.id}}/{{idpq}}/">
+            <button class="btn btn-danger" data-original-title="Eliminar cliente">
+                <i class=" icon-remove-sign"></i>
+            </button>
+        </a>
+    </div>
+
+              {% if cl.order == '0' %}
+
+              <div class="btn-group">
+                  <a href="/ordenar-room-cliente/{{cl.id}}/{{idpq}}/">
+                      <button class="btn btn-success" data-original-title="Ordenar cliente">
+                          <i class="icon-double-angle-right">{{cl.order}}</i>
+                      </button>
+                  </a>
+              </div>
+
+              {% else %}
+
+              <div class="btn-group">
+                  <a href="/ordenar-room-cliente-quitar/{{cl.id}}/{{idpq}}/">
+                      <button class="btn btn-success" data-original-title="Eliminar orden cliente">
+                          <i class="icon-double-angle-left">{{cl.order}}</i>
+                      </button>
+                  </a>
+              </div>
+
+              {% endif %}
+
+</div>
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  <div class="btn-toolbar row-action">
+    <div class="btn-group">
+        <a href="/eliminar-c/{{cl.cliente.id}}/{{idpq}}/">
+            <button class="btn btn-danger" data-original-title="Eliminar cliente">
+                <i class=" icon-remove-sign"></i>
+            </button>
+        </a>
+    </div>
+
+      {% if cl.order == '0' %}
+
+                <div class="btn-group">
+                    <a href="/ordenar-room-cliente-g/{{cl.id}}/{{idpq}}/">
+                        <button class="btn btn-success" data-original-title="Ordenar cliente">
+                            <i class="icon-double-angle-right">{{cl.order}}</i>
+                        </button>
+                    </a>
+                </div>
+
+                {% else %}
+
+                <div class="btn-group">
+                    <a href="/ordenar-room-cliente-quitar-g/{{cl.id}}/{{idpq}}/">
+                        <button class="btn btn-success" data-original-title="Eliminar orden cliente">
+                            <i class="icon-double-angle-left">{{cl.order}}</i>
+                        </button>
+                    </a>
+                </div>
+
+      {% endif %}
+
+</div>
+{% endif %}
+
+
+    {% if request.session.tipous == 3 %}
+      {% if activoc %}
+          <div class="btn-toolbar row-action">
+            <div class="btn-group">
+                <a href="/eliminar-c-a2/{{cl.cliente.id}}/{{idpq}}/">
+                    <button class="btn btn-danger" data-original-title="Eliminar cliente">
+                        <i class=" icon-remove-sign"></i>
+                    </button>
+                </a>
+            </div>
+
+            {% if cl.order == '0' %}
+
+                  <div class="btn-group">
+                      <a href="/ordenar-room-cliente-c/{{cl.id}}/{{idpq}}/">
+                          <button class="btn btn-success" data-original-title="Ordenar cliente">
+                              <i class="icon-double-angle-right">{{cl.order}}</i>
+                          </button>
+                      </a>
+                  </div>
+
+                  {% else %}
+
+                  <div class="btn-group">
+                      <a href="/ordenar-room-cliente-quitar-c/{{cl.id}}/{{idpq}}/">
+                          <button class="btn btn-success" data-original-title="Eliminar orden cliente">
+                              <i class="icon-double-angle-left">{{cl.order}}</i>
+                          </button>
+                      </a>
+                  </div>
+
+              {% endif %}
+
+
+        </div>
+      {% else %}
+      <div class="btn-toolbar row-action">
+            <div class="btn-group">
+                <a href="/eliminar-c-a/{{cl.cliente.id}}/{{idpq}}/">
+                    <button class="btn btn-danger" data-original-title="Eliminar cliente">
+                        <i class=" icon-remove-sign"></i>
+                    </button>
+                </a>
+            </div>
+        
+
+
+              {% if cl.order == '0' %}
+
+                  <div class="btn-group">
+                      <a href="/ordenar-room-cliente-c/{{cl.id}}/{{idpq}}/">
+                          <button class="btn btn-success" data-original-title="Ordenar cliente">
+                              <i class="icon-double-angle-right">{{cl.order}}</i>
+                          </button>
+                      </a>
+                  </div>
+
+                  {% else %}
+
+                  <div class="btn-group">
+                      <a href="/ordenar-room-cliente-quitar-c/{{cl.id}}/{{idpq}}/">
+                          <button class="btn btn-success" data-original-title="Eliminar orden cliente">
+                              <i class="icon-double-angle-left">{{cl.order}}</i>
+                          </button>
+                      </a>
+                  </div>
+
+              {% endif %}
+
+
+  </div>
+      
+      {% endif %}    
+    {% endif %}
+  
+
+                        </td>
+                      </tr>
+                      {% endfor %}
+                   
+                    </tbody>
+              </table>
+
+              </div>
+            </div>
+          </div>
+
+
+          <!-- INICIO DEL TEMPLATE CHAPERON -->
+
+                    <div class="content-widgets gray">
+            <div class="widget-head blue">
+               
+              <h3> Cuartos Asignados </h3>      
+                     
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+                <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+
+                
+                    <thead>
+                      <tr>
+                        <td>
+                          Cuarto
+                        </td>
+                         <td>
+                          Nombre
+                        </td>
+                         <td>
+                          Tarea
+                        </td>
+                         <td>
+                          Acción
+                        </td>
+                      </tr>
+                
+                    </thead>
+
+                    <tbody> 
+                    {% for cl in objchapcargado %}                 
+                      <tr>
+                        <td>
+                          {{cl.chapeyearcuarto.cuarto}}
+                        </td>
+                        <td>
+                    
+                          <a href="/cce/{{cl.cliente.user.id}}" target="_blank" title="Abrir propiedades del cliente">
+                               {{cl.chapeyear}}
+                          </a>
+
+                        </td>
+                        <td>
+                           {{cl.chapeyear.tareav}}
+                        </td>
+                        <td>
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or request.session.tipous == 3%}
+  <div class="btn-toolbar row-action">
+    <div class="btn-group">
+        <a href="/eliminar-cuarto-chaperon/{{cl.id}}/{{idpq}}/">
+            <button class="btn btn-danger" data-original-title="Eliminar cliente">
+                <i class=" icon-remove-sign"></i>
+            </button>
+        </a>
+    </div>
+
+              {% if cl.order == '0' %}
+
+              <div class="btn-group">
+                  <a href="/ordenar-chaperon-cuarto/{{cl.id}}/{{idpq}}/">
+                      <button class="btn btn-success" data-original-title="Ordenar cliente">
+                          <i class="icon-double-angle-right">{{cl.order}}</i>
+                      </button>
+                  </a>
+              </div>
+
+              {% else %}
+
+              <div class="btn-group">
+                  <a href="/ordenar-chaperon-cuarto-quitar/{{cl.id}}/{{idpq}}/">
+                      <button class="btn btn-success" data-original-title="Eliminar orden cliente">
+                          <i class="icon-double-angle-left">{{cl.order}}</i>
+                      </button>
+                  </a>
+              </div>
+
+              {% endif %}
+
+</div>
+{% endif %}
+
+
+
+  
+
+                        </td>
+                      </tr>
+                      {% endfor %}
+                   
+                    </tbody>
+              </table>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- FIN DEL TEMPLATE CHAPERON -->
+
+
+
+        </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

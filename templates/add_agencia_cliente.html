@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+{% block title %}
+    Actualizar Programa Asesor
+  {% endblock %}
+</title>
+
+{% include "base_administrador.html" %}
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% include 'menu_navegacion_cliente.html' %}
+
+
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets light-gray">
+            <div class="widget-head blue clearfix">
+              <h3>Modulo Agencia</h3>
+            </div>
+            <div class="widget-container">
+              <h3>Datos de la Agencia </h3>
+              <table class="stat-table table table-stats table-striped table-sortable table-bordered">
+              <tbody>
+
+              <tr>
+                <th>Agencia</th>
+                <th>Asesor</th>
+                <th>Precio Programa</th>
+                <th>No Comisionable</th>
+                <th>Comisionable</th>
+                <th>{{vobjag.asesor_agencia.agencia_ase.comision}}% Comisión  </th>
+                <th>Status Cliente</th>
+                
+                
+              </tr>
+
+              <tr>
+                <td>
+                  {{vobjag.asesor_agencia.agencia_ase.nombre}}
+                  
+                </td>
+                <td>
+                  {{vobjag.asesor_agencia.nombre}} {{vobjag.asesor_agencia.ap_pat}} {{vobjag.asesor_agencia.ap_mat}}
+                </td>
+                <td>
+                 {% if pr.tipo_cambio_id == 1 %}
+                          $
+                      {% endif %}
+                      {% if pr.tipo_cambio_id == 2 %}
+                          €
+                      {% endif %} {{pr.precio_promo}}
+                </td>
+                 <td>
+                  {% if pr.tipo_cambio_id == 1 %}
+                          $
+                      {% endif %}
+                      {% if pr.tipo_cambio_id == 2 %}
+                          €
+                      {% endif %}
+
+                  {{pr.precio.programa.n_comisionable}}</td>
+                <td>
+                  {% if pr.tipo_cambio_id == 1 %}
+                          $
+                      {% endif %}
+                      {% if pr.tipo_cambio_id == 2 %}
+                          €
+                      {% endif %}
+
+                      {{nc}}
+                    
+                </td>
+               
+                <td>
+                  {% if pr.tipo_cambio_id == 1 %}
+                          $
+                      {% endif %}
+                      {% if pr.tipo_cambio_id == 2 %}
+                          €
+                      {% endif %}
+                  {{vcomisioncondescuento}}
+                </td>
+                <td>
+                {%  if clien.status_prog == 0  %}
+                      <span class="label">Prospecto</span>
+                      {% endif %}
+
+                      {%  if clien.status_prog == 1  %}
+                      <span class="label label-success">Inscrito</span>
+                      {% endif %}
+
+                      {%  if clien.status_prog == 2  %}
+                      <span class="label label-info">Lista de espera</span>
+                      {% endif %}
+<!-- otros estatus-->
+                      {%  if clien.status_prog == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if clien.status_prog == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                      {%  if clien.status_prog == 5  %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+                      {%  if clien.status_prog == 6  %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+<!-- otros estatus-->
+                </td>              
+                
+              </tr>
+
+
+
+     
+              </tbody>
+              </table>
+
+
+
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                   {% csrf_token %}
+
+
+              <div class="control-group">
+                  <label class="control-label">Agencia</label>
+                  <div class="controls">
+
+                    <select id="agencia" class="span3 valid" name="agencia_ase">
+
+                      <option selected="selected" value="">---------</option>
+                      {%  for a in ag%}
+                        <option value="{{ a.id }}">{{a.nombre}}</option>
+                      {% endfor %}  
+                    </select>
+
+
+                 Sucursal
+                  <select name="sucursal_ase" id="sucursal_ase" class="span4" size="1"></select>
+                  Asesor
+                  <select name="asesor_agencia" id="asesor_agencia" class="span4" size="1"></select>
+                </div>
+
+
+{% if user.is_staff or request.session.tipous == 1 or request.session.tipous == 2 or clien.asesor_id == user.perfil.id  %}
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Agregar</button>
+                  </div>
+{% endif %}
+                </form>
+
+{% if request.session.vvalor %}
+{% if user.is_staff or request.session.tipous == 1 %}
+                <form  method="POST" action="/ver_cliente_especifica/">
+{% endif %}
+{% if request.session.tipous == 2 %}
+                <form  method="POST" action="/gver-cliente-especifica/">
+{% endif %}
+{% if request.session.tipous == 3 %}
+                <form  method="POST" action="/aver-cliente-especifica/">
+{% endif %}                   
+                   {% csrf_token %}
+
+              <div class="control-group">
+                  <input type="hidden" value="{{request.session.vvalor}}" name="valor">
+                  <input type="hidden" value="{{request.session.asesorf}}" name="asesor">
+                  <input type="hidden" value="{{request.session.programaf}}" name="programa">
+                  <input type="hidden" value="{{request.session.cvsalidaf}}" name="cvsalida">
+                  <input type="hidden" value="{{request.session.estatusf}}" name="estatus">
+                  <input type="hidden" value="{{request.session.escuelaf}}" name="escuela">
+                  <input type="hidden" value="{{request.session.segurof}}" name="seguro">
+                  <input type="hidden" value="{{request.session.sexof}}" name="sexo">
+                  <input type="hidden" value="{{request.session.aniof}}" name="anio">
+                 
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-link">Consulta Anterior</button>
+                  </div>
+
+                </form>
+{% endif %}                 
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+ {% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

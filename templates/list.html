@@ -1,0 +1,27 @@
+
+
+{% for contact in contacts %}
+    
+    {{ contact.user.first_name|upper }}<br />
+    ...
+{% endfor %}
+
+<div class="paginations">
+    <span class="step-linkss">
+      
+        {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        <span class="currents">
+            Pagina {{ contacts.number }} de {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">Siguiente</a>
+        {% endif %}
+    </span>
+</div>
+
+
+

@@ -1,0 +1,143 @@
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              {% if vc == "actualizarpc" %} Actualizar programa cliente {% endif %} 
+              {% if vc == "seguimientoc" %} Seguimiento cliente {% endif %} 
+              {% if vc == "editarcliente" %} Editar cliente {% endif %} 
+              {% if vc == "actualizarascec" %} Actualizar asesor al cliente {% endif %}
+              {% if vc == "pagosc" %} Pagos de los clientes {% endif %}
+              {% if vc == "fotocliente" %} Foto cliente {% endif %}
+              {% if vc == "custodiacliente" %} Custodia cliente {% endif %}
+              {% if vc == "doccliente" %} Documentos del cliente {% endif %}
+              {% if vc == "reserva" %} Número de reserva del cliente {% endif %}
+              {% if vc == "nota" %} Nota del cliente {% endif %}
+              {% if vc == "registrar_wl" %} WL Cliente {% endif %}
+              {% if vc == "agencia" %} Agencia Cliente {% endif %}
+              {% if vc == "tutor" %} Tutor Cliente {% endif %}
+
+              
+              :: 
+              {% if clien.iris %}
+                  {{clien.iris}}
+              {% endif %} -- 
+              {{usuario.last_name}} {{clien.apmat}} {{usuario.first_name}}  
+              --
+              {% if pr.precio.programa.clave %}
+                  {{pr.precio.programa.clave}}
+              {% endif %}  
+              
+              ::
+            </h3>
+          </div>
+          <ul class="breadcrumb">
+{% if user.is_staff or request.session.tipous == 1%}
+              <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta_cliente/">Clientes </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/cce/{{usuario.id}}">{{usuario.first_name}} {{usuario.last_name}} {{clien.apmat}}</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+{% endif %}
+{% if request.session.tipous == 2 %}
+              <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/consulta-cliente/">Cliente </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/opciones-clientes/{{usuario.id}}">{{usuario.first_name}} {{usuario.last_name}} {{clien.apmat}}</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+{% endif %} 
+
+{% if request.session.tipous == 3 %}
+              <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li>
+              <a href="/mis-clientes/">Mis Clientes </a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+            <li>
+              <a href="/opciones-clientes-a/{{usuario.id}}">{{usuario.first_name}} {{usuario.last_name}} {{clien.apmat}}</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+            </li>
+{% endif %}                  
+            
+            {% if vc == "actualizarpc" %}
+            <li class="active">Actualizar Programa cliente</li>
+            {% endif %}
+            {% if vc == "seguimientoc" %}
+            <li class="active">Seguimiento de cliente</li>
+            {% endif %}
+            {% if vc == "editarcliente" %}
+            <li class="active">Editar cliente</li>
+            {% endif %}
+            {% if vc == "actualizarascec" %}
+            <li class="active">Actualizar el asesor al cliente</li>
+            {% endif %}
+            {% if vc == "pagosc" %}
+            <li class="active">Pagos del cliente</li>
+            {% endif %}
+            {% if vc == "fotocliente" %}
+            <li class="active">Foto cliente</li>
+            {% endif %}
+             {% if vc == "custodiacliente" %}
+            <li class="active">Custodia cliente</li>
+            {% endif %}
+            {% if vc == "doccliente" %}
+            <li class="active">Documentos cliente</li>
+            {% endif %}
+            {% if vc == "reserva" %}
+            <li class="active">Reserva cliente</li>
+            {% endif %}
+            {% if vc == "nota" %}
+            <li class="active">Nota cliente</li>
+            {% endif %}
+            {% if vc == "registrar_wl" %}
+            <li class="active">WL Cliente</li>
+            {% endif %}
+            {% if vc == "agencia" %}
+            <li class="active">Agencia Cliente</li>
+            {% endif %}
+            {% if vc == "tutor" %}
+            <li class="active">Tutor Cliente</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>

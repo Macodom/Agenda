@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+      Formulario Consulta Chaperon 
+</title>
+
+{% include "base_administrador.html" %} 
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}    
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+{% if request.session.tipous == 4 %}
+  {% include 'headercaja.html' %}
+  {% include 'menuizquierdocaja.html' %}
+{% endif %}
+
+{% if request.session.tipous == 10 %}
+  {% include 'headerrecepcion.html' %}
+  {% include 'menuizquierdorecepcion.html' %}
+{% endif %}
+  
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i><strong>Ok!</strong>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Chaperon
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Chaperon</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+<!-- Aqui van los roidfluid -->
+{% if request.session.tipous == 2 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Chaperon
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Chaperon</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+<!-- Aqui van los roidfluid -->
+{% if request.session.tipous == 3 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Chaperon
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Chaperon</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+ {% if request.session.tipous == 4 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Chaperon
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-caja/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Chaperon</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+ {% if request.session.tipous == 10 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Chaperon
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-recepcion/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Chaperon</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+  
+
+
+
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+
+            <h3><i class="icon-plane"></i> Consulta de Chaperon <i class="icon-plane"></i>  </h3>            
+      
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+                   
+
+
+<div id="nameap" >
+                  <div class="control-group">
+                    <label class="control-label">Apellido Paterno</label>
+                    <div class="controls">
+                      <input id="appat" class="span12" type="text" maxlength="30" name="appat"></input>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Apellido Materno</label>
+                    <div class="controls">
+                      <input id="apmat" class="span12" type="text" maxlength="30" name="apmat"></input>
+                    </div>
+                  </div>
+</div>
+
+                   <div class="control-group">
+                    <label class="control-label">Busqueda</label>
+                        <div class="controls">
+                        <label class="radio">
+                            <input type="radio" checked="" value="1" name="opcion"></input>
+                             Apellidos
+
+                        </label>
+                          </div>
+                  </div>
+
+
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Consultar</button>
+                  </div>
+
+                </form>
+
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Nombre</th>
+                    <th> Apellidos</th>
+                    <th> Programa </th>
+                    <th> Tarea durante el viaje </th>
+                    <th> Salida </th>
+                    <th> Color </th>
+                    <th> Acción </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {%  for c1 in clien1  %}
+                  <tr>
+                    <td>{{c1.name}}</td>
+                    <td> {{c1.last_name}} {{c1.apmat}}</td>
+                    <td>{{c1.programa}}</td>
+                    <td>{{c1.tareav}}</td>
+                    <td>{{c1.salida}}</td>
+                    <td>{{c1.color}}</td>
+
+                    <td class="center">
+                      <div class="btn-toolbar row-action">
+                        <div class="btn-group">
+                           <a onclick="return confirm('¿Realmente desea eliminar la Mac Addres este registro?')"  href="/eliminar-mac-chaps/{{c1.id_tipo_chap}}/{{c1.id_security}}/">
+                          <button class="btn btn-danger" title="Eliminar Mac Addres">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>
+                        </div>
+                      </div>
+
+                    </td>  
+                  </tr>
+                  {%  endfor %}
+
+
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

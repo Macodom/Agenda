@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head prefix="og: http://ogp.me/ns#">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<meta property="og:url" content="http://admin.creaturviajes.com/imagen_detalle/{{imagen.pk}}" />
+		<meta property="og:site_name" content="Creatur Viajes" />
+		<meta property="og:title" content="{{ imagen.pk_cliente.precio.precio.programa.nombre }} - 2014"/>
+		<meta property="og:description" content="{{ imagen.descripcion }}" />
+		<meta property="og:image" content="http://admin.creaturviajes.com/media/{{ imagen.foto }}" />
+
+		<title>Integración con Facebook</title>
+		<?php include 'headers.php'; ?>
+	</head>
+<body>
+
+{% if imagen %}
+    
+    <img src="{{ MEDIA_URL }}{{ imagen.foto }}">
+    
+{% endif %}
+
+</body>
+</html>

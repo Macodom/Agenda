@@ -1,0 +1,377 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+      Formulario Consulta Clientes 
+</title>
+
+{% include "base_administrador.html" %} 
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}    
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+{% if request.session.tipous == 4 %}
+  {% include 'headercaja.html' %}
+  {% include 'menuizquierdocaja.html' %}
+{% endif %}
+
+  
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i><strong>Ok!</strong>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Clientes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Clientes</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+<!-- Aqui van los roidfluid -->
+{% if request.session.tipous == 2 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Clientes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Clientes</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+<!-- Aqui van los roidfluid -->
+{% if request.session.tipous == 3 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Clientes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Clientes</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+ {% if request.session.tipous == 4 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Clientes
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-caja/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Consulta de Clientes</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+  
+
+
+
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+
+            <h3> Consulta de Clientes para cambiar el status a inscrito  </h3>            
+      
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="signupForm" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+                  {% csrf_token %}
+                   
+
+
+<div id="nameap" >
+                  <div class="control-group">
+                    <label class="control-label">Apellido Paterno</label>
+                    <div class="controls">
+                      <input id="appat" class="span12" type="text" maxlength="30" name="appat"></input>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Apellido Materno</label>
+                    <div class="controls">
+                      <input id="apmat" class="span12" type="text" maxlength="30" name="apmat"></input>
+                    </div>
+                  </div>
+</div>
+
+
+<div id="dats" >
+                  <div class="control-group">
+                    <label class="control-label">Número de Reserva</label>
+                    <div class="controls">
+                      <input id="datos" class="span12" type="text" maxlength="30" name="datos"></input>
+                    </div>
+                  </div>
+</div>
+
+                   <div class="control-group">
+                    <label class="control-label">Busqueda</label>
+                        <div class="controls">
+                        <label class="radio">
+                            <input type="radio" checked="" value="1" name="opcion"></input>
+                             Apellidos
+
+                        </label>
+                        <label class="radio">
+                             <input type="radio" value="2" name="opcion"></input>
+                          Iris
+                        </label>
+                          </div>
+                  </div>
+
+
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Consultar</button>
+                  </div>
+
+                </form>
+{% if esta %}
+              <table class="table data-grid table-bordered paper-table tbl-serach responsive">
+                <thead>
+                  <tr>
+                    <th> Nombre</th>
+                    <th> Num. Reserva </th>
+                    <th> Programa </th>
+                    <th> Clave Programa </th>
+                    <th> Asesor </th>
+                     <th> Status </th>
+                  </tr>
+                </thead>
+                <tbody>
+{% if esta == 1 %}
+                  {%  for c1 in clien1  %}
+                  <tr>
+                    <td>
+
+{% if user.is_staff or request.session.tipous == 1 %}
+                      <a href="/admin-cambiar-status-cliente/{{c1.id}}">{{c1.name}} {{c1.last_name}}</a>
+{% endif %}
+{% if request.session.tipous == 2 %}
+                      <a href="/gerente-cambiar-status-cliente/{{c1.id}}">{{c1.name}} {{c1.last_name}}</a>
+{% endif %}
+                  
+                    </td>
+                    <td> {% if c1.iris %} {{c1.iris}} {% endif %}</td>
+                    <td>{{c1.programa}}</td>
+                    <td>{{c1.cveprograma}}</td>
+                    <td>{{c1.asesorname}} {{c1.asesorap}}</td>
+
+                    <td>
+
+                      {%  if c1.status_prog == 0  %}
+                      <span class="label">Prospecto</span>
+                      {% endif %}
+
+                      {% if c1.status_prog == 1 and c1.garantizado == False %}
+                        <span class="label label-success"> Inscrito</span>
+                      {% endif %}
+
+                      {% if c1.status_prog == 1 and c1.garantizado == True %}
+                        <span class="label label-success"> Garantizado</span>
+                      {% endif %}
+
+                      {%  if c1.status_prog == 2  %}
+                      <span class="label label-info">Lista de espera</span>
+                      {% endif %}
+<!-- otros estatus-->
+                      {%  if c1.status_prog == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if c1.status_prog == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                      {%  if c1.status_prog == 5  %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+                      {%  if c1.status_prog == 6  %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+
+                    </td>  
+                  </tr>
+                  {%  endfor %}
+{% endif %}
+{% if esta == 2 %}
+                  <tr>
+                  <td>
+{% if user.is_staff or request.session.tipous == 1 %}                    
+                    <a href="/admin-cambiar-status-cliente/{{objotro.user.id}}">{{objotro.user.first_name}} {{objotro.user.last_name}}</a>
+{% endif %}
+{% if request.session.tipous == 2 %}                   
+                    <a href="/gerente-cambiar-status-cliente/{{objotro.user.id}}">{{objotro.user.first_name}} {{objotro.user.last_name}}</a>
+{% endif %}                      
+                    
+                  </td>
+                  <td> {% if objotro.iris %} {{objotro.iris}} {% endif %}</td>
+                  <td>{{objotro.precio}}</td>
+                  <td>{{objotro.precio.precio.programa.clave}}</td>
+                  <td>{{objotro.asesor.user.first_name}} {{objotro.asesor.user.last_name}}</td>
+                  <td>
+
+                    {%  if objotro.status_prog == 0  %}
+                      <span class="label">Prospecto</span>
+                      {% endif %}
+
+
+                       {% if objotro.status_prog == 1 and objotro.garantizado == False %}
+                        <span class="label label-success"> Inscrito</span>
+                      {% endif %}
+
+                      {% if objotro.status_prog == 1 and objotro.garantizado == True %}
+                        <span class="label label-success"> Garantizado</span>
+                      {% endif %}
+
+
+                      {%  if objotro.status_prog == 2  %}
+                      <span class="label label-info">Lista de espera</span>
+                      {% endif %}
+<!-- otros estatus-->
+                      {%  if objotro.status_prog == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if objotro.status_prog == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                      {%  if objotro.status_prog == 5  %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+                      {%  if objotro.status_prog == 6  %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+
+                  </td>  
+                  </tr>
+{% endif %}
+
+{% if esta == 3%}
+  {% if user.is_staff or request.session.tipous == 1%}
+                  <tr>
+                    <td><a href="/admin-cambiar-status-cliente/{{objotro.user.id}}">{{objotro.user.first_name}} {{objotro.user.last_name}}</a></td>
+                    <td> {% if objotro.iris %} {{objotro.iris}} {% endif %}</td>
+                    <td>{{objotro.precio}}</td>
+                    <td>{{objotro.precio.precio.programa.clave}}</td>
+                    <td>{{objotro.asesor.user.first_name}} {{objotro.asesor.user.last_name}}</td>
+                  </tr>
+  {% endif %}
+{% endif %}
+{% if esta == 3 and request.session.tipous == 2%}
+                  <tr>
+                    <td><a href="/gerente-cambiar-status-cliente/{{objotro.user.id}}">{{objotro.user.first_name}} {{objotro.user.last_name}}</a></td>
+                    <td> {% if objotro.iris %} {{objotro.iris}} {% endif %}</td>
+                    <td>{{objotro.precio}}</td>
+                    <td>{{objotro.precio.precio.programa.clave}}</td>
+                    <td>{{objotro.asesor.user.first_name}} {{objotro.asesor.user.last_name}}</td>
+                  </tr>
+{% endif %}
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+{%  endif %}
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

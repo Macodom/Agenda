@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+   Registro de personal
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+
+	<div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1%}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Personal
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Registro de personal</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Personal
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Registro de personal</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+    	<div class="row-fluid">
+    		<div class="span12">
+    			<div class="content-widgets gray">
+    				            <div class="widget-head blue">
+					              <h3> Registro de personal</h3>
+					            </div>
+					            <div class="widget-container">
+              					<div class="form-container grid-form form-background">
+
+<form name="personal" class="form-horizontal left-align" id="signupForm" method="POST" action="">
+	{% csrf_token %}
+
+
+	                  <div class="control-group">
+                    <label class="control-label">Nombre</label>
+                    <div class="controls">
+                      {{u.first_name}}
+                      {{ u.first_name.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Apellido Paterno</label>
+                    <div class="controls">
+                      {{u.last_name}}
+                      {{ u.last_name.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Apellido Materno</label>
+                    <div class="controls">
+                      {{p.apmat}}
+                      {{ p.apmat.errors}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Email</label>
+                    <div class="controls">
+                     {{u.email}}
+                     {{ u.email.errors}}
+                     
+                        <div id="results2"></div>
+                    </div>
+                  </div>
+
+                 
+
+                <div class="control-group">
+                  <label class="control-label">Sexo</label>
+                  <div class="controls">
+                    {{p.sexo}}             
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Fecha de nacimiento</label>
+                  <div class="controls">
+                   <div id="datetimepicker4" class="input-append">
+                    {{p.fecha_nacimiento}}
+                      <span class="add-on">
+                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                      </span>    
+                    </div>
+                    {{ p.fecha_nacimiento.errors}}         
+                  </div>
+                </div>
+
+
+
+
+                <div class="control-group">
+                  <label class="control-label">Telefono</label>
+                  <div class="controls">
+                    {{p.telefono}} 
+                    {{ p.telefono.errors}}            
+                  </div>
+                </div>
+
+
+
+
+                <div class="control-group">
+                    <label class="control-label">País</label>
+                    <div class="controls">
+                      {{p.pais}}
+                    </div>
+                  </div>
+                 <div class="control-group">
+                  <label class="control-label">Estado</label>
+                  <div class="controls">
+
+                    {{p.estado}}
+              
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Ciudad</label>
+                  <div class="controls">
+
+               {{p.localidad}}
+     
+                  </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Dirección</label>
+                    <div class="controls">
+                      {{p.direccion}}
+                      {{ p.direccion.errors}}     
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Código postal</label>
+                    <div class="controls">
+                      {{p.codigo_postal}}
+                      {{ p.codigo_postal.errors}}     
+                    </div>
+                  </div>
+
+                <div class="control-group">
+                  <label class="control-label">Agencia/Sucursal</label>
+                  <div class="controls">
+                    {{p.agencia}}             
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Puesto</label>
+                  <div class="controls">
+                    {{p.puesto}}             
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Nacionalidad</label>
+                  <div class="controls">
+                    {{p.nacionalidad}}             
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Talla</label>
+                  <div class="controls">
+                    {{p.talla}}     
+                    {{p.talla.errors}}             
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Seguro de viaje/Upgrade</label>
+                  <div class="controls">
+                    {{p.segumedico}}             
+                  </div>
+                </div>
+<div id="seguroupgrade">
+                <div class="control-group">
+                  <label class="control-label">#Voucher</label>
+                  <div class="controls">
+                    {{p.upgrade_seguro}}             
+                  </div>
+                </div>
+</div>                 
+
+                <div class="control-group">
+                  <label class="control-label">Seleccion el tipo de usuario</label>
+                  <div class="controls">
+                  {{p.id_tipo_usuario}} 
+                  </div>
+                </div>
+
+
+<div id="unidadnegocio">
+           <div class="control-group">
+                  <label class="control-label">Unidad de negocio</label>
+                  <div class="controls">
+                    <select id="unidadnego" name="unidadnego" class="span12">
+                      <option value="0"> ..... </option>
+                      {% for u in unidadn %}
+                      <option value="{{u.clave}}"> {{u.clave}} </option>
+                      {% endfor %}
+                    </select>            
+                  </div>
+                </div>
+
+</div>
+
+<div id="divclave">
+                <div class="control-group">
+                    <label class="control-label">clave</label>
+                    <div class="controls">
+                        {{p.clave}}   
+                    </div>
+                  </div>
+
+                <div class="control-group">
+                  <label class="control-label">Teléfono directo</label>
+                  <div class="controls">
+                    {{p.telefono_directo}} 
+                    {{ p.telefono_directo.errors}}            
+                  </div>
+                </div>
+</div>
+                
+
+                  <div class="control-group">
+                    <label class="control-label">Nombre de Usuario</label>
+                    <div class="controls">
+                        {{u.username}}
+                        {{ u.username.errors}}     
+                        
+	                      <div id="results"></div>
+                        
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <label class="control-label">Contraseña</label>
+                    <div class="controls">
+                     {{u.password}}
+                    </div>
+                  </div>
+
+<span id="spinner" >
+                          <img src="{{STATIC_URL}}site_media/spinner.gif"/>
+</span>
+
+                  <div class="form-actions">
+                    <button id="btnguardar" type="submit" class="btn btn-primary">Registrar</button>
+                  </div>
+
+                </form>
+
+
+					</form>
+{% include "footer.html" %}
+		  <div class="scroll-top">
+		    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+		  </div>
+		  
+
+		  </div>
+		  </div>
+		  	</div>
+		  </div>
+		  </div>
+    </div>
+    </div>
+</div>
+
+{% endblock %}	

@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+
+Sucursal
+</title>
+
+{% include "base_administrador.html" %}
+
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+{% if user.is_staff or request.session.tipous == 1%}
+ <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Sucursal
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Modulo Sucursal</li>
+          </ul>
+        </div>
+      </div> 
+{% endif %}
+{% if request.session.tipous == 2 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Sucursal
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Modulo Sucursal</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+<div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              Sucursal
+            </h3> 
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/p-asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">Modulo Sucursal</li>
+          </ul>
+        </div>
+      </div>  
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue">
+                        {% if edit %} 
+               <h3> Editar de Sucursal</h3>             
+                        {% else %}
+              <h3> Registro de Sucursal</h3>          
+                        {% endif %}
+
+            </div>
+            <div class="widget-container">
+              <div class="form-container grid-form form-background">
+
+
+                <form name="fsucursal" class="form-horizontal left-align" id="fsucursal" method="POST" action="">
+                  {% csrf_token %}
+
+
+                  <div class="control-group">
+                    <label class="control-label">Agencia</label>
+                    <div class="controls">
+                      {{a.agencia_ase}}
+                    </div>
+                  </div>
+                   
+                  <div class="control-group">
+                    <label class="control-label">País</label>
+                    <div class="controls">
+                      {{a.pais}}
+                    </div>
+                  </div>
+
+                 <div class="control-group">
+                  <label class="control-label">Estados</label>
+                  <div class="controls">
+
+                    {{a.estado}}
+              
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label">Ciudad</label>
+                  <div class="controls">
+
+               {{a.localidad}}
+     
+                  </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Dirección</label>
+                    <div class="controls">
+                      {{a.direccion}}
+                    </div>
+                  </div> 
+                  <div class="control-group">
+                    <label class="control-label">Clave</label>
+                    <div class="controls">
+                      {{a.clave}}
+                    </div>
+                  </div>
+
+
+
+                  <div class="control-group">
+                    <label class="control-label">Telefono</label>
+                    <div class="controls">
+                      {{a.telefono}}
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label">Correo</label>
+                    <div class="controls">
+                      {{a.email}}
+                    </div>
+                  </div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

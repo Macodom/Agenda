@@ -1,0 +1,329 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+    Wl
+</title>
+
+{% include "base_administrador.html" %}
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ 
+{% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}    
+
+{% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  {% include 'headerasesor.html' %}
+  {% include 'menuizquierdoasesor.html' %}
+{% endif %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+{% if user.is_staff or request.session.tipous == 1 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              WL
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/administrador/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">WL Cargadas</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+
+<!-- Aqui van los roidfluid -->
+{% if request.session.tipous == 2 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              WL
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/gerente/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">WL Cargadas</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+{% if request.session.tipous == 3 %}
+  <div class="row-fluid ">
+        <div class="span12">
+          <div class="primary-head">
+            <h3 class="page-header"> 
+              WL
+            </h3>  
+          </div>
+          <ul class="breadcrumb">
+            <li>
+              <a href="/asesor/" class="icon-home"></a>
+              <span class="divider ">
+                <i class="icon-angle-right"></i>
+              </span>
+            </li>
+            <li class="active">WL Cargadas</li>
+          </ul>
+        </div>
+      </div>
+{% endif %}
+
+
+
+      <div class="row-fluid">
+          <div class="span12">
+          <div class="content-widgets light-gray">
+            <div class="widget-head blue clearfix">
+              <h3>WL Cargadas</h3>
+            </div>
+            
+            <div class="widget-container">
+              <div class="btn-group" id="url">
+                        {% if user.is_staff or request.session.tipous == 1  %}
+                        <a href="/adconsultar_cli/">
+                        {% endif %}
+                        {% if request.session.tipous == 2  %}
+                        <a href="/geconsultar_cli/">
+                        {% endif %}
+                        {% if request.session.tipous == 3  %}
+                        <a href="/asconsultar_cli/">
+                        {% endif %}
+                            <button class="btn btn-round-min btn btn-info" data-original-title="Consultar Precios">
+                                <span><i class="icon-plus"></i></span>
+                            </button>
+                        </a>
+                    </div>
+
+                <table class="table data-grid responsive table-bordered paper-table tbl-serach">
+                    <thead>
+                    <tr>
+                      <th class="invoice-id">
+                        Solicitud
+                      </th>
+                      <th class="invoice-date">
+                         Programa  Que desea
+                      </th>
+                      <th class="invoice-date">
+                         Status
+                      </th>
+                      <th class="invoice-date">
+                         Programa Actual
+                      </th>
+                      <th class="invoice-date">
+                         Iris
+                      </th>
+                      <th class="invoice-date">
+                         Precio
+                      </th>
+                      <th class="invoice-date">
+                         Clave
+                      </th>
+                      <th class="invoice-date">
+                        Registro
+                      </th>
+                      <th class="invoice-date">
+                         Salida
+                      </th>
+
+                       <th class="invoice-date">
+                         Asesor
+                      </th>
+                      <th class="invoice-date">
+                         1er Apellido
+                      </th>
+                      <th class="invoice-date">
+                         2do Apellido
+                      </th>
+                      <th class="invoice-date">
+                         Nombre
+                      </th>
+                      <th class="invoice-date">
+                         Acción
+                      </th>
+                      
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for w in wl %}  
+                    <tr>
+                <td>
+                  {{w.fecha_registro|date:" M. d, Y"}}
+                </td>
+                <td>
+                  {{w.precio.precio.programa.clave}}
+                    --
+                    {{w.precio.precio.salida.nombre}}
+                    --
+                    {{w.precio.precio.vigencia}}
+
+
+                </td>
+                <td>
+                  {%  if w.cliente.status_prog == 0  %}
+                      <span class="label">Prospecto</span>
+                      {% endif %}
+
+                      {%  if w.cliente.status_prog == 1  %}
+                      <span class="label label-success">Inscrito</span>
+                      {% endif %}
+
+                      {%  if w.cliente.status_prog == 2  %}
+                      <span class="label label-info">Lista de espera</span>
+                      {% endif %}
+<!-- otros estatus-->
+                      {%  if w.cliente.status_prog == 3  %}
+                      <span class="label label-warning">No contesta</span>
+                      {% endif %}
+
+                      {%  if w.cliente.status_prog == 4  %}
+                      <span class="label label-important">No va</span>
+                      {% endif %}
+
+                      {%  if w.cliente.status_prog == 5  %}
+                      <span class="label label-important">Cancelado</span>
+                      {% endif %}
+                      {%  if w.cliente.status_prog == 6  %}
+                      <span class="label label-success">Efectivo</span>
+                      {% endif %}
+                </td>
+                <td>
+                  {{w.cliente.precio.precio.programa.clave}}
+                  --
+                  {{w.precio.precio.salida.nombre}}
+                </td>
+                 <td>
+                  {{w.cliente.iris}} 
+                </td>
+                <td>
+                  {% if w.cliente.precio.tipo_cambio_id == 1 %}
+                          $
+                  {% endif %}
+                  {% if w.cliente.precio.tipo_cambio_id == 2 %}
+                          €
+                  {% endif %} 
+                  {{w.cliente.precio.precio_promo}} 
+                </td>
+                <td>
+                  {{w.cliente.precio.claveprecio}} 
+                </td>
+                <td>
+                  {{ w.cliente.fecha_registro|date:" M. d, Y" }} 
+                </td>
+                </td>
+                <td>
+                  {{w.cliente.precio.precio.salida}} 
+                </td>
+                 <td>
+                  {{w.cliente.asesor.clave}} 
+                </td>
+                <td>
+                   {{w.cliente.user.last_name}} 
+                </td>
+                 <td>
+                      {{w.cliente.apmat}} 
+                </td>
+                <td >
+                  {% if request.session.tipous == 2 %}
+                   <a href="/geregistrar_wl/{{w.cliente.user.id}}" title="Actualizar">
+                      {{w.cliente.user.first_name}}
+                  </a> 
+                  {% endif %}
+                  {% if request.session.tipous == 3 %}
+                   <a href="/asregistrar_wl/{{w.cliente.user.id}}" title="Actualizar">
+                      {{w.cliente.user.first_name}}
+                  </a>     
+                  {% endif %}
+                     
+                </td>
+                <td>
+                  <div class="btn-toolbar row-action">
+                    <div class="btn-group">
+                       {% if request.session.tipous == 2 %}
+                         <a href="/geeliminar_wl/{{w.cliente.user.id}}/{{w.id}}/">
+                          <button class="btn btn-danger" title="Eliminar">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a> 
+                        {% endif %}
+                        {% if request.session.tipous == 3 %}
+                         <a href="/aseliminar_wl/{{w.cliente.user.id}}/{{w.id}}/">
+                          <button class="btn btn-danger" title="Eliminar">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>     
+                        {% endif %}
+
+                          
+                    </div>
+                  </div>
+                </td>
+                      
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}

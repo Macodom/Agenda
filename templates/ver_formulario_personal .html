@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>
+    Ver personal
+</title>
+
+{% include "base_administrador.html" %}
+
+{% block admin %}
+
+
+<div class="layout"> <!-- inicio de toda la pagina desde del body-->
+  <!-- Navbar
+    ================================================== -->
+ {% if user.is_staff or request.session.tipous == 1 %}
+  {% include 'headeradmin.html' %}
+  {% include 'menuizquierdoadmin.html' %}
+{% endif %}
+
+ {% if request.session.tipous == 2 %}
+  {% include 'headergerente.html' %}
+  {% include 'menuizquierdogerente.html' %}
+{% endif %}
+
+
+
+  <div class="main-wrapper">
+    <div class="container-fluid">
+
+{% if messages %}
+  {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+
+        <i class="icon-exclamation-sign"></i>
+        {{ message }}   
+      </div>
+  {% endfor %}    
+{% endif %}
+
+
+
+
+
+<!-- Aqui van los roidfluid -->
+      <div class="row-fluid ">
+        <div class="span12">
+          <div class="content-widgets gray">
+            <div class="widget-head blue clearfix">
+              <h3 class="pull-left">Búsqueda de Personal</h3>
+            </div>
+            <div class="widget-container">
+              <table class="stat-table table responsive paper-table table-stats table-striped table-sortable table-bordered">
+                <tbody> 
+                  <tr>
+                    <th> Nombre</th>
+                    <th> Apellidos </th>
+                    <th> Email </th>
+                    <th> Sexo </th>
+                    <th> Status </th>
+                    <th> Acción </th>
+                  </tr>
+
+                
+                  <tr>
+
+                    <td>{{u.first_name}}</td>
+                    <td>{{u.last_name}}</td>
+                    <td> {{u.email}}</td>
+                    
+
+                       <td class="center">  
+                        {% if perfil.sexo == 'M'  %}
+                            Masculino
+                        {% else %}
+                           Femenino
+                        {% endif %}
+                       </td>                 
+
+                         <td class="center">
+                      {%  if u.is_active  %}
+                      <span class="label label-success">Activo</span>
+                      {% endif %}
+
+                      {% for t in perfil.id_tipo_usuario.all%}
+                        <span class="label label-warning">{{t.nombre}}</span>
+                      {% endfor %}  
+
+                       
+
+
+                      {%  if u.is_superuser  %}
+                      <span class="label label-info">Superusuario</span>
+                      {% endif %}
+                      {%  if not u.is_active  %}
+                      <span class="label label-important">Suspendido</span>
+                      {% endif %}
+
+
+
+                    </td>
+            
+                      <td class="center"><div class="btn-toolbar row-action">
+                        <div class="btn-group">
+
+{% if user.is_staff or request.session.tipous == 1%}
+
+                          <a href="/editar/{{u.id}}">
+                          <button class="btn btn-info" title="Editar">
+                            <i class="icon-edit"></i>
+                          </button>
+                          </a>
+                          {%  if not u.is_superuser  %}  
+                          <a href="/suspender/{{u.id}}">
+                          <button class="btn btn-danger" title="Suspender">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>
+                          {% endif %}
+                        
+                        {%  if not u.is_active  %}
+                          <a href="/activar/{{u.id}}">
+                          <button class="btn btn-success" title="Approve">
+                            <i class=" icon-ok"></i>
+                          </button>
+                          </a>
+                        {% endif %}  
+  
+{% endif %}
+{% if request.session.tipous == 2 %}
+                          <a href="/editar-personal/{{u.id}}">
+                          <button class="btn btn-info" title="Editar">
+                            <i class="icon-edit"></i>
+                          </button>
+                          </a>
+                          {%  if not u.is_superuser  %}  
+                          <a href="/suspender-personal/{{u.id}}">
+                          <button class="btn btn-danger" title="Suspender">
+                            <i class=" icon-remove-sign"></i>
+                          </button>
+                          </a>
+                          {% endif %}
+                        
+                        {%  if not u.is_active  %}
+                          <a href="/activar-presonal/{{u.id}}">
+                          <button class="btn btn-success" title="Approve">
+                            <i class=" icon-ok"></i>
+                          </button>
+                          </a>
+                        {% endif %}  
+  
+{% endif %}
+  
+                        
+                        </div>
+                      </div></td>
+                  </tr>
+                  <tr>
+                    <th> Fecha de nacimiento </th>
+                    <th> Teléfono </th>
+                    <th> Localidad </th>
+                    <th> Agencia </th>
+                    <th colspan="2"> Puesto </th>
+                  </tr>
+                  <tr>
+                    <td> {{perfil.fecha_nacimiento}} </td>
+                        <td> {{perfil.telefono}} </td>
+                        <td> {{perfil.localidad}} </td>
+                        <td> {{perfil.agencia}} </td>
+                        <td colspan="2"> {{perfil.puesto}} </td>
+                  </tr>
+                  <tr>
+                    <th colspan="6"> Dirección </th>
+                  </tr>
+                  <tr>
+                    <td colspan="6"> {{perfil.pais}}, {{perfil.estado}}, {{perfil.localidad}}, {{perfil.direccion}} </td>
+                  </tr>
+                   <tr>
+                    <th colspan="6"> Fotografia </th>
+                  </tr>
+                  <tr>
+                    <td colspan="6"> 
+                    {% if  perfil.image  %}
+                      <div class="user-thumb">
+                          <img height="40" width="40" alt="User" src="{{MEDIA_URL}}{{perfil.image}}">   
+                    </div>
+                      {% else %}
+                      <div class="user-thumb"> 
+                          <img height="40" width="40" alt="User" src="{{STATIC_URL}}images/user-thumb1.png">
+                    </div>
+                      {% endif %}
+
+                       </td>
+                  </tr>
+                
+
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% include 'footer.html' %}
+  <div class="scroll-top">
+    <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
+  </div>
+</div>
+
+{% endblock %}
