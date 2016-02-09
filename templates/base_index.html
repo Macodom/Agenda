@@ -1,0 +1,335 @@
+{% load staticfiles %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Admin Panel Template">
+<meta name="author" content="Westilian: Kamrujaman Shohel">
+<!-- styles -->
+<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+<link href="{% static "css/jquery.gritter.css" %}" rel="stylesheet">
+<link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet">
+<link rel="stylesheet" href={% static "css/font-awesome.css" %}>
+
+<link href="{% static "css/tablecloth.css" %}" rel="stylesheet">
+<link href="{% static "css/responsive-tables.css" %}" rel="stylesheet">
+
+<link href="{% static " css/chosen.css" %}" rel="stylesheet">
+<link href="{% static "css/styles.css" %}" rel="stylesheet">
+
+
+<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+<!--fav and touch icons -->
+<link rel="shortcut icon" href={% static "ico/favicon.ico" %}>
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+      href="ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+      href="ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png">
+<!--============ javascript ===========-->
+
+<script src={% static "js/jquery.js" %}></script>
+
+<script src={% static "js/jquery-ui-1.10.1.custom.min.js" %}></script>
+<script src={% static "js/bootstrap.js" %}></script>
+<script src={% static "js/bootstrap-fileupload.js" %}></script>
+<script src={% static "js/accordion.nav.js" %}></script>
+
+<script src={% static "js/jquery.tagsinput.js" %}></script>
+<script src={% static "js/chosen.jquery.js" %}></script>
+<script src={% static "js/bootstrap-colorpicker.js" %}></script>
+
+<script src={% static "js/bootstrap-datetimepicker.min.js" %}></script>
+
+<script src={% static "js/date.js" %}></script>
+<script src={% static "js/daterangepicker.js" %}></script>
+
+<script src={% static "js/custom.js" %}></script>
+<script src={% static "js/respond.min.js" %}></script>
+<script src={% static "js/ios-orientationchange-fix.js" %}></script>
+
+<script src={% static "js/jquery.validate.js" %}></script>
+
+<script src={% static "js/responsive-tables.js" %}></script>
+<script src={% static "js/jquery.dataTables.js" %}></script>
+<script src={% static "js/jquery.tablecloth.js" %}></script>
+<script src={% static "js/ZeroClipboard.js" %}></script>
+<script src={% static "js/dataTables.bootstrap.js" %}></script>
+<script src={% static "js/TableTools.js" %}></script>
+<script src={% static "js/jquery.collapsible.js" %}></script>
+<script src={% static "js/excanvas.js" %}></script>
+<script src={% static "js/jquery.tablesorter.js" %}></script>
+
+
+<script src={% static "js/jquery.flot.js" %}></script>
+<script src={% static "js/jquery.flot.selection.js" %}></script>
+<script src={% static "js/jquery.flot.pie.js" %}></script>
+<script src={% static "js/jquery.flot.stack.js" %}></script>
+<script src={% static "js/jquery.flot.time.js" %}></script>
+<script src={% static "js/jquery.flot.tooltip.js" %}></script>
+<script src={% static "js/jquery.flot.resize.js" %}></script>
+
+<script src={% static "js/jquery.gritter.js" %}></script>
+
+<script src={% static "js/stepy.jquery.js" %}></script>
+
+<link href="{% static "site_media/spinner.css" %}" rel="stylesheet" type="text/css"/>
+
+<!-- Slider para la aplicacion movil-->
+<!-- Add mousewheel plugin (this is optional) -->
+{#<script type="text/javascript" src="slide_movil/jquery.mousewheel-3.0.6.pack.js"></script>#}
+<!-- Add fancyBox main JS and CSS files -->
+<script type="text/javascript" src="{% static "slide_movil/jquery.fancybox.js?v=2.1.5" %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static "slide_movil/jquery.fancybox.css?v=2.1.5" %}" media="screen"/>
+<!-- Add Button helper (this is optional) -->
+{#<link rel="stylesheet" type="text/css" href="slide_movil/helpers/jquery.fancybox-buttons.css?v=1.0.5"/>#}
+{#<script type="text/javascript" src="slide_movil/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>#}
+{#<!-- Add Thumbnail helper (this is optional) -->#}
+{#<link rel="stylesheet" type="text/css" href="slide_movil/helpers/jquery.fancybox-thumbs.css?v=1.0.7"/>#}
+{#<script type="text/javascript" src="slide_movil/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>#}
+{#<!-- Add Media helper (this is optional) -->#}
+{#<script type="text/javascript" src="slide_movil/helpers/jquery.fancybox-media.js?v=1.0.6"></script>#}
+
+
+<!-- grafica -->
+
+<link class="include" rel="stylesheet" type="text/css" href={% static "js/grafica/jquery.jqplot.min.css" %}/>
+
+<script class="include" type="text/javascript" src={% static "js/grafica/jquery.jqplot.min.js" %}></script>
+<script type="text/javascript" src={% static "syntaxhighlighter/scripts/shCore.min.js" %}></script>
+<script type="text/javascript" src={% static "syntaxhighlighter/scripts/shBrushJScript.min.js" %}></script>
+<script type="text/javascript" src={% static "syntaxhighlighter/scripts/shBrushXml.min.js" %}></script>
+<!-- Additional plugins go here -->
+
+<script class="include" type="text/javascript" src={% static "js/grafica/jqplot.barRenderer.min.js" %}></script>
+<script class="include" type="text/javascript" src={% static "js/grafica/jqplot.pieRenderer.min.js" %}></script>
+<script class="include" type="text/javascript"
+        src={% static "js/grafica/jqplot.categoryAxisRenderer.min.js" %}></script>
+<script class="include" type="text/javascript" src={% static "js/grafica/jqplot.pointLabels.min.js" %}></script>
+
+
+<!-- url para Angularjs -->
+<script type='text/javascript' src={% static "js/angular/angular.min.js" %}></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript" src={% static "js/angular/app.js" %}></script>
+<script type="text/javascript" src={% static "js/angular/controller.js" %}></script>
+<script type="text/javascript" src={% static "js/angular/service.js" %}></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-sanitize.js"></script>
+<script type="text/javascript" src={% static "js/angular/ng-resource/angular-resource.js" %}></script>
+<script type="text/javascript" src={% static "js/angular/ui.Modal/ui-bootstrap-tpls-0.12.0.min.js" %}></script>
+<!-- url para Angularjs -->
+
+<!-- url para editor de texto -->
+<script type='text/javascript' src={% static "js/angular/ng-wig/ng-wig.js" %}></script>
+<link href="{% static "js/angular/ng-wig/ng-wig.css" %}" rel="stylesheet">
+<!-- url para editor de texto -->
+<script class="code" type="text/javascript">$(document).ready(function () {
+    $.jqplot.config.enablePlugins = true;
+    var s1 = [
+        {% for pr in i2 %}
+            {{pr.cliente}},
+        {% endfor %}
+    ];
+
+
+    var ticks = [
+        {% for ins in i2 %}
+            '{{ins.asesor}}',
+        {% endfor %}
+    ];
+
+
+    plot1 = $.jqplot('chart2', [s1], {
+        // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+        animate: !$.jqplot.use_excanvas,
+        seriesDefaults: {
+            renderer: $.jqplot.BarRenderer,
+            pointLabels: {show: true}
+        },
+        axes: {
+            xaxis: {
+                renderer: $.jqplot.CategoryAxisRenderer,
+                ticks: ticks
+            }
+        },
+        highlighter: {show: false}
+    });
+
+    $('#chart2').bind('jqplotDataClick',
+            function (ev, seriesIndex, pointIndex, data) {
+                $('#info22').html('series: ' + seriesIndex + ', point: ' + pointIndex + ', data: ' + data);
+            }
+    );
+});</script>
+
+
+<script class="code" type="text/javascript">$(document).ready(function () {
+    $.jqplot.config.enablePlugins = true;
+    var s1 = [
+        {% for pr in i %}
+            {{pr.cliente}},
+        {% endfor %}
+    ];
+
+    console.log(s1);
+
+
+    var ticks = [
+        {% for ins in i %}
+            '{{ins.dia}}',
+        {% endfor %}
+    ];
+
+
+    plot1 = $.jqplot('chart1', [s1], {
+        // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+        animate: !$.jqplot.use_excanvas,
+        seriesDefaults: {
+            renderer: $.jqplot.BarRenderer,
+            pointLabels: {show: true}
+        },
+        axes: {
+            xaxis: {
+                renderer: $.jqplot.CategoryAxisRenderer,
+                ticks: ticks
+            }
+        },
+        highlighter: {show: false}
+    });
+
+    $('#chart1').bind('jqplotDataClick',
+            function (ev, seriesIndex, pointIndex, data) {
+                $('#info1').html('series: ' + seriesIndex + ', point: ' + pointIndex + ', data: ' + data);
+            }
+    );
+});</script>
+
+
+
+
+
+{% if msncliente %}
+    <script type="text/javascript">
+
+        $(document).ready(
+                function () {
+
+                    $(window).load(function () {
+                        var unique_id = $.gritter.add({
+                            // (string | mandatory) the heading of the notification
+                            title: 'Esta es un noticia!!!',
+                            // (string | mandatory) the text inside the notification
+                            text: 'Este cliente actualmente se encuentra en efectivo teniendo la cantidad cubierta para pasar a inscrito, de clic  <a href="/cliente-inscrito-a/{{clien.user_id}}" style="color:#ccc">aquí</a> para pasarlo a inscrito.',
+                            // (string | optional) the image to display on the left
+                            image: '/static/images/notification-thumb.png',
+                            // (bool | optional) if you want it to fade out on its own or just sit there
+                            sticky: false,
+                            // (int | optional) the time you want it to be alive for before fading out
+                            time: '10000',
+                            // (string | optional) the class name you want to apply to that specific message
+                            class_name: 'my-sticky-class'
+                        });
+                        // You can have it return a unique id, this can be used to manually remove it later using
+                        /*
+                         setTimeout(function(){
+                         $.gritter.remove(unique_id, {
+                         fade: true,
+                         speed: 'slow'
+                         });
+                         }, 6000)
+                         */
+                        return false;
+                    });
+                });
+
+    </script>
+{% endif %}
+
+<script type="text/javascript">
+    $(function () {
+        $(".paper-table").tablecloth({
+            theme: "paper",
+            striped: true,
+            sortable: true,
+            condensed: false
+        });
+    });
+    $(function () {
+        $(".dark-table").tablecloth({
+            theme: "dark",
+            striped: true,
+            sortable: true,
+            condensed: false
+        });
+    });
+    $(function () {
+        $(".stat-table").tablecloth({
+            theme: "stats",
+            striped: true,
+            sortable: true,
+            condensed: false
+        });
+    });
+    $(function () {
+        $("table").tablecloth({
+            theme: "default",
+            striped: true,
+            bordered: true
+        });
+    });
+
+    $(function () {
+        $('#fecha_range').daterangepicker();
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(document).on("click", ".alert-box-precio-experado", function (e) {
+        bootbox.alert("Este precio ya está desactivado, revisa la fecha de cierre.!", function () {
+            //callback
+        });
+    });
+
+
+    $(function () {
+        $('#datetimepicker3').datetimepicker({
+            pickDate: false
+        });
+    });
+
+    $(function () {
+        $('#datetimepicker33').datetimepicker({
+            pickDate: false
+        });
+    });
+
+    /*====Select Box====*/
+    $(function () {
+        $(".chzn-select").chosen();
+        $(".chzn-select-deselect").chosen({
+            allow_single_deselect: true
+        });
+    });
+
+    $(function () {
+        $(".chzn2-select").chosen();
+        $(".chzn2-select-deselect").chosen({
+            allow_single_deselect: true
+        });
+    });
+
+
+</script>
+
+
+</head>
+<body>
+{% block admin %}
+
+{% endblock %}
+{% block extrajs %}
+{% endblock %}
+
+</body>
+
+</html>
