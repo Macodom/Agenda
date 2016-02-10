@@ -1,0 +1,61 @@
+{% load staticfiles %}
+<div class="navbar navbar-inverse top-nav">
+    <div class="navbar-inner">
+      <div class="container">
+        <span class="home-link">
+          <a href="/p-caja/" class="icon-home"></a>
+        </span>
+        <a class="brand" href="/p-caja/">
+        <img src="{% static "images/logo-falgun.png" %}" width="103" height="50" alt="Falgun"></a>
+        <div class="nav-collapse">
+          <ul class="nav">
+
+          <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-money"></i> Registro de llamadas <b class="icon-angle-down"></b>
+              </a>
+            <div class="dropdown-menu">
+              <ul>
+          <li><a href="/formulario_cliente/"><i class="icon-search"></i> Registrar clientes </a></li>
+          <li><a href="/formulario_area/"><i class="icon-search"></i> Registrar áreas </a></li>
+          <li><a href="/formulario_asesor/"><i class="icon-search"></i> Registrar asesores </a></li>
+          <li><a href="/formulario_llamadas_entrante/"><i class="icon-search"></i> Registrar llamadas entrantes </a></li>
+          <li><a href="/formulario_llamadas_salida/"><i class="icon-search"></i> Registrar llamadas salientes </a></li>
+              </ul>
+            </div>
+            </li>
+
+
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-file"></i> Consultar llamadas <b class="icon-angle-down"></b>
+              </a>
+              <div class="dropdown-menu">
+                <ul>
+                  <li><a href="/consulta_llamada_entrante/"><i class="icon-download"></i> Llamadas entrantes </a></li>
+                  <li><a href="/consulta_llamada_salida/"><i class="icon-download"></i> Llamadas Salientes </a></li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="dropdown">
+              <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <i class="icon-file"></i> Consultar áreas <b class="icon-angle-down"></b>
+              </a>
+              <div class="dropdown-menu">
+                <ul>
+                  <li><a href="/consulta_area/"><i class="icon-download"></i> Áreas </a></li>
+                  <li><a href="/consulta_asesores/"><i class="icon-download"></i> Asesores </a></li>
+                </ul>
+              </div>
+            </li>
+
+
+
+
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>

@@ -13,12 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from Agenda.App.Recepcion.views import *
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+
+from Agenda.App.Recepcion.views import *
 
 urlpatterns = [
     url(r'^$', 'Agenda.App.Recepcion.views.login'),
-
+    url(r'^',include('Agenda.App.Area.urls')),
     url(r'^admin/', admin.site.urls),
 ]

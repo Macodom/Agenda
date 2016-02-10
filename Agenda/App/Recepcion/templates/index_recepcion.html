@@ -1,3 +1,12 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>
+
+Recepción
+</title>
+
 {% extends "base_index.html" %}
 
 {% block title %}
@@ -5,9 +14,10 @@
 {% endblock %}
 
 {% block admin %}
-      {% include 'headeradmin.html' %}
-      {% include 'menuizquierdoadmin.html' %}
+      {% include 'header_recepcion.html' %}
     <div class="layout"> <!-- inicio de toda la pagina desde del body-->
+
+      {% include 'menuizquierdoasesor.html' %}
 
 
         <div class="main-wrapper">
@@ -33,13 +43,13 @@
                     <div class="span12">
                         <div class="content-widgets gray">
                             <div class="widget-head blue">
-                                <h3> Registro de personal</h3>
+                                <h3> Registro </h3>
                             </div>
                             <div class="widget-container">
                                 <div class="form-container grid-form form-background">
 
                                     <form name="personal" class="form-horizontal left-align" id="signupForm"
-                                          method="POST" action="gistro_personal">
+                                          method="POST" action="reggistro_personal">
                                         {% csrf_token %}
 
 
@@ -63,53 +73,10 @@
                                             </div>
                                         </div>
 
-
-                                        <div class="control-group">
-                                            <label class="control-label">Sexo</label>
-                                            <div class="controls">
-                                                {{ p.sexo }}
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label">Fecha de nacimiento</label>
-                                            <div class="controls">
-                                                <div id="datetimepicker4" class="input-append">
-                                                    {{ p.fecha_nacimiento }}
-                      <span class="add-on">
-                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                      </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
                                         <div class="control-group">
                                             <label class="control-label">Telefono</label>
                                             <div class="controls">
                                                 {{ p.telefono }}
-                                            </div>
-                                        </div>
-
-
-                                        <div class="control-group">
-                                            <label class="control-label">Localidad</label>
-                                            <div class="controls">
-                                                {{ p.localidad }}
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label">Agencia</label>
-                                            <div class="controls">
-                                                {{ p.agencia }}
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label">Puesto</label>
-                                            <div class="controls">
-                                                {{ p.puesto }}
                                             </div>
                                         </div>
 
@@ -148,15 +115,6 @@
                                         </div>
 
 
-                                        <div class="control-group">
-                                            <label class="control-label">Esta de acuerdo con nuestra política de
-                                                privacidad</label>
-                                            <div class="controls">
-                                                <input type="checkbox" class="checkbox" id="agree" name="agree"/>
-                                            </div>
-                                        </div>
-
-
                                         <div class="form-actions">
                                             <button type="submit" class="btn btn-primary">Sign Up</button>
                                             <button type="button" class="btn">Cancel</button>
@@ -166,11 +124,7 @@
 
 
                                     </form>
-                                    <div class="copyright">
-                                        <p>
-                                            &copy; 2013 westilian
-                                        </p>
-                                    </div>
+      {% include 'footer.html' %}
                                     <div class="scroll-top">
                                         <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
                                     </div>

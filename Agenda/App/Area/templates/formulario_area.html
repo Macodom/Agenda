@@ -4,81 +4,47 @@
     <meta charset="utf-8">
     <title>
 
-        Promociones
+        Consulta de áreas
     </title>
 
 
-    <div class="layout"> <!-- inicio de toda la pagina desde del body-->
-        <!-- Navbar
-          ================================================== -->
-            {% include 'headeradmin.html' %}
-            {% include 'menuizquierdoadmin.html' %}
+    {% extends "base_index.html" %}
+
+    {% block title %}
+        Administrador del sitios
+    {% endblock %}
+
+    {% block admin %}
+        {% include 'header_recepcion.html' %}
+        <div class="layout"> <!-- inicio de toda la pagina desde del body-->
+
+            {% include 'menuizquierdoasesor.html' %}
 
 
-        <div class="main-wrapper">
-            <div class="container-fluid">
+            <div class="main-wrapper">
+                <div class="container-fluid">
 
-                {% if messages %}
-                    {% for message in messages %}
-                        <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
-                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div {% if message.tags %} class="alert alert-{{ message.tags }}"  {% endif %}   >
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
 
-                            <i class="icon-exclamation-sign"></i>
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-
-
-                <!-- Aqui van los roidfluid -->
-                {% if user.is_staff or request.session.tipous == 1 %}
-                    <div class="row-fluid ">
-                        <div class="span12">
-                            <div class="primary-head">
-                                <h3 class="page-header">
-                                    Promociones
-                                </h3>
+                                <i class="icon-exclamation-sign"></i><strong>Ok!</strong>
+                                {{ message }}
                             </div>
-                            <ul class="breadcrumb">
-                                <li>
-                                    <a href="/administrador/" class="icon-home"></a>
-              <span class="divider ">
-                <i class="icon-angle-right"></i>
-              </span>
-                                </li>
-                                <li class="active">Consulta Promociones</li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endif %}
-                {% if request.session.tipous == 2 %}
+                        {% endfor %}
+                    {% endif %}
+
+
+
+
+
+                    <!-- Aqui van los roidfluid -->
                     <div class="row-fluid ">
                         <div class="span12">
                             <div class="primary-head">
                                 <h3 class="page-header">
-                                    Promociones
-                                </h3>
-                            </div>
-                            <ul class="breadcrumb">
-                                <li>
-                                    <a href="/p-gerente/" class="icon-home"></a>
-              <span class="divider ">
-                <i class="icon-angle-right"></i>
-              </span>
-                                </li>
-                                <li class="active">Consulta Promociones</li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endif %}
-
-
-                {% if request.session.tipous == 3 %}
-                    <div class="row-fluid ">
-                        <div class="span12">
-                            <div class="primary-head">
-                                <h3 class="page-header">
-                                    Mapas
+                                    Áreas
                                 </h3>
                             </div>
                             <ul class="breadcrumb">
@@ -88,103 +54,63 @@
                 <i class="icon-angle-right"></i>
               </span>
                                 </li>
-                                <li class="active">Consulta Promociones</li>
+                                <li>
+                                    <a href="/consulta_area/">Áreas</a>
+              <span class="divider">
+                <i class="icon-angle-right">
+                </i>
+              </span>
+                                </li>
+
+                                <li class="active">Formulario Áreas</li>
                             </ul>
                         </div>
                     </div>
-                {% endif %}
 
-                <div class="row-fluid ">
-                    <div class="span12">
-                        <div class="content-widgets gray">
-                            <div class="widget-head blue clearfix">
-                                <h3 class="pull-left">Lista de Promociones</h3>
-                            </div>
-                            <div class="widget-container">
-
-                                <div class="btn-group" id="url">
-
-                                    <a href="/formulario-promociones/" title="Agregar Promociones">
-                                        <button class="btn btn-round-min btn btn-info"
-                                                data-original-title="Agregar Promociones">
-                                            <span><i class="icon-plus"></i></span>
-                                        </button>
-                                    </a>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="content-widgets gray">
+                                <div class="widget-head blue">
+                                    <h3> Registro de áreas</h3>
                                 </div>
+                                <div class="widget-container">
+                                    <div class="form-container grid-form form-background">
 
-                                <table class="table data-grid table-bordered paper-table tbl-serach responsive">
-                                    <thead>
-                                    <tr>
-                                        <th> Titulo</th>
-                                        <th class="center"> Precio</th>
-                                        <th class="center"> Descripción</th>
-                                        <th class="center"> Imagen</th>
-                                        <th class="center"> Estatus</th>
-                                        <th class="center"> Acción</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                                        <form name="personal" class="form-horizontal left-align" id="signupForm"
+                                              method="POST" action="reggistro_personal">
+                                            {% csrf_token %}
 
-                                    {% for c in ObjModelQuery %}
-                                        <tr>
-                                            <td>{{ c.titulo }}</td>
-                                            <td>{{ c.precio }}</td>
-                                            <td>{{ c.descripcion|slice:":73" }}</td>
-                                            <td class="center">
-                                                <div class="user-thumb">
-                                                    <img height="100" width="100" alt="User"
-                                                         src="{{ MEDIA_URL }}{{ c.image }}">
+                                            <div class="control-group">
+                                                <label class="control-label">Nombre del área</label>
+                                                <div class="controls">
+                                                    {{ AForm.name }}
                                                 </div>
-                                            </td>
-                                            <td>
-                                                {% if c.status == True %}
-                                                    <span class="label label-success">Activo</span>
-                                                {% else %}
-                                                    <span class="label label-warning">Desactivado</span>
-                                                {% endif %}
-                                            </td>
-                                            <td class="center">
-                                                <div class="btn-toolbar row-action">
-                                                    <div class="btn-group">
+                                            </div>
 
-                                                        <a href="/editar-promociones/{{ c.id }}/">
-                                                            <button class="btn btn-info" title="Editar">
-                                                                <i class="icon-edit"></i>
-                                                            </button>
-                                                        </a>
+                                            <div class="formulario_sin_borde">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Guardar
+                                                </button>
+                                            </div>
 
-                                                        <a href="/eliminar-promociones/{{ c.id }}/"
-                                                           onclick="return confirm('Realmente desea eliminar este registro? \n Nota: \n Si este registro tiene relaciones, serán eliminados.')">
-                                                            <button class="btn btn-danger" title="Eliminar">
-                                                                <i class="icon-remove"></i>
-                                                            </button>
-                                                        </a>
+                                        </form>
 
 
-                                                    </div>
-                                                </div>
-                                            </td>
+                                        </form>
+                                        {% include 'footer.html' %}
+                                        <div class="scroll-top">
+                                            <a href="#" class="tip-top" title="Go Top"><i
+                                                    class="icon-double-angle-up"></i></a>
+                                        </div>
 
 
-                                        </tr>
-                                    {% endfor %}
-
-                                    </tbody>
-                                    <tfoot>
-                                    </tfoot>
-                                </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
-        {% include 'footer.html' %}
-        <div class="scroll-top">
-            <a href="#" class="tip-top" title="Go Top"><i class="icon-double-angle-up"></i></a>
-        </div>
-    </div>
 
-{% endblock %}
+    {% endblock %}
