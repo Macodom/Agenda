@@ -6,6 +6,6 @@ from Agenda.App.Area.views import *
 urlpatterns = patterns('',
                        url(r'^formulario_area/', 'Agenda.App.Area.views.Formulario_area'),
                        url(r'^consulta_area/', 'Agenda.App.Area.views.Consulta_area'),
-                       # url(r'^editar-zonas/(?P<pk>\d+)/$', 'xv.app.presentaciones.views.editar_zonas'),
-                       # url(r'^eliminar-zonas/(?P<pk>\d+)/$', 'xv.app.presentaciones.views.eliminar_zonas'),
+                       url(r'^editar_area/(?P<pk>\d+)/$', 'Agenda.App.Area.views.Editar_area'),
+                       url(r'^eliminar_area/(?P<pk>\d+)/$', 'Agenda.App.Area.views.Eliminar_area'),
                        )

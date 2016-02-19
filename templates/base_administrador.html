@@ -132,91 +132,86 @@
 <!-- url para editor de texto -->
 
 
+<script class="code" type="text/javascript">$(document).ready(function () {
+    $.jqplot.config.enablePlugins = true;
+    var s1 = [
+        {% for pr in i2 %}
+            {{pr.cliente}},
+        {% endfor %}
+    ];
 
 
+    var ticks = [
+        {% for ins in i2 %}
+            '{{ins.asesor}}',
+        {% endfor %}
+    ];
 
 
+    plot1 = $.jqplot('chart2', [s1], {
+        // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+        animate: !$.jqplot.use_excanvas,
+        seriesDefaults: {
+            renderer: $.jqplot.BarRenderer,
+            pointLabels: {show: true}
+        },
+        axes: {
+            xaxis: {
+                renderer: $.jqplot.CategoryAxisRenderer,
+                ticks: ticks
+            }
+        },
+        highlighter: {show: false}
+    });
 
-    <script class="code" type="text/javascript">$(document).ready(function () {
-        $.jqplot.config.enablePlugins = true;
-        var s1 = [
-            {% for pr in i2 %}
-                {{pr.cliente}},
-            {% endfor %}
-        ];
-
-
-        var ticks = [
-            {% for ins in i2 %}
-                '{{ins.asesor}}',
-            {% endfor %}
-        ];
-
-
-        plot1 = $.jqplot('chart2', [s1], {
-            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
-            animate: !$.jqplot.use_excanvas,
-            seriesDefaults: {
-                renderer: $.jqplot.BarRenderer,
-                pointLabels: {show: true}
-            },
-            axes: {
-                xaxis: {
-                    renderer: $.jqplot.CategoryAxisRenderer,
-                    ticks: ticks
-                }
-            },
-            highlighter: {show: false}
-        });
-
-        $('#chart2').bind('jqplotDataClick',
-                function (ev, seriesIndex, pointIndex, data) {
-                    $('#info22').html('series: ' + seriesIndex + ', point: ' + pointIndex + ', data: ' + data);
-                }
-        );
-    });</script>
+    $('#chart2').bind('jqplotDataClick',
+            function (ev, seriesIndex, pointIndex, data) {
+                $('#info22').html('series: ' + seriesIndex + ', point: ' + pointIndex + ', data: ' + data);
+            }
+    );
+});</script>
 
 
-    <script class="code" type="text/javascript">$(document).ready(function () {
-        $.jqplot.config.enablePlugins = true;
-        var s1 = [
-            {% for pr in i %}
-                {{pr.cliente}},
-            {% endfor %}
-        ];
+<script class="code" type="text/javascript">$(document).ready(function () {
+    $.jqplot.config.enablePlugins = true;
+    var s1 = [
+        {% for pr in i %}
+            {{pr.cliente}},
+        {% endfor %}
+    ];
 
-        console.log(s1);
-
-
-        var ticks = [
-            {% for ins in i %}
-                '{{ins.dia}}',
-            {% endfor %}
-        ];
+    console.log(s1);
 
 
-        plot1 = $.jqplot('chart1', [s1], {
-            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
-            animate: !$.jqplot.use_excanvas,
-            seriesDefaults: {
-                renderer: $.jqplot.BarRenderer,
-                pointLabels: {show: true}
-            },
-            axes: {
-                xaxis: {
-                    renderer: $.jqplot.CategoryAxisRenderer,
-                    ticks: ticks
-                }
-            },
-            highlighter: {show: false}
-        });
+    var ticks = [
+        {% for ins in i %}
+            '{{ins.dia}}',
+        {% endfor %}
+    ];
 
-        $('#chart1').bind('jqplotDataClick',
-                function (ev, seriesIndex, pointIndex, data) {
-                    $('#info1').html('series: ' + seriesIndex + ', point: ' + pointIndex + ', data: ' + data);
-                }
-        );
-    });</script>
+
+    plot1 = $.jqplot('chart1', [s1], {
+        // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
+        animate: !$.jqplot.use_excanvas,
+        seriesDefaults: {
+            renderer: $.jqplot.BarRenderer,
+            pointLabels: {show: true}
+        },
+        axes: {
+            xaxis: {
+                renderer: $.jqplot.CategoryAxisRenderer,
+                ticks: ticks
+            }
+        },
+        highlighter: {show: false}
+    });
+
+    $('#chart1').bind('jqplotDataClick',
+            function (ev, seriesIndex, pointIndex, data) {
+                $('#info1').html('series: ' + seriesIndex + ', point: ' + pointIndex + ', data: ' + data);
+            }
+    );
+});</script>
 
 
 
